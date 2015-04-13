@@ -12,7 +12,7 @@
 int create_timerfd() {
 	int timerfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);
 	if (timerfd < 0) {
-		printf("Failed in timerfd_create\n");
+		printf("Failed In timerfd_create\n");
   	}
   	return timerfd;
 }
@@ -20,20 +20,24 @@ int create_timerfd() {
 class Timer
 {
 public:
-	Timer(int fd, bool only_once):timefd_(fd), once_run_(only_once) { }
+	Timer(int fd, bool only_once):timerfd_(fd), once_run_(only_once) { }
 	
 	~Timer() {
 		close(timerfd_);
 	}
 
 	int GetFd() {
-		return timefd_;
+		return timerfd_;
 	}
 
-	int SetInterval() {
-		timerfd_settime(time_fd, 1, );
-	}
-	
+	int SetInterval(int sec, int msec);
+
+	int GetInterval(int &sec, int &msec);
+
+	int Countdown(int &sec, int &msec);
+
+	int Disarm();
+
 private:
 	int timerfd_;
 	bool once_run_;
