@@ -3,28 +3,25 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <string>
-
 #include "event_driver.h"
 
 using namespace std;
 	
 int main(int argc , char **argv) {
-	if (argc != 3) {
-		printf("usage: %s ip_address port_number\n", basename(argv[0]));
+	if (argc != 2) {
+		printf("usage: %s port_number\n", basename(argv[0]));
 		exit(EXIT_FAILURE);
 	}
 
 	signal(SIGPIPE, SIG_IGN);
 
-	string ip = argv[1];
-	int port = atoi(argv[2]);
+	int port = atoi(argv[1]);
 
 	int fd = socket(PF_INET, SOCK_STREAM, 0);
 
 	Socket *server = new Socket(fd);
 
-	server->BindListen(ip, port);
+	server->BindListen(port);
 
 	printf("Login Server Start, pid %d, Listen Fd %d\n", getpid(), server->GetFd());
 

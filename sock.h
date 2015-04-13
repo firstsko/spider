@@ -42,7 +42,7 @@ class Socket
 		state_ = SOCK_CLOSED;
 	}
 
-	int BindListen(const std::string &ip, int port);
+	int BindListen(int port);
 
 	// Only Support Edge Trigger In Epoll Model
 	int Read();

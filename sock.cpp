@@ -137,13 +137,13 @@ int Socket::Accept(int listen_fd) {
 	return 0;
 }
 
-int Socket::BindListen(const string &ip, int port) {
+int Socket::BindListen(int port) {
 	int ret = 0;
 
 	struct sockaddr_in address;	
 	bzero(&address, sizeof(address));
 	address.sin_family = AF_INET;
-	inet_pton(AF_INET, ip.c_str(), &address.sin_addr);
+	address.sin_addr.s_addr = htonl(INADDR_ANY);
 	address.sin_port = htons(port);
 	
 	ret = bind(sockfd_, (struct sockaddr *) &address, sizeof(address));
