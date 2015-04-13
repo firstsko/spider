@@ -10,7 +10,7 @@
 using namespace std;
 	
 int main(int argc , char **argv) {
-	if (argc != 2) {
+	if (argc != 3) {
 		printf("usage: %s ip_address port_number\n", basename(argv[0]));
 		exit(EXIT_FAILURE);
 	}
