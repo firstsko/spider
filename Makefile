@@ -1,5 +1,5 @@
 server: server.o sock.o event_driver.o timer.o
-	g++ -Wall -I../common -o server server.o sock.o event_driver.o -g -lpthread 
+	g++ -Wall -o server server.o sock.o event_driver.o -g -lpthread 
 server.o:server.cpp
 	g++ -Wall -o server.o server.cpp -g -c
 sock.o:sock.cpp

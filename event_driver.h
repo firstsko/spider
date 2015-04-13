@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <map>
 
+#include "timer.h"
 #include "sock.h"
 
 #define MAX_EVENT_NO 1024
@@ -48,9 +49,9 @@ private:
 	int epfd_; 
 
 	std::map <int, Socket *> event_container_;
+	std::map <Timer_t, Timer *> timer_container_;
 
-	// std::map <int > time_containr_;
-
+private:
 	static EventDriver* p_event_driver_;
 };
 
