@@ -23,9 +23,11 @@ typedef struct timespec Timer_t;
 class Timer
 {
 public:
-	Timer(int fd, bool only_once):timerfd_(fd), once_run_(only_once) {
+	Timer(int fd, bool only_once):timerfd_(fd), once_run_(only_once), tick_times_(0) {
 		interval_.tv_sec = 0;
 		interval_.tv_nsec = 0;
+		next_.tv_sec = 0;
+		next_.tv_nsec = 0;
 	}
 	
 	~Timer() {
@@ -40,15 +42,25 @@ public:
 
 	void GetInterval (int &sec, int &msec) const;
 
-	int Countdown(int &sec, int &msec);
+	int Countdown();
+
+	bool OnceOnly() {
+		return once_run_;
+	}
 
 	int Disarm();
+
+	// When On Expiration, Run Callback Function, And Reset next_ Field
+	void ActiveCb(void *data);
+	
+	virtual int Callback(void *data);
 
 private:
 	int timerfd_;
 	bool once_run_;
+	uint64_t tick_times_;
 	Timer_t interval_;	
-
+	Timer_t next_;	
 };
 
 // > >= == < <== Overload

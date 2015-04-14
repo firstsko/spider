@@ -7,30 +7,62 @@ int Timer::SetInterval(int sec, int msec) {
 
 	clock_gettime(CLOCK_MONOTONIC, &current);	
 
+	new_time.it_value.tv_sec = current.tv_sec + sec;
+	new_time.it_value.tv_nsec = current.tv_nsec + 1000000 * msec;
+
 	if (once_run_) {
-		new_time.it_interval.tv_sec = sec;
-		new_time.it_interval.tv_nsec = 1000000 * sec;
+		new_time.it_interval.tv_sec = 0;
+		new_time.it_interval.tv_nsec = 0;
+
 	} else {
 		new_time.it_interval.tv_sec = sec;
-		new_time.it_interval.tv_nsec = 1000000 * sec;
-		new_time.it_value.tv_sec = current.tv_sec + sec;
-		new_time.it_value.tv_nsec = current.tv_nsec + 1000000 * msec;
+		new_time.it_interval.tv_nsec = 1000000 * msec;
 	}
+
+	next_.tv_sec = current.tv_sec + interval_.tv_sec;
+	next_.tv_nsec = current.tv_nsec + interval_.tv_nsec;
 
 	interval_ = new_time.it_interval;
 
 	return timerfd_settime(timerfd_, TFD_TIMER_ABSTIME, &new_time, NULL);
 }
 
-// The Remaining Amount Time Util Next Expiration
-int Timer::Countdown(int &sec, int &msec) {
-	struct itimerspec next; 		
-	int ret = timerfd_gettime(timerfd_, &next);
-	if (ret == 0) {
-		sec = next.it_value.tv_sec;
-		msec = next.it_value.tv_nsec/100000;
+// Refresh The Remaining Amount Time Util Next Expiration
+int Timer::Countdown() {
+	// Unlikely Happen
+	if (tick_times_ && once_run_) {
+		next_.tv_sec = 0;
+		next_.tv_nsec = 0;
+		return 0;
 	}
+
+	struct timespec current;
+	struct itimerspec next;
+	int ret = clock_gettime(CLOCK_MONOTONIC, &current);	
+	if (ret != 0) {
+		return ret;
+	}
+
+	ret = timerfd_gettime(timerfd_, &next);
+	if (ret != 0) {
+		return ret;
+	}
+
+	next_.tv_sec = current.tv_sec + next.it_value.tv_sec;
+	next_.tv_nsec = current.tv_nsec + next.it_value.tv_nsec;
+
 	return ret;
+}
+
+// When On Expiration, Run Callback Function, And Reset next_ member
+void Timer::ActiveCb(void *data) {
+	tick_times_++;
+	// Invoke Callback
+	Callback(data);
+	// Refresh The Remaining Amount Time Util Next Expiration
+	Countdown();
+
+	return;
 }
 
 // The Interval

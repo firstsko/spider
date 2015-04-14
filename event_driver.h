@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <map>
+#include <list>
 
 #include "timer.h"
 #include "sock.h"
@@ -28,13 +29,13 @@ public:
 
 	void ModifyEvent(int fd, int active_type);
 
-	void DelEvent(int);
+	void DelEvent(int fd);
 
-//	void AddTimer(int);
+	void AddTimer(Timer *timer);
 
-//	void DelTimer(int);
+	void DelTimer(Timer *timer);
 
-//	void Tick(int);
+	void Tick(int fd);
 
 	void StartLoop(int timeout_usec = 1000);
 	
@@ -49,7 +50,9 @@ private:
 	int epfd_; 
 
 	std::map <int, Socket *> event_container_;
-	std::map <Timer_t, Timer *> timer_container_;
+
+	// We Need A Sorted Structure to Hold Timer Events, MinHeap
+	std::list < Timer *> timer_container_;
 
 private:
 	static EventDriver* p_event_driver_;

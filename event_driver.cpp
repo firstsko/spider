@@ -56,6 +56,11 @@ void EventDriver::DelEvent(int fd) {
 	event_container_.erase(fd);
 }
 
+void EventDriver::Tick(int fd) {
+
+	return;
+}
+
 void EventDriver::StartLoop(int timeout_usec) {
 	epoll_event events[MAX_EVENT_NO];
 
@@ -72,37 +77,40 @@ void EventDriver::StartLoop(int timeout_usec) {
 		map<int, Socket *>::iterator it;
 
 		for (int i = 0; i < number; i++) {
-			int sockfd = events[i].data.fd;
+			int event_fd = events[i].data.fd; // event_fd May Both Be socket OR timerfd
 		
 			// Connection Closed By Peer
 			if (events[i].events & EPOLLRDHUP) {
 
-				if ((it = event_container_.find(sockfd)) != event_container_.end()) {
+				if ((it = event_container_.find(event_fd)) != event_container_.end()) {
 					it->second->Close();
-					DelEvent(sockfd);
+					DelEvent(event_fd);
 				}
 			}
 			// Recieve New Data
 			if (events[i].events & EPOLLIN) {
 				// Accept A New Connection, Level-Trigger
-				if ((it = event_container_.find(sockfd)) != event_container_.end()) {
+				if ((it = event_container_.find(event_fd)) != event_container_.end()) {
 					if (it->second->State() == SOCK_LISTENNING) {
 						// Note That New Socket Object Will Be Created
-						int connfd = Socket::Accept(sockfd);
+						int connfd = Socket::Accept(event_fd);
 						if (connfd < 0) {
 							PrintErrno();
 						}
 						continue;
 					}
 				}
+				// CheckTimer
+				Tick(event_fd);
+
 				// Drain All Data From TCP Recv Buffer, If TCP_FIN Recieved, Remove The Event
-				if ((it = event_container_.find(sockfd)) != event_container_.end()) {
+				if ((it = event_container_.find(event_fd)) != event_container_.end()) {
 					it->second->Read();
 					// Remove Closed Socket
 					if (it->second->State() == SOCK_CLOSED) {
-						DelEvent(sockfd);
+						DelEvent(event_fd);
 					} else {
-						ModifyEvent(sockfd, EPOLLOUT);
+						ModifyEvent(event_fd, EPOLLOUT);
 					}
 				}
 
@@ -110,13 +118,13 @@ void EventDriver::StartLoop(int timeout_usec) {
 
 			if (events[i].events & EPOLLOUT) { // Ready To Send Data
 				// Send All Data
-				if ((it = event_container_.find(sockfd)) != event_container_.end()) {
+				if ((it = event_container_.find(event_fd)) != event_container_.end()) {
 					it->second->Write();
 					// Remove Closed Socket
 					if (it->second->State() == SOCK_CLOSED) {
-						DelEvent(sockfd);
+						DelEvent(event_fd);
 					} else {
-						ModifyEvent(sockfd, EPOLLIN);
+						ModifyEvent(event_fd, EPOLLIN);
 					}
 				}
 
