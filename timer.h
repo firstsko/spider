@@ -53,7 +53,9 @@ public:
 	// When On Expiration, Run Callback Function, And Reset next_ Field
 	void ActiveCb(void *data);
 	
-	virtual int Callback(void *data);
+	virtual int Callback(void *data) {
+		return 0;
+	}
 
 private:
 	int timerfd_;

@@ -61,7 +61,6 @@ void Timer::ActiveCb(void *data) {
 	Callback(data);
 	// Refresh The Remaining Amount Time Util Next Expiration
 	Countdown();
-
 	return;
 }
 
