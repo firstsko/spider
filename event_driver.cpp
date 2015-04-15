@@ -95,6 +95,10 @@ void EventDriver::Tick(int fd) {
 	}
 
 	it->second->ActiveCb(NULL);
+	if (it->second->OnceOnly()) {
+		DelTimer(it->second);
+	}
+
 	return;
 }
 
