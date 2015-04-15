@@ -97,6 +97,7 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 void EventDriver::DelTimer(Timer *timer) {
 	epoll_ctl(epfd_, EPOLL_CTL_DEL, timer->GetFd(), NULL);
 	timer_container_.erase(timer->GetFd());
+	timer->Disarm();
 	delete timer;
 }
 
