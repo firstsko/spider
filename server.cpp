@@ -9,7 +9,9 @@
 using namespace std;
 
 int bar(void* data) {
+	
 	printf("I am A Timer\n");
+	
 	return 0;
 }
 	

@@ -5,10 +5,15 @@ int Timer::SetInterval(int sec, int msec) {
 	struct itimerspec new_time; 		
 	struct timespec current;
 
-	clock_gettime(CLOCK_REALTIME, &current);	
+	clock_gettime(CLOCK_MONOTONIC, &current);	
 
 	new_time.it_value.tv_sec = current.tv_sec + sec;
 	new_time.it_value.tv_nsec = current.tv_nsec + 1000000 * msec;
+
+	// If Nanosecond Field Exceeds 1000000000, Second Field Increase
+	if (new_time.it_value.tv_nsec > 1000000000) {
+		new_time.it_value.tv_sec++;
+	}
 
 	if (once_run_) {
 		new_time.it_interval.tv_sec = 0;
