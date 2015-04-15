@@ -64,7 +64,7 @@ void EventDriver::DelEvent(int fd) {
 	event_container_.erase(fd);
 }
 
-// Only This Function Can Create Timer
+// Only This Function Can Create Timer, User Must Check Return Value
 int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (void *)) {
 	int fd = create_timerfd();
 	if (fd < 0) {
