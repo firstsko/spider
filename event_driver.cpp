@@ -79,6 +79,12 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 	ptimer->SetCallback(callback);
 
 	timer_container_.insert(make_pair(ptimer->GetFd(), ptimer));
+
+	epoll_event event;
+	event.data.fd = fd;
+	event.events = EPOLLIN | EPOLLET; 
+	epoll_ctl(epfd_, EPOLL_CTL_ADD, fd, &event);
+
 	return 0;
 } 
 

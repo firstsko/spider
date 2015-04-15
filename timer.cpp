@@ -5,7 +5,7 @@ int Timer::SetInterval(int sec, int msec) {
 	struct itimerspec new_time; 		
 	struct timespec current;
 
-	clock_gettime(CLOCK_MONOTONIC, &current);	
+	clock_gettime(CLOCK_REALTIME, &current);	
 
 	new_time.it_value.tv_sec = current.tv_sec + sec;
 	new_time.it_value.tv_nsec = current.tv_nsec + 1000000 * msec;
@@ -38,7 +38,7 @@ int Timer::Countdown() {
 
 	struct timespec current;
 	struct itimerspec next;
-	int ret = clock_gettime(CLOCK_MONOTONIC, &current);	
+	int ret = clock_gettime(CLOCK_REALTIME, &current);	
 	if (ret != 0) {
 		return ret;
 	}
