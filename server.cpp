@@ -23,7 +23,7 @@ int main(int argc , char **argv) {
 
 	server->BindListen(port);
 
-	printf("Login Server Start, pid %d, Listen Fd %d\n", getpid(), server->GetFd());
+	printf("Server Start, pid %d, Listen Fd %d On Port %d TCP\n", getpid(), server->GetFd(), port);
 
 	EventDriver *driver = EventDriver::Instance();
 	driver->CreateDriver();

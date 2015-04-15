@@ -35,13 +35,13 @@ public:
 
 	void DelTimer(Timer *timer);
 
-	void Tick(int fd);
-
 	void StartLoop(int timeout_usec = 1000);
 	
 	static EventDriver* Instance();
 
 private:
+	void Tick(int fd);
+
 	void PrintErrno() {
 		printf("%s %d Error %d Info:%s\n", __FILE__, __LINE__, errno, strerror(errno));
 	}
@@ -51,8 +51,7 @@ private:
 
 	std::map <int, Socket *> event_container_;
 
-	// We Need A Sorted Structure to Hold Timer Events, MinHeap
-	std::list < Timer *> timer_container_;
+	std::map <int, Timer *> timer_container_;
 
 private:
 	static EventDriver* p_event_driver_;

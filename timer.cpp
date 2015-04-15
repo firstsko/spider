@@ -55,13 +55,13 @@ int Timer::Countdown() {
 }
 
 // When On Expiration, Run Callback Function, And Reset next_ member
-void Timer::ActiveCb(void *data) {
+int Timer::ActiveCb(void *data) {
 	tick_times_++;
 	// Invoke Callback
-	Callback(data);
+	int ret = callback_(data);
 	// Refresh The Remaining Amount Time Util Next Expiration
 	Countdown();
-	return;
+	return ret;
 }
 
 // The Interval

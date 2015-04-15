@@ -57,7 +57,14 @@ void EventDriver::DelEvent(int fd) {
 }
 
 void EventDriver::Tick(int fd) {
+	map <int, Timer *>::iterator it = timer_container_.find(fd);
 
+	if (it == timer_container_.end()) {
+		printf("Fatal, No Related Timer Found");
+		return;
+	}
+
+	it->second->ActiveCb(NULL);
 	return;
 }
 
@@ -113,7 +120,6 @@ void EventDriver::StartLoop(int timeout_usec) {
 						ModifyEvent(event_fd, EPOLLOUT);
 					}
 				}
-
 			} 
 
 			if (events[i].events & EPOLLOUT) { // Ready To Send Data

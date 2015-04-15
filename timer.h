@@ -51,18 +51,15 @@ public:
 	int Disarm();
 
 	// When On Expiration, Run Callback Function, And Reset next_ Field
-	void ActiveCb(void *data);
+	int ActiveCb(void *data);
 	
-	virtual int Callback(void *data) {
-		return 0;
-	}
-
 private:
 	int timerfd_;
 	bool once_run_;
 	uint64_t tick_times_;
 	Timer_t interval_;	
 	Timer_t next_;	
+	int (*callback_) (void *);
 };
 
 // > >= == < <== Overload
