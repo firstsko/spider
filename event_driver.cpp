@@ -67,6 +67,7 @@ void EventDriver::DelEvent(int fd) {
 
 // Only This Function Can Create Timer, User Must Check Return Value
 int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (void *)) {
+	int ret = 0;
 	int fd = create_timerfd();
 	if (fd < 0) {
 		return fd;
@@ -78,17 +79,23 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 	ptimer->SetInterval(sec, msec);
 	ptimer->SetCallback(callback);
 
-	timer_container_.insert(make_pair(ptimer->GetFd(), ptimer));
-
 	epoll_event event;
 	event.data.fd = fd;
 	event.events = EPOLLIN | EPOLLET; 
-	epoll_ctl(epfd_, EPOLL_CTL_ADD, fd, &event);
 
+	ret = epoll_ctl(epfd_, EPOLL_CTL_ADD, fd, &event);
+	
+	if (ret != 0) {
+		printf("Fail To Add Epoll Timer\n");
+		return ret;
+	}
+
+	timer_container_.insert(make_pair(ptimer->GetFd(), ptimer));
 	return 0;
 } 
 
 void EventDriver::DelTimer(Timer *timer) {
+	epoll_ctl(epfd_, EPOLL_CTL_DEL, timer->GetFd(), NULL);
 	timer_container_.erase(timer->GetFd());
 	delete timer;
 }
