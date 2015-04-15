@@ -27,3 +27,7 @@
 *.out
 *.app
 server
+
+# Tmp
+.swp
+.swo
