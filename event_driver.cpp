@@ -6,6 +6,14 @@
 
 using namespace std;
 
+static int create_timerfd() {
+	int timerfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);
+	if (timerfd < 0) {
+		printf("Failed In timerfd_create\n");
+  	}
+  	return timerfd;
+}
+
 EventDriver* EventDriver::p_event_driver_ = NULL;
 
 EventDriver::~EventDriver() {
@@ -54,6 +62,28 @@ void EventDriver::DelEvent(int fd) {
 	epoll_ctl(epfd_, EPOLL_CTL_DEL, fd, NULL);
 	delete event_container_[fd];
 	event_container_.erase(fd);
+}
+
+// Only This Function Can Create Timer
+int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (void *)) {
+	int fd = create_timerfd();
+	if (fd < 0) {
+		return fd;
+	}
+
+	Timer* ptimer = new Timer(fd, once_only);
+
+	//Trigger The Timer And Set CallBack
+	ptimer->SetInterval(sec, msec);
+	ptimer->SetCallback(callback);
+
+	timer_container_.insert(make_pair(ptimer->GetFd(), ptimer));
+	return 0;
+} 
+
+void EventDriver::DelTimer(Timer *timer) {
+	timer_container_.erase(timer->GetFd());
+	delete timer;
 }
 
 void EventDriver::Tick(int fd) {

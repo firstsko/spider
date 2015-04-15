@@ -31,7 +31,7 @@ public:
 
 	void DelEvent(int fd);
 
-	void AddTimer(Timer *timer);
+	int AddTimer(int sec, int msec, bool once_only, int (*callback) (void *));
 
 	void DelTimer(Timer *timer);
 

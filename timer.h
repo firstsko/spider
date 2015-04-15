@@ -12,14 +12,6 @@
 
 typedef struct timespec Timer_t;
 
-/*static int create_timerfd() {
-	int timerfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);
-	if (timerfd < 0) {
-		printf("Failed In timerfd_create\n");
-  	}
-  	return timerfd;
-}*/
-
 class Timer
 {
 public:
@@ -50,6 +42,9 @@ public:
 
 	int Disarm();
 
+	void SetCallback(int (*callback) (void *)) {
+		callback_ = callback;
+	}
 	// When On Expiration, Run Callback Function, And Reset next_ Field
 	int ActiveCb(void *data);
 	
