@@ -7,8 +7,8 @@
 #include <map>
 #include <list>
 
-#include "timer.h"
 #include "sock.h"
+#include "timer.h"
 
 #define MAX_EVENT_NO 1024
 
