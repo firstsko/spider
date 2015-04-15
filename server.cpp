@@ -4,8 +4,14 @@
 #include <stdlib.h>
 
 #include "event_driver.h"
+#include "timer.h"
 
 using namespace std;
+
+int bar(void* data) {
+	printf("I am A Timer\n");
+	return 0;
+}
 	
 int main(int argc , char **argv) {
 	if (argc != 2) {
@@ -30,6 +36,8 @@ int main(int argc , char **argv) {
 
 	// Listen Fd Use Level-Trigger
 	driver->AddEvent(fd, server, LEVEL_TRIGGER);
+
+	driver->AddTimer(2, 500, false, bar);
 
 	driver->StartLoop();
 
