@@ -35,7 +35,7 @@ void EventDriver::CreateDriver() {
 }
 
 // Default Edge-Trigger, Level-Trigger Only For Listening Fd
-void EventDriver::AddEvent(int fd, Socket *sk,  Trigger_t type) {
+void EventDriver::AddEvent(int fd, Socket *sk, Trigger_t type) {
 	epoll_event event;
 	event.data.fd = fd;
 	if (type == LEVEL_TRIGGER) {
