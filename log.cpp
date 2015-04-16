@@ -3,7 +3,11 @@
 #include <dirent.h>
 #include <stdio.h>
 
+#include <set>
+
 #include "log.h"
+
+using namespace std;
 
 Log::Log():fd_(-1), level_(LOG_DEBUG), path_("./log"), suffix_(".log") {
 	// Check Existence, If Not, Create It
@@ -22,8 +26,14 @@ Log::Log():fd_(-1), level_(LOG_DEBUG), path_("./log"), suffix_(".log") {
 	char buf[64];
 	snprintf(buf, sizeof(buf) - 1, "%d:%02d:%02d", 1900 + pnow.tm_year, 1 + pnow.tm_mon, pnow.tm_mday);
 	today_ = buf;
-	//current_file = prefix_ + today_ + "0" + suffix_;
+	current_file = prefix_ + today_ + "0" + suffix_;
 	DIR *dir = opendir(path_.c_str());
+
+	set <string> files;
+	while((ptr = readdir(dir))!=NULL) {
+		string file = ptr->d_name;
+
+	}
 
 	closedir(dir);
 }

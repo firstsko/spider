@@ -29,5 +29,5 @@
 server
 
 # Tmp
-.swp
-.swo
+*.swp
+*.swo
