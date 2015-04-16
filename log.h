@@ -17,12 +17,11 @@ typedef enum {
 
 class Log {
 public:
-	Log():path("./log") {
+	Log():fd_(-1), path_("./log"), level_(LOG_INFO) {
 		// Check Directory Exist, If Not, Create It
 		if (access(path_.c_str(), F_OK) != 0) {
-			mkdir(path.c_str(), R_OK | W_OK | X_OK);
+			mkdir(path_.c_str(), R_OK | W_OK | X_OK);
 		}
-
 	}
 
 	void SetPath(const std::string &path) {
@@ -39,6 +38,7 @@ private:
 
 	Loglevel_t level_;
 	std::string path_;		
+
 };
 
 #endif 
