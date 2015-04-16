@@ -104,8 +104,8 @@ void EventDriver::DelTimer(Timer *timer) {
 void EventDriver::Tick(int fd) {
 	map <int, Timer *>::iterator it = timer_container_.find(fd);
 
+	// If Not Timerfd
 	if (it == timer_container_.end()) {
-		printf("Fatal, No Related Timer Found");
 		return;
 	}
 
