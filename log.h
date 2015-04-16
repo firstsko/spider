@@ -2,6 +2,8 @@
 #define _LOG_H_
 
 #include <sys/stat.h>
+#include <unistd.h>
+#include <string>
 #include <string>
 
 typedef enum {
@@ -19,10 +21,16 @@ class Log {
 public:
 	Log();
 
+	~Log() {
+		close(fd_);
+	}
+
 	void SetPath(const std::string &path) {
 		path_ = path;
 	}
 	
+private:
+	void FindExistingLog();
 
 private:
 	int fd_;
