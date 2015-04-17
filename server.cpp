@@ -12,9 +12,8 @@
 using namespace std;
 
 int bar(void* data) {
-	// string now = now_str();	
-//	printf("Hey! Check Clock: %s\n", now.c_str());
-	printf("Hey! Check Clock");
+	printf("Hey,Check Clock: %s\n", now_str().c_str());
+//	printf("%sHello\n", now_str().c_str());
 	return 0;
 }
 	
