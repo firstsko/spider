@@ -31,3 +31,6 @@ server
 # Tmp
 *.swp
 *.swo
+
+# Logs
+*.log
