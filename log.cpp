@@ -78,6 +78,7 @@ void Log::FindExistingLog() {
 		return;
 	}
 
+	// Find The Max Log Index File, Which Means The Lastest Written File
 	int max_index = 0;
 	regmatch_t match_set[1];
 	char match[100] = {0};
@@ -93,9 +94,9 @@ void Log::FindExistingLog() {
 		}
 	}
 
+	// If current_file_ Oversized, Created A New Log File, Index++
+	
 
 	regfree(&reg);
 	closedir(dir);
-
-	// current_file_ = prefix_ + today_ + "123" + suffix_;
 }
