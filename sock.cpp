@@ -144,6 +144,7 @@ int Socket::Accept(int listen_fd) {
 	return 0;
 }
 
+// If This Function Fails, Process Will Exit Immediately
 int Socket::BindListen(int port) {
 	int ret = 0;
 
@@ -156,13 +157,13 @@ int Socket::BindListen(int port) {
 	ret = bind(sockfd_, (struct sockaddr *) &address, sizeof(address));
 	if (ret == -1) {
 		PrintErrno();
-		return ret;
+		exit(EXIT_FAILURE);
 	}
 	
 	ret = listen(sockfd_, 5);
 	if (ret == -1) {
 		PrintErrno();
-		return ret;
+		exit(EXIT_FAILURE);
 	}
 
 	state_ = SOCK_LISTENNING;
