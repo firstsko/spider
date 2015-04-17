@@ -66,7 +66,7 @@ int Ini::LoadFile(const string &filename) {
 
     while (fgets(line, MAXLINE, fp) != NULL) {
 
-        char *p, *section, *key, *value; 
+        char *p, *section; 
         char key_name[MAXLINE] = {0};
         char value_name[MAXLINE] = {0};
 
