@@ -25,7 +25,6 @@ static string today_str() {
 	return string(buf);
 }
 
-
 Log::Log():fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log") {
 	// Check Existence, If Not, Create It
 	if (access(path_.c_str(), F_OK) != 0) {
