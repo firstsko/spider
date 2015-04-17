@@ -39,8 +39,8 @@ private:
 	Loglevel_t level_;
 
 	std::string path_;		
-	std::string suffix_;		
 	std::string prefix_;		
+	std::string suffix_;		
 	std::string current_file_;		
 	std::string today_;		
 };
