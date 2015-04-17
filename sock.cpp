@@ -116,24 +116,31 @@ int Socket::Connect(const string &ip, int port, int second) {
 	return 0;
 }
 
+// NonBlocking And Edge-Trigger
 int Socket::Accept(int listen_fd) {
 	int peer_fd = 0;
 	sockaddr_in peer_addr;
 	socklen_t addr_len = sizeof(peer_addr);
 	
-	peer_fd = accept(listen_fd, (sockaddr *)&peer_addr, &addr_len);
-	if (peer_fd == -1) {
-		PrintErrno();
-		return -1;
+	while(true) {
+		peer_fd = accept(listen_fd, (sockaddr *)&peer_addr, &addr_len);
+		if (peer_fd == -1) {
+			if (errno == EAGAIN || errno == EWOULDBLOCK) {
+				break;
+			} else if (errno == EINTR) {
+				continue;
+			} else {
+				PrintErrno();
+				return -1;
+			}
+		} else {
+			Socket* peer = new Socket(peer_fd);
+			peer->SetState(SOCK_TCP_ENSTABLISHED);
+			peer->SetPeerAddr(peer_addr);
+			EventDriver::Instance()->AddEvent(peer_fd, peer);
+		}
 	}
 
-	Socket* peer = new Socket(peer_fd);
-
-	peer->SetState(SOCK_TCP_ENSTABLISHED);
-	peer->SetPeerAddr(peer_addr);
-	
-	EventDriver::Instance()->AddEvent(peer_fd, peer);
-	
 	return 0;
 }
 

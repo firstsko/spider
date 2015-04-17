@@ -36,8 +36,8 @@ int main(int argc , char **argv) {
 	EventDriver *driver = EventDriver::Instance();
 	driver->CreateDriver();
 
-	// Listen Fd Use Level-Trigger
-	driver->AddEvent(fd, server, LEVEL_TRIGGER);
+	// Listen Fd Use Edge-Trigger
+	driver->AddEvent(fd, server, EDGE_TRIGGER);
 
 	driver->AddTimer(2, 500, false, bar);
 

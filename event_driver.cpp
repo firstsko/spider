@@ -34,7 +34,7 @@ void EventDriver::CreateDriver() {
 	epfd_ = epoll_create(5);
 }
 
-// Default Edge-Trigger, Level-Trigger Only For Listening Fd
+// Default Edge-Trigger
 void EventDriver::AddEvent(int fd, Socket *sk, Trigger_t type) {
 	epoll_event event;
 	event.data.fd = fd;
@@ -149,8 +149,8 @@ void EventDriver::StartLoop(int timeout_usec) {
 				if ((it = event_container_.find(event_fd)) != event_container_.end()) {
 					if (it->second->State() == SOCK_LISTENNING) {
 						// Note That New Socket Object Will Be Created
-						int connfd = Socket::Accept(event_fd);
-						if (connfd < 0) {
+						int ret = Socket::Accept(event_fd);
+						if (ret < 0) {
 							PrintErrno();
 						}
 						continue;
