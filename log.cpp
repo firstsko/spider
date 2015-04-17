@@ -2,7 +2,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <regex.h>
 #include <string.h>
@@ -14,7 +13,7 @@
 using namespace std;
 
 // 20150417
-static string today_str() {
+string today_str() {
 	time_t now;
 	struct tm pnow = {0};
 	time(&now);
@@ -22,17 +21,33 @@ static string today_str() {
 	char buf[64];
 	snprintf(buf, sizeof(buf) - 1, "%d%02d%02d", 1900 + pnow.tm_year, 1 + pnow.tm_mon, pnow.tm_mday);
 
-	return string(buf);
+	return std::string(buf);
 }
 
-Log::Log():fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log") {
+// [19:30:30 030] Hour Minute Second Millisecond 
+string now_str() {
+    char now_str[128];
+
+    struct timeval now = {0};
+    struct tm pnow;
+    gettimeofday(&now, NULL);
+    localtime_r(&now.tv_sec, &pnow);
+	snprintf(now_str, sizeof(now_str) - 1, "[%d:%02d:%02d %03ld]", pnow.tm_hour, pnow.tm_min, pnow.tm_sec, now.tv_usec);
+
+    return string(now_str);
+}
+
+Log::Log(): fp_(NULL), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log") {
 	// Check Existence, If Not, Create It
 	if (access(path_.c_str(), F_OK) != 0) {
-		mkdir(path_.c_str(), R_OK | W_OK | X_OK);
+		mkdir(path_.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 	}
 	// Maxsum File Size 50MB As Default
 	max_size_ = 50 * 1024 * 1024;
-
+	// Initialise current_file_ 
+	FindExistingLog();
+	// OpenFile
+	fp_ = fopen(current_file_.c_str(), "a+");
 }
 
 // Format: server20150417001.log
@@ -65,7 +80,7 @@ void Log::FindExistingLog() {
 	}
 
 	if (files.empty()) {
-		current_file_ = prefix_ + today_ + "000" + suffix_;
+		current_file_ = path_ + "/" + prefix_ + today_ + "000" + suffix_;
 		regfree(&reg);
 		closedir(dir);
 		return;
@@ -100,7 +115,7 @@ void Log::FindExistingLog() {
 	if (file_info.st_size >= max_size_) {
 		max_index++;
 		char buf[256] = {0};
-		snprintf(buf, sizeof(buf) - 1, "%s%s%03d%s", prefix_.c_str(), today_.c_str(), max_index, suffix_.c_str());
+		snprintf(buf, sizeof(buf) - 1, "%s/%s%s%03d%s", path_.c_str(), prefix_.c_str(), today_.c_str(), max_index, suffix_.c_str());
 		current_file_ = buf;
 	}
 	

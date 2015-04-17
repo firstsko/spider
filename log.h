@@ -3,6 +3,7 @@
 
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string>
 #include <string>
 
@@ -17,12 +18,15 @@ typedef enum {
 	LOG_DEBUG,
 } Loglevel_t;
 
+std::string today_str();
+std::string now_str();
+
 class Log {
 public:
 	Log();
 
 	~Log() {
-		close(fd_);
+		fclose(fp_);
 	}
 
 	void SetPath(const std::string &path) {
@@ -33,7 +37,7 @@ private:
 	void FindExistingLog();
 
 private:
-	int fd_;
+	FILE *fp_;
 	unsigned max_size_;
 	unsigned files_counter_;
 	Loglevel_t level_;

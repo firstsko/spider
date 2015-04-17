@@ -1,6 +1,6 @@
 #ifndef _VERSION_
 #define _VERSION_
 
-const char *version = "spider0.0.1"
+const char *version = "Spider0.0.1";
 
 #endif
