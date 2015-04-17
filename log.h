@@ -2,6 +2,8 @@
 #define _LOG_H_
 
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string>
@@ -22,23 +24,28 @@ std::string today_str();
 std::string now_str();
 
 class Log {
-public:
-	Log();
 
+public:
 	~Log() {
-		fclose(fp_);
+		close(fd_);
 	}
+
+	static Log* Instance();
 
 	void SetPath(const std::string &path) {
 		path_ = path;
 	}
 	
 private:
+	// Private Constructor For Singletion
+	Log();
+
 	void FindExistingLog();
 
 private:
-	FILE *fp_;
+	int fd_;
 	unsigned max_size_;
+	unsigned written_byte;
 	unsigned files_counter_;
 	Loglevel_t level_;
 
@@ -47,6 +54,8 @@ private:
 	std::string suffix_;		
 	std::string current_file_;		
 	std::string today_;		
+	
+	static Log *plog_;
 };
 
 #endif 

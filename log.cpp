@@ -12,6 +12,8 @@
 
 using namespace std;
 
+Log* Log::plog_ = NULL;
+
 // 20150417
 string today_str() {
 	time_t now;
@@ -37,7 +39,15 @@ string now_str() {
     return string(now_str);
 }
 
-Log::Log(): fp_(NULL), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log") {
+// Singleton, Not Multi-Thread Safe
+Log* Log::Instance() {
+	if (plog_ == NULL) {
+		plog_ = new Log();
+	}
+	return plog_;
+}
+
+Log::Log(): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log") {
 	// Check Existence, If Not, Create It
 	if (access(path_.c_str(), F_OK) != 0) {
 		mkdir(path_.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
@@ -46,8 +56,8 @@ Log::Log(): fp_(NULL), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), 
 	max_size_ = 50 * 1024 * 1024;
 	// Initialise current_file_ 
 	FindExistingLog();
-	// OpenFile
-	fp_ = fopen(current_file_.c_str(), "a+");
+	// OpenFile, Append Write, Create If Not Exist, User Has RWX right
+	fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 }
 
 // Format: server20150417001.log
@@ -122,3 +132,6 @@ void Log::FindExistingLog() {
 	regfree(&reg);
 	closedir(dir);
 }
+
+
+

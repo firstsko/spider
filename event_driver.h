@@ -19,10 +19,10 @@ typedef enum {
 
 class EventDriver {
 public:
-	EventDriver():epfd_(0) {};
-
 	~EventDriver();
 	
+	static EventDriver* Instance();
+
 	void CreateDriver();
 
 	void AddEvent(int fd, Socket *sk, Trigger_t type = EDGE_TRIGGER);
@@ -36,10 +36,11 @@ public:
 	void DelTimer(Timer *timer);
 
 	void StartLoop(int timeout_usec = 1000);
-	
-	static EventDriver* Instance();
 
 private:
+	// Private Constructor For Singletion
+	EventDriver():epfd_(0) {};
+
 	void Tick(int fd);
 
 	void PrintErrno() {

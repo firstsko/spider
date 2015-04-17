@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <iostream>
 
 #include "version.h"
 #include "server.h"
@@ -12,7 +13,7 @@
 using namespace std;
 
 int bar(void* data) {
-	printf("Hey! Check Clock: %s\n", now_str().c_str());
+	cout << "Hey! Check Clock:" << now_str() << endl;
 //	printf("%sHello\n", now_str().c_str());
 	return 0;
 }
@@ -23,7 +24,7 @@ int main(int argc , char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	Log log;
+	Log *log = Log::Instance();
 	signal(SIGPIPE, SIG_IGN);
 	
 
@@ -49,6 +50,7 @@ int main(int argc , char **argv) {
 
 	delete server;
 	delete driver;
+	delete log;
 
 	return 0;
 }
