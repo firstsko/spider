@@ -1,4 +1,5 @@
 #include <sys/time.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <stdio.h>
@@ -95,8 +96,15 @@ void Log::FindExistingLog() {
 	}
 
 	// If current_file_ Oversized, Created A New Log File, Index++
+	struct stat file_info;	
+	stat(current_file_.c_str(), &file_info);
+	if (file_info.st_size >= max_size_) {
+		max_index++;
+		char buf[256] = {0};
+		snprintf(buf, sizeof(buf) - 1, "%s%s%03d%s", prefix_.c_str(), today_.c_str(), max_index, suffix_.c_str());
+		current_file_ = buf;
+	}
 	
-
 	regfree(&reg);
 	closedir(dir);
 }
