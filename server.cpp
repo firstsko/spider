@@ -12,7 +12,7 @@
 using namespace std;
 
 int bar(void* data) {
-	printf("Hey,Check Clock: %s\n", now_str().c_str());
+	printf("Hey! Check Clock: %s\n", now_str().c_str());
 //	printf("%sHello\n", now_str().c_str());
 	return 0;
 }
