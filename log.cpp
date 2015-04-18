@@ -192,6 +192,7 @@ void Log::Rotate() {
 	// Check If Our Current Logfile Is Delete By Some One Abruptly
 	struct stat fd_stats;
 	if (stat(current_file_.c_str(), &fd_stats) != 0) {
+		close(fd_);
 		FindExistingLog();
 		fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 	}
@@ -209,6 +210,6 @@ void Log::Flush() {
 		return;
 	}
 	dprintf(fd_, "%s", pbuff_);
-	memset(pbuff_, 0 , LOG_CACHE_SIZE);
+	memset(pbuff_, 0, LOG_CACHE_SIZE);
 	buff_offset_ = 0;
 }
