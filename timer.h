@@ -6,9 +6,10 @@
 #include <sys/timerfd.h>
 
 #include <string>
-#include <string.h>
 #include <time.h>
 #include <stdint.h>
+
+#include "server.h"
 
 typedef struct timespec Timer_t;
 

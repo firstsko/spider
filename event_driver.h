@@ -9,6 +9,7 @@
 
 #include "sock.h"
 #include "timer.h"
+#include "server.h"
 
 #define MAX_EVENT_NO 1024
 
@@ -42,10 +43,6 @@ private:
 	EventDriver():epfd_(0) {};
 
 	void Tick(int fd);
-
-	void PrintErrno() {
-		printf("%s %d Error %d Info:%s\n", __FILE__, __LINE__, errno, strerror(errno));
-	}
 
 private:
 	int epfd_; 

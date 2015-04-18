@@ -7,8 +7,8 @@
 #include <netinet/in.h>
 
 #include <string>
-#include <string.h>
-#include <errno.h>
+
+#include "server.h"
 
 typedef enum {
 	SOCK_IDLE,
@@ -93,10 +93,6 @@ private:
 		peer_ = address;
 	}
 	
-	static void PrintErrno() {
-		printf("%s %d Errno %d Info:%s\n", __FILE__, __LINE__, errno, strerror(errno));
-	}
-
 private:
 	int sockfd_;
 	sockaddr_in peer_;

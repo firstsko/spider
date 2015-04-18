@@ -34,28 +34,28 @@ Socket::~Socket() {
 
 void Socket::SetNonBlocking() {
 	if (fcntl(sockfd_, F_SETFL, O_NONBLOCK | fcntl(sockfd_, F_GETFL)) != 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 }
 
 void Socket::SetNoTcpDelay() {
 	int no_delay = 1;
 	if (setsockopt(sockfd_, IPPROTO_TCP, TCP_NODELAY, &no_delay, sizeof(no_delay)) != 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 }
 
 void Socket::SetKeepAlive() {
 	int keep_alive = 1;
 	if (setsockopt(sockfd_, SOL_SOCKET, SO_KEEPALIVE, &keep_alive, sizeof(keep_alive)) != 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 }
 
 void Socket::SetResueAddr() {
 	int resue = 1;
 	if (setsockopt(sockfd_, SOL_SOCKET, SO_REUSEADDR, &resue, sizeof(resue)) != 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 }
 
@@ -75,7 +75,7 @@ int Socket::Connect(const string &ip, int port, int second) {
 	if (ret == 0) {
 		return ret;
 	} else if (errno != EINPROGRESS)  { // Connect Fail
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 		return -1;	
 	}	
 	
@@ -92,7 +92,7 @@ int Socket::Connect(const string &ip, int port, int second) {
 	// Our Connection Is Completed When Socket Becomes Writable Without Errors
 	ret = select(sockfd_ + 1, NULL, &wfds, NULL, &timeout);
 	if (ret <= 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 		return - 1;
 	}
 
@@ -130,7 +130,7 @@ int Socket::Accept(int listen_fd) {
 			} else if (errno == EINTR) {
 				continue;
 			} else {
-				PrintErrno();
+				ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 				return -1;
 			}
 		} else {
@@ -156,13 +156,15 @@ int Socket::BindListen(int port) {
 	
 	ret = bind(sockfd_, (struct sockaddr *) &address, sizeof(address));
 	if (ret == -1) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
+		printf("Fatal Error: %s. Program Abort!\n", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 	
 	ret = listen(sockfd_, 5);
 	if (ret == -1) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
+		printf("Fatal Error: %s. Program Abort!\n", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 
@@ -184,7 +186,7 @@ int Socket::Read() {
 			if (errno == EAGAIN || errno == EWOULDBLOCK) {
 				break;
 			} else if (errno == ECONNRESET) { // Recieve A TCP_RST From Peer 
-				PrintErrno();
+				ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 				Close();
 				state_ = SOCK_CLOSED;
 				break;
@@ -226,7 +228,7 @@ int Socket::Write() {
 				// All Data Sent In Non-Blocking Socket
 				break;
 			} else if (errno == ECONNRESET) { // Recieve A TCP_RST From Peer 
-				PrintErrno();
+				ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 				Close();
 				state_ = SOCK_CLOSED;
 				break;
@@ -263,7 +265,7 @@ void Socket::ShutdownW() {
 int Socket::SetTcpInBuffsize(size_t size) {
 	int ret = setsockopt(sockfd_, SOL_SOCKET, SO_RCVBUF, &size, 4);
 	if (ret < 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 	return ret;
 }
@@ -271,7 +273,7 @@ int Socket::SetTcpInBuffsize(size_t size) {
 int Socket::SetTcpOutBuffsize(size_t size) {
 	int ret = setsockopt(sockfd_, SOL_SOCKET, SO_SNDBUF, &size, 4);
 	if (ret < 0) {
-		PrintErrno();
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 	return ret;
 }

@@ -1,6 +1,5 @@
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <errno.h>
 
 #include "event_driver.h"
 
@@ -126,7 +125,7 @@ void EventDriver::StartLoop(int timeout_usec) {
 			if (errno == EINTR) {
 				continue;
 			}
-			this->PrintErrno();
+			ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 			break;	
 		}
 
@@ -151,7 +150,7 @@ void EventDriver::StartLoop(int timeout_usec) {
 						// Note That New Socket Object Will Be Created
 						int ret = Socket::Accept(event_fd);
 						if (ret < 0) {
-							PrintErrno();
+							ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 						}
 						continue;
 					}

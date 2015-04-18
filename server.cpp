@@ -4,11 +4,12 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "version.h"
 #include "server.h"
 #include "event_driver.h"
 #include "timer.h"
 #include "log.h"
+
+static const char *version = "Spider0.0.1";
 
 using namespace std;
 
