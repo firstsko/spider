@@ -9,15 +9,6 @@
 #include <string>
 #include <string>
 
-#define LOG_LOG(level, fmt...)                                  \
-    if ( level >= g_sLog.GetLevel() ) {                         \
-        g_sLog.WriteLog(level, fmt);                            \
-    }
-
-#define LOG_ERROR(fmt...)       LOG_LOG(Log::LL_ERROR, fmt)
-#define LOG_INFO(fmt...)        LOG_LOG(Log::LL_INFO, fmt)
-#define LOG_DEBUG(fmt...)       LOG_LOG(Log::LL_DEBUG, fmt)
-
 // Each Line Can Be Written Less Than 1024 Bytes
 #define LOG_MAX_LINE 1024
 
@@ -53,13 +44,13 @@ public:
 		path_ = path;
 	}
 
-	size_t Record(Loglevel_t level, const char *format, ...);
+	size_t Record(Loglevel_t level, const char *file, int line, const char *func, const char *format, ...);
 	
 private:
 	// Private Constructor For Singletion
 	Log();
 
-	size_t WriteRecord(Loglevel_t level, const char *format, va_list args);
+	size_t WriteRecord(Loglevel_t level, const char *file, int line, const char *func, const char *format, va_list args);
 
 	void FindExistingLog();
 	

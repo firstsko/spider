@@ -23,10 +23,9 @@ int main(int argc , char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	Log *log = Log::Instance();
+
 	signal(SIGPIPE, SIG_IGN);
 	
-
 	int port = atoi(argv[1]);
 
 	int fd = socket(PF_INET, SOCK_STREAM, 0);
@@ -35,6 +34,7 @@ int main(int argc , char **argv) {
 
 	server->BindListen(port);
 
+	INFO("%s Server Start, pid %d, Listen Fd %d On TCP Port %d", version, getpid(), server->GetFd(), port);
 	printf("%s Server Start, pid %d, Listen Fd %d On TCP Port %d\n", version, getpid(), server->GetFd(), port);
 
 	EventDriver *driver = EventDriver::Instance();
@@ -49,7 +49,7 @@ int main(int argc , char **argv) {
 
 	delete server;
 	delete driver;
-	delete log;
+	//delete log;
 
 	return 0;
 }

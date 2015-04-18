@@ -39,7 +39,7 @@ string today_str() {
 	return std::string(buf);
 }
 
-// [19:30:30 030] Hour Minute Second Millisecond 
+// 19:30:30 030 Hour Minute Second Millisecond 
 string now_str() {
     char now_str[128];
 
@@ -47,7 +47,7 @@ string now_str() {
     struct tm pnow;
     gettimeofday(&now, NULL);
     localtime_r(&now.tv_sec, &pnow);
-	snprintf(now_str, sizeof(now_str) - 1, "[%d:%02d:%02d %03ld]", pnow.tm_hour, pnow.tm_min, pnow.tm_sec, now.tv_usec/1000);
+	snprintf(now_str, sizeof(now_str) - 1, "%d:%02d:%02d %03ld", pnow.tm_hour, pnow.tm_min, pnow.tm_sec, now.tv_usec/1000);
 
     return string(now_str);
 }
@@ -70,6 +70,7 @@ Log::Log(): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), su
 	// Initialise current_file_ 
 	FindExistingLog();
 	// OpenFile, Append Write, Create If Not Exist, User Has RWX right
+	fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 }
 
 // Format: server20150417001.log
@@ -145,7 +146,7 @@ void Log::FindExistingLog() {
 	closedir(dir);
 }
 
-size_t Log::Record(Loglevel_t level, const char *format, ...) {
+size_t Log::Record(Loglevel_t level, const char *file, int line, const char *func, const char *format, ...) {
 	if (level_ < level) {
 		return 0;
 	}
@@ -154,25 +155,25 @@ size_t Log::Record(Loglevel_t level, const char *format, ...) {
 	size_t bytes = 0;
 	va_list args;
 	va_start(args, format);
-	bytes = WriteRecord(level, format, args);
+	bytes = WriteRecord(level, file, line, func, format, args);
 	va_end(args);
 	
 	return bytes;
 }
 
 // Each Line Can Be Written Less Than 1024 Bytes
-size_t Log::WriteRecord(Loglevel_t level, const char *format, va_list args) {
+size_t Log::WriteRecord(Loglevel_t level, const char *file, int line, const char *func, const char *format, va_list args) {
 	char linebuffer[LOG_MAX_LINE];
 	size_t offset = 0;
 
-	// Print Header Stamp, [18:35:20 329][DEBUG event_driver.cpp 113] 
-	offset = snprintf(linebuffer + offset, LOG_MAX_LINE - 1, "[%s][%s %s %d]", now_str().c_str(), Levelname[level].name,
-	 __FILE__, __LINE__);
+	// Print Header Stamp, [18:35:20 329][DEBUG] event_driver.cpp (113) bar 
+	offset = snprintf(linebuffer + offset, LOG_MAX_LINE - 1, "[%s][%s] %s (%d) %s: ", now_str().c_str(), Levelname[level].name,
+		file, line, func);
 
 	// Print Log Infomation
 	offset += vsnprintf(linebuffer + offset, LOG_MAX_LINE - 1 - offset, format, args);
 
-	// Action, Use '\n' to Speed The LineBuffer
+	// I/O Action, Use '\n' to Speed The LineBuffer
 	dprintf(fd_, "%s\n", linebuffer);
 
 	return offset;
