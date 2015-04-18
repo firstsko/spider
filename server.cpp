@@ -13,8 +13,7 @@
 using namespace std;
 
 int bar(void* data) {
-	cout << "Hey! Check Clock:" << now_str() << endl;
-//	printf("%sHello\n", now_str().c_str());
+	write(1, now_str().c_str(), now_str().length());
 	return 0;
 }
 	

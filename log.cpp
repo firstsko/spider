@@ -5,12 +5,25 @@
 #include <stdlib.h>
 #include <regex.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include <set>
 
 #include "log.h"
 
 using namespace std;
+
+// The Array Is Correctly Ordered
+LogLevel Levelname[LOG_DEBUG + 1] = {
+	{LOG_EMERG, "EMERG"},
+	{LOG_ALERT, "ALERT"},
+	{LOG_CRIT, "CRIT"},
+	{LOG_ERROR, "ERROR"},
+	{LOG_WARNING, "WARNING"},
+	{LOG_NOTICE, "NOTICE"},
+	{LOG_INFO, "INFO"},
+	{LOG_DEBUG, "DEBUG"},
+};
 
 Log* Log::plog_ = NULL;
 
@@ -57,7 +70,6 @@ Log::Log(): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), su
 	// Initialise current_file_ 
 	FindExistingLog();
 	// OpenFile, Append Write, Create If Not Exist, User Has RWX right
-	fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 }
 
 // Format: server20150417001.log
@@ -133,5 +145,46 @@ void Log::FindExistingLog() {
 	closedir(dir);
 }
 
+size_t Log::Record(Loglevel_t level, const char *format, ...) {
+	if (level_ < level) {
+		return 0;
+	}
 
+	Rotate();
+	size_t bytes = 0;
+	va_list args;
+	va_start(args, format);
+	bytes = WriteRecord(level, format, args);
+	va_end(args);
+	
+	return bytes;
+}
 
+// Each Line Can Be Written Less Than 1024 Bytes
+size_t Log::WriteRecord(Loglevel_t level, const char *format, va_list args) {
+	char linebuffer[LOG_MAX_LINE];
+	size_t offset = 0;
+
+	// Print Header Stamp, [18:35:20 329][DEBUG event_driver.cpp 113] 
+	offset = snprintf(linebuffer + offset, LOG_MAX_LINE - 1, "[%s][%s %s %d]", now_str().c_str(), Levelname[level].name,
+	 __FILE__, __LINE__);
+
+	// Print Log Infomation
+	offset += vsnprintf(linebuffer + offset, LOG_MAX_LINE - 1 - offset, format, args);
+
+	// Action, Use '\n' to Speed The LineBuffer
+	dprintf(fd_, "%s\n", linebuffer);
+
+	return offset;
+}
+
+void Log::Rotate() {
+	struct stat fd_stats;
+	fstat(fd_, &fd_stats);
+
+	if ((today_ != today_str()) || fd_stats.st_size >= max_size_) {
+		close(fd_);
+		FindExistingLog();	
+		fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	}
+}

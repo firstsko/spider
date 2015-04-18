@@ -9,16 +9,33 @@
 #include <string>
 #include <string>
 
+#define LOG_LOG(level, fmt...)                                  \
+    if ( level >= g_sLog.GetLevel() ) {                         \
+        g_sLog.WriteLog(level, fmt);                            \
+    }
+
+#define LOG_ERROR(fmt...)       LOG_LOG(Log::LL_ERROR, fmt)
+#define LOG_INFO(fmt...)        LOG_LOG(Log::LL_INFO, fmt)
+#define LOG_DEBUG(fmt...)       LOG_LOG(Log::LL_DEBUG, fmt)
+
+// Each Line Can Be Written Less Than 1024 Bytes
+#define LOG_MAX_LINE 1024
+
 typedef enum {
 	LOG_EMERG = 0,
 	LOG_ALERT,
 	LOG_CRIT,
-	LOG_ERR,
+	LOG_ERROR,
 	LOG_WARNING,
 	LOG_NOTICE,
 	LOG_INFO,
 	LOG_DEBUG,
 } Loglevel_t;
+
+typedef struct {
+	Loglevel_t level;
+	const char *name;
+} LogLevel;
 
 std::string today_str();
 std::string now_str();
@@ -35,17 +52,24 @@ public:
 	void SetPath(const std::string &path) {
 		path_ = path;
 	}
+
+	size_t Record(Loglevel_t level, const char *format, ...);
 	
 private:
 	// Private Constructor For Singletion
 	Log();
 
+	size_t WriteRecord(Loglevel_t level, const char *format, va_list args);
+
 	void FindExistingLog();
+	
+	// Update Today
+	void Rotate();
 
 private:
 	int fd_;
 	unsigned max_size_;
-	unsigned written_byte;
+	unsigned written_bytes;
 	unsigned files_counter_;
 	Loglevel_t level_;
 
@@ -54,6 +78,7 @@ private:
 	std::string suffix_;		
 	std::string current_file_;		
 	std::string today_;		
+	
 	
 	static Log *plog_;
 };
