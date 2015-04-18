@@ -1,7 +1,6 @@
 #include <sys/socket.h>
 #include <signal.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <iostream>
 
 #include "server.h"
@@ -9,12 +8,17 @@
 #include "timer.h"
 #include "log.h"
 
-static const char *version = "Spider0.0.1";
+static const char *version = "Spider0.0.2";
 
 using namespace std;
 
 int bar(void* data) {
-	write(1, now_str().c_str(), now_str().length());
+	INFO("Now %s", now_str().c_str());
+	return 0;
+}
+
+int flush_log(void* data) {
+	Log::Instance()->Flush();
 	return 0;
 }
 	
@@ -23,7 +27,6 @@ int main(int argc , char **argv) {
 		printf("usage: %s port_number\n", basename(argv[0]));
 		exit(EXIT_FAILURE);
 	}
-
 
 	signal(SIGPIPE, SIG_IGN);
 	
@@ -45,12 +48,13 @@ int main(int argc , char **argv) {
 	driver->AddEvent(fd, server, EDGE_TRIGGER);
 
 	driver->AddTimer(0, 500, false, bar);
+	// Every 100ms Flush Log Cache Buffer
+	driver->AddTimer(0, 100, false, flush_log);
 
 	driver->StartLoop();
 
 	delete server;
 	delete driver;
-	//delete log;
 
 	return 0;
 }

@@ -55,12 +55,12 @@ string now_str() {
 // Singleton, Not Multi-Thread Safe
 Log* Log::Instance() {
 	if (plog_ == NULL) {
-		plog_ = new Log();
+		plog_ = new Log(true);
 	}
 	return plog_;
 }
 
-Log::Log(): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log") {
+Log::Log(bool enable_buff): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), suffix_(".log"), buff_offset_(0) {
 	// Check Existence, If Not, Create It
 	if (access(path_.c_str(), F_OK) != 0) {
 		mkdir(path_.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
@@ -71,6 +71,18 @@ Log::Log(): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_("undefined"), su
 	FindExistingLog();
 	// OpenFile, Append Write, Create If Not Exist, User Has RWX right
 	fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+
+	pbuff_ = NULL;
+	enable_buff_ = enable_buff;
+	
+	// Set 64 KB Cache
+	if (enable_buff_) {
+		pbuff_ = (char *) malloc(LOG_CACHE_SIZE * sizeof(char));
+		if (pbuff_ == NULL) {
+			perror("Failed To Allocate Log Buff\n");
+			exit(EXIT_FAILURE);
+		}
+	}	
 }
 
 // Format: server20150417001.log
@@ -161,19 +173,42 @@ size_t Log::WriteRecord(Loglevel_t level, const char *file, int line, const char
 	// Print Log Infomation
 	offset += vsnprintf(linebuffer + offset, LOG_MAX_LINE - 1 - offset, format, args);
 
-	// I/O Action, Use '\n' to Flush The LineBuffer
-	dprintf(fd_, "%s\n", linebuffer);
+	if (enable_buff_) {
+		buff_offset_ += snprintf(pbuff_ + buff_offset_, LOG_MAX_LINE - 1, "%s\n", linebuffer);
+		// Make Sure Next Write Will Not Override Cache Buffer
+		if (buff_offset_ >= LOG_CACHE_SIZE - LOG_MAX_LINE) {
+			// I/O Action, Use '\n' to Flush The LineBuffer
+			Flush();
+		}
+	} else {
+		// I/O Action, Use '\n' to Flush The LineBuffer
+		dprintf(fd_, "%s\n", linebuffer);
+	}
 
 	return offset;
 }
 
 void Log::Rotate() {
+	// Check If Our Current Logfile Is Delete By Some One Abruptly
 	struct stat fd_stats;
-	fstat(fd_, &fd_stats);
+	if (stat(current_file_.c_str(), &fd_stats) != 0) {
+		FindExistingLog();
+		fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	}
 
 	if ((today_ != today_str()) || fd_stats.st_size >= max_size_) {
 		close(fd_);
 		FindExistingLog();	
 		fd_ = open(current_file_.c_str(), O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 	}
+}
+
+void Log::Flush() {
+	Rotate();
+	if (!enable_buff_) {
+		return;
+	}
+	dprintf(fd_, "%s", pbuff_);
+	memset(pbuff_, 0 , LOG_CACHE_SIZE);
+	buff_offset_ = 0;
 }

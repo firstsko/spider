@@ -6,11 +6,13 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <string>
+#include <stdlib.h>
 #include <string>
 
 // Each Line Can Be Written Less Than 1024 Bytes
 #define LOG_MAX_LINE 1024
+// Enable 128KB Cache
+#define LOG_CACHE_SIZE (128*1024)
 
 typedef enum {
 	LOG_EMERG = 0,
@@ -32,10 +34,12 @@ std::string today_str();
 std::string now_str();
 
 class Log {
-
 public:
 	~Log() {
 		close(fd_);
+		if (pbuff_ != NULL) {
+			free(pbuff_);
+		}
 	}
 
 	static Log* Instance();
@@ -46,9 +50,12 @@ public:
 
 	size_t Record(Loglevel_t level, const char *file, int line, const char *func, const char *format, ...);
 	
+	// Flush Buffer
+	void Flush();
+	
 private:
 	// Private Constructor For Singletion
-	Log();
+	Log(bool enable_buff);
 
 	size_t WriteRecord(Loglevel_t level, const char *file, int line, const char *func, const char *format, va_list args);
 
@@ -70,7 +77,9 @@ private:
 	std::string current_file_;		
 	std::string today_;		
 	
-	
+	bool enable_buff_;
+	char *pbuff_;
+	size_t buff_offset_;
 	static Log *plog_;
 };
 
