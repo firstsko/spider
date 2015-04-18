@@ -79,8 +79,7 @@ void Log::FindExistingLog() {
 	today_ = today_str();
 
 	// Use Regular Expression To Filt Files
-	string logfile_reg = prefix_ + today_+ "[0-9]{3,}" + suffix_;
-	string logindex_reg = "[0-9]{3,}";
+	string logfile_reg = prefix_ + today_+ "[0-9]\\{3,\\}" + suffix_;
 
 	regex_t reg;
 
@@ -109,26 +108,15 @@ void Log::FindExistingLog() {
 		return;
 	}
 
-	if (regcomp(&reg, logindex_reg.c_str(), 0) != 0) {
-		printf ("Failed to Compile Regular Expression\n");
-		regfree(&reg);
-		closedir(dir);
-		return;
-	}
-
 	// Find The Max Log Index File, Which Means The Lastest Written File
 	int max_index = 0;
-	regmatch_t match_set[1];
-	char match[100] = {0};
 	for (it = files.begin(); it != files.end(); it++) {
-		string filename = *it;
-		regexec(&reg, filename.c_str(), 1, match_set, 0);
-		int len = match_set[0].rm_eo - match_set[0].rm_so;
-		memset(match, '\0', sizeof(match));
-		memcpy(match, filename.c_str() + match_set[0].rm_so, len);
-		if (max_index < atoi(match)) {
-			max_index = atoi(match);
-			current_file_ = filename;
+		string filename = *it;	
+		string match = filename.substr((prefix_.length() + today_.length()), 
+			filename.length() - prefix_.length() - today_.length() - suffix_.length());
+		if (max_index < atoi(match.c_str())) {
+			max_index = atoi(match.c_str());
+			current_file_ = path_ + "/" + filename;
 		}
 	}
 
@@ -173,7 +161,7 @@ size_t Log::WriteRecord(Loglevel_t level, const char *file, int line, const char
 	// Print Log Infomation
 	offset += vsnprintf(linebuffer + offset, LOG_MAX_LINE - 1 - offset, format, args);
 
-	// I/O Action, Use '\n' to Speed The LineBuffer
+	// I/O Action, Use '\n' to Flush The LineBuffer
 	dprintf(fd_, "%s\n", linebuffer);
 
 	return offset;
