@@ -36,7 +36,7 @@ int main(int argc , char **argv) {
 	server->BindListen(port);
 
 	INFO("%s Server Start, pid %d, Listen Fd %d On TCP Port %d", version, getpid(), server->GetFd(), port);
-	printf("%s Server Start, pid %d, Listen Fd %d On TCP Port %d\n", version, getpid(), server->GetFd(), port);
+	printf("%s %s Server Start, pid %d, Listen Fd %d On TCP Port %d\n", now_str().c_str(), version, getpid(), server->GetFd(), port);
 
 	EventDriver *driver = EventDriver::Instance();
 	driver->CreateDriver();

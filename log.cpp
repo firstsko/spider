@@ -114,7 +114,7 @@ void Log::FindExistingLog() {
 		string filename = *it;	
 		string match = filename.substr((prefix_.length() + today_.length()), 
 			filename.length() - prefix_.length() - today_.length() - suffix_.length());
-		if (max_index < atoi(match.c_str())) {
+		if (max_index <= atoi(match.c_str())) {
 			max_index = atoi(match.c_str());
 			current_file_ = path_ + "/" + filename;
 		}
