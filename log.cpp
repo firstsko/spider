@@ -166,8 +166,8 @@ size_t Log::WriteRecord(Loglevel_t level, const char *file, int line, const char
 	char linebuffer[LOG_MAX_LINE];
 	size_t offset = 0;
 
-	// Print Header Stamp, [18:35:20 329][DEBUG] event_driver.cpp (113) bar 
-	offset = snprintf(linebuffer + offset, LOG_MAX_LINE - 1, "[%s][%s] %s (%d) %s: ", now_str().c_str(), Levelname[level].name,
+	// Print Header Stamp, [18:35:20 329][DEBUG] event_driver.cpp (113) <bar>
+	offset = snprintf(linebuffer + offset, LOG_MAX_LINE - 1, "[%s][%s] %s (%d) <%s> ", now_str().c_str(), Levelname[level].name,
 		file, line, func);
 
 	// Print Log Infomation
