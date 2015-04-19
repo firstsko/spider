@@ -47,7 +47,7 @@ string now_str() {
     struct tm pnow;
     gettimeofday(&now, NULL);
     localtime_r(&now.tv_sec, &pnow);
-	snprintf(now_str, sizeof(now_str) - 1, "%d:%02d:%02d %03ld", pnow.tm_hour, pnow.tm_min, pnow.tm_sec, now.tv_usec/1000);
+	snprintf(now_str, sizeof(now_str) - 1, "%02d:%02d:%02d %03ld", pnow.tm_hour, pnow.tm_min, pnow.tm_sec, now.tv_usec/1000);
 
     return string(now_str);
 }
