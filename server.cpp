@@ -36,7 +36,7 @@ void dump_stacktrace(int signal) {
 	symbols = backtrace_symbols(stack, size);
 
 	if (symbols == NULL) {
-		ERROR("backtrace_symbols");
+		CRIT("backtrace_symbols");
 		perror("backtrace_symbols");
 		exit(EXIT_FAILURE);
 	}
@@ -49,7 +49,7 @@ void dump_stacktrace(int signal) {
 	}
 
 	free(symbols);
-	ERROR("Process Abort!");
+	CRIT("Process Abort!");
 	Log::Instance()->Flush();
 	printf("Process Abort!\n");
 	exit(EXIT_FAILURE);
