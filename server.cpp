@@ -55,14 +55,6 @@ void dump_stacktrace(int signal) {
 	exit(EXIT_FAILURE);
 }
 
-int hello() {
-	char b[3] = {'a', 'b', 'c'};
-	int *a = (int *) 0x00000001;
-	printf("%d%c\n", *a, b[100]);
-
-	return 0;
-}
-
 int main(int argc , char **argv) {
 	if (argc != 2) {
 		printf("usage: %s port_number\n", basename(argv[0]));
@@ -72,9 +64,8 @@ int main(int argc , char **argv) {
 	// When Segmentation Fault Occurs, Print Diagnose Information
 	signal(SIGSEGV, dump_stacktrace);
 	signal(SIGPIPE, SIG_IGN);
-	hello();	
-	int port = atoi(argv[1]);
 
+	int port = atoi(argv[1]);
 	int fd = socket(PF_INET, SOCK_STREAM, 0);
 
 	Socket *server = new Socket(fd);
