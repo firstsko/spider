@@ -111,7 +111,7 @@ int Socket::Accept(int listen_fd) {
 				return -1;
 			}
 		} else {
-			INFO("Accept Connection From Client %s:%d Enstablished", iptostr(peer_addr.sin_addr.s_addr), ntohs(peer_addr.sin_port));
+			INFO("Accept Connection From Client %s:%d", iptostr(peer_addr.sin_addr.s_addr), ntohs(peer_addr.sin_port));
 			Socket* peer = new Socket(peer_fd);
 			peer->SetState(SOCK_TCP_ENSTABLISHED);
 			peer->SetPeerAddr(peer_addr);
