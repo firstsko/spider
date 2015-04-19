@@ -17,6 +17,12 @@
 
 using namespace std;
 
+static char* iptostr(unsigned ip) {
+	struct in_addr addr;
+	memcpy(&addr, &ip, 4);
+	return inet_ntoa(addr);
+}
+
 // Initialize File Descriptor, Set No Blocking , No Delay, Address Reuse, KeepAlive
 Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), inbuf_(""), outbuf_("") {
 	SetNonBlocking();
@@ -67,53 +73,24 @@ int Socket::Connect(const string &ip, int port, int second) {
 
 	inet_pton(AF_INET, ip.c_str(), &address.sin_addr);
 	address.sin_port = htons(port);
+	SetPeerAddr(address);
 
 	state_ = SOCK_CONNECTTING,
 	ret = connect(sockfd_, (struct sockaddr *) &address, sizeof(address));
-	
+
 	// If Succeed Immediately
 	if (ret == 0) {
+		state_ = SOCK_TCP_ENSTABLISHED;
+		EventDriver::Instance()->AddEvent(sockfd_, this);
 		return ret;
 	} else if (errno != EINPROGRESS)  { // Connect Fail
 		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 		return -1;	
-	}	
-	
-	fd_set rfds;
-	fd_set wfds;
-
-	struct timeval timeout;
-	timeout.tv_sec = second;
-	timeout.tv_usec = 0;
-	
-	FD_ZERO(&rfds);
-	FD_SET(sockfd_, &wfds);
-
-	// Our Connection Is Completed When Socket Becomes Writable Without Errors
-	ret = select(sockfd_ + 1, NULL, &wfds, NULL, &timeout);
-	if (ret <= 0) {
-		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
-		return - 1;
+	} else {
+		// Connection In Progress
+		EventDriver::Instance()->AddEvent(sockfd_, this);
+		return 0;
 	}
-
-	if (!FD_ISSET(sockfd_, &wfds)) {
-		return -1;
-	}
-	
-	int error = 0;
-	socklen_t length = sizeof(error);
-
-	ret = getsockopt(sockfd_, SOL_SOCKET, SO_ERROR, &error, &length);
-	if (ret < 0) {
-		return -1;	
-	}
-
-	if (error != 0)	{
-		return - 1;
-	}
-
-	state_ = SOCK_TCP_ENSTABLISHED;
-	return 0;
 }
 
 // NonBlocking And Edge-Trigger
@@ -134,6 +111,7 @@ int Socket::Accept(int listen_fd) {
 				return -1;
 			}
 		} else {
+			INFO("Accept Connection From Client %s:%d Enstablished", iptostr(peer_addr.sin_addr.s_addr), ntohs(peer_addr.sin_port));
 			Socket* peer = new Socket(peer_fd);
 			peer->SetState(SOCK_TCP_ENSTABLISHED);
 			peer->SetPeerAddr(peer_addr);
@@ -210,14 +188,34 @@ int Socket::Read() {
 }
 
 int Socket::Write() {
+	// On Connection Complete And Socket Become Writable
+	if (state_ == SOCK_CONNECTTING) {
+		int ret = 0;
+		int error = 0;
+		socklen_t length = sizeof(error);
+
+		ret = getsockopt(sockfd_, SOL_SOCKET, SO_ERROR, &error, &length);
+		if (ret < 0) {
+			return -1;	
+		}
+
+		if (error != 0)	{
+			return - 1;
+		}
+
+		INFO("Connection With Server %s:%d Enstablished", iptostr(peer_.sin_addr.s_addr), peer_.sin_port);
+		state_ = SOCK_TCP_ENSTABLISHED;
+		return 0;
+	}
+
 	// No Data To Send
 	if (outbuf_.empty()) {
-		printf("No Data To Send\n");
+		INFO("No Data To Send");
 		return 0;
 	}
 
 	int sendsize = outbuf_.size();	
-	printf("Send Size %d\n", sendsize);
+	INFO("Send Size %d", sendsize);
 	int len = 0;		
 	int bytes = 0;
 
