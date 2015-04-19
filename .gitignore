@@ -27,6 +27,7 @@
 *.out
 *.app
 server
+test
 
 # Tmp
 *.swp
