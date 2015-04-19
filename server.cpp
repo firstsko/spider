@@ -29,10 +29,10 @@ void dump_stacktrace(int signal) {
 	// Flush Log
 	Log::Instance()->Flush();
 
-	void *stack[10];
+	void *stack[64];
 	size_t size;
 	char **symbols;
-	size = backtrace(stack, 10);
+	size = backtrace(stack, 64);
 	symbols = backtrace_symbols(stack, size);
 
 	if (symbols == NULL) {
