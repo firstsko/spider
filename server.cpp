@@ -23,6 +23,17 @@ int flush_log(void* data) {
 	return 0;
 }
 
+void flush_log(void) {
+	Log::Instance()->Flush();
+}
+
+void ctrl_c_handler(int signal) {
+	EMERG("Proccess Interupted By Signal(%d) SIGINT(CTRL+C)", signal);
+	printf("Proccess Interupted By SIGINT(CTRL+C)\n");
+	Log::Instance()->Flush();
+	exit(EXIT_FAILURE);
+}
+
 void dump_stacktrace(int signal) {
 	printf("Segmentation Fault!\n");
 	CRIT("Segmentation Fault!");
@@ -36,8 +47,8 @@ void dump_stacktrace(int signal) {
 	symbols = backtrace_symbols(stack, size);
 
 	if (symbols == NULL) {
-		CRIT("backtrace_symbols");
-		perror("backtrace_symbols");
+		CRIT("no backtrace_symbols");
+		perror("no backtrace_symbols");
 		exit(EXIT_FAILURE);
 	}
 
@@ -64,6 +75,7 @@ int main(int argc , char **argv) {
 	// When Segmentation Fault Occurs, Print Diagnose Information
 	signal(SIGSEGV, dump_stacktrace);
 	signal(SIGPIPE, SIG_IGN);
+	signal(SIGINT, ctrl_c_handler);
 
 	int port = atoi(argv[1]);
 	int fd = socket(PF_INET, SOCK_STREAM, 0);
@@ -80,15 +92,16 @@ int main(int argc , char **argv) {
 
 	// Listen Fd Use Edge-Trigger
 	driver->AddEvent(fd, server, EDGE_TRIGGER);
-
-	driver->AddTimer(0, 500, false, bar);
 	// Every 100ms Flush Log Cache Buffer
 	driver->AddTimer(0, 100, false, flush_log);
+
+	driver->AddTimer(0, 500, false, bar);
 
 	driver->StartLoop();
 
 	delete server;
 	delete driver;
 
+	atexit(flush_log);
 	return 0;
 }

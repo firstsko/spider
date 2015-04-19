@@ -151,7 +151,6 @@ size_t Log::Record(Loglevel_t level, const char *file, int line, const char *fun
 		return 0;
 	}
 
-	Rotate();
 	size_t bytes = 0;
 	va_list args;
 	va_start(args, format);
@@ -213,6 +212,7 @@ void Log::Flush() {
 		return;
 	}
 
+	Rotate();
 	dprintf(fd_, "%s", pbuff_);
 	memset(pbuff_, 0, LOG_CACHE_SIZE);
 	buff_offset_ = 0;
