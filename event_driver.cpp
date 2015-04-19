@@ -65,7 +65,7 @@ void EventDriver::DelEvent(int fd) {
 }
 
 // Only This Function Can Create Timer, User Must Check Return Value
-int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (void *)) {
+int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (void *), void *args) {
 	int ret = 0;
 	int fd = create_timerfd();
 	if (fd < 0) {
@@ -78,6 +78,7 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 	//Trigger The Timer And Set CallBack
 	ptimer->SetInterval(sec, msec);
 	ptimer->SetCallback(callback);
+	ptimer->SetArgs(args);
 
 	epoll_event event;
 	event.data.fd = fd;
@@ -101,7 +102,7 @@ void EventDriver::DelTimer(Timer *timer) {
 	delete timer;
 }
 
-void EventDriver::Tick(int fd) {
+void EventDriver::Tick(int fd, void *args) {
 	map <int, Timer *>::iterator it = timer_container_.find(fd);
 
 	// If Not Timerfd
@@ -109,7 +110,7 @@ void EventDriver::Tick(int fd) {
 		return;
 	}
 
-	it->second->ActiveCb(NULL);
+	it->second->ActivateCb(args);
 	if (it->second->OnceOnly()) {
 		DelTimer(it->second);
 	}
@@ -157,7 +158,7 @@ void EventDriver::StartLoop(int timeout_usec) {
 					}
 				}
 				// CheckTimer
-				Tick(event_fd);
+				Tick(event_fd, NULL);
 
 				// Drain All Data From TCP Recv Buffer, If TCP_FIN Recieved, Remove The Event
 				if ((it = event_container_.find(event_fd)) != event_container_.end()) {

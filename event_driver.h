@@ -32,7 +32,7 @@ public:
 
 	void DelEvent(int fd);
 
-	int AddTimer(int sec, int msec, bool once_only, int (*callback) (void *));
+	int AddTimer(int sec, int msec, bool once_only, int (*callback) (void *), void *args);
 
 	void DelTimer(Timer *timer);
 
@@ -42,7 +42,7 @@ private:
 	// Private Constructor For Singletion
 	EventDriver():epfd_(0) {};
 
-	void Tick(int fd);
+	void Tick(int fd, void *args);
 
 private:
 	int epfd_; 

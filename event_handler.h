@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "event_driver.h"
 #include "server.h"
 #include "sock.h"
 
@@ -18,8 +19,8 @@ public:
 		}
 	}
 	
-	// When As A Client Launch A Connection
-	int OnConnect(const std::string &ip, int port);
+	// As A Client Launch A Connection
+	int OnConnect(const std::string &ip, int port, int timeout = 10);
 
 	// Close Connection With Peer
 	int CloseConnect();

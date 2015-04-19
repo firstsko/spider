@@ -60,7 +60,7 @@ int Timer::Countdown() {
 }
 
 // When On Expiration, Run Callback Function, And Reset next_ member
-int Timer::ActiveCb(void *data) {
+int Timer::ActivateCb(void *data) {
 	tick_times_++;
 	// Invoke Callback
 	int ret = callback_(data);

@@ -5,10 +5,17 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include <string>
 
 #include "server.h"
+
+static char* iptostr(unsigned ip) {
+	struct in_addr addr;
+	memcpy(&addr, &ip, 4);
+	return inet_ntoa(addr);
+}
 
 typedef enum {
 	SOCK_IDLE,
@@ -16,6 +23,7 @@ typedef enum {
 	SOCK_CONNECTTING,
 	SOCK_TCP_ENSTABLISHED,	
 	SOCK_CLOSED,
+	SOCK_TIMEOUT, // Unused Now
 	SOCK_SHUT_ALL,
 	SOCK_SHUT_READ,
 	SOCK_SHUT_WRITE,
@@ -50,8 +58,8 @@ class Socket
 	// Only Support Edge Trigger In Epoll Model
 	int Write();
 	
-	// Only For Non-Blocking Connect With A Timout
-	int Connect(const std::string &ip, int port, int timeout);
+	// Only For Non-Blocking Connect With A Timout 10 Second As Default
+	int Connect(const std::string &ip, int port, int timeout = 10);
 
 	static int Accept(int listen_fd);
 
@@ -70,6 +78,10 @@ class Socket
 	void ShutdownW();
 
 	void ShutdownR();
+
+	sockaddr_in GetPeerAddr() {
+		return peer_;
+	}
 	
 private:
 	// Non-Blocking I/O

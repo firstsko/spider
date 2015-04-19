@@ -46,8 +46,13 @@ public:
 	void SetCallback(int (*callback) (void *)) {
 		callback_ = callback;
 	}
+
+	void SetArgs(void *args) {
+		args_ = args;
+	}
+
 	// When On Expiration, Run Callback Function, And Reset next_ Field
-	int ActiveCb(void *data);
+	int ActivateCb(void *data);
 	
 private:
 	int timerfd_;
@@ -56,6 +61,7 @@ private:
 	Timer_t interval_;	
 	Timer_t next_;	
 	int (*callback_) (void *);
+	void *args_;
 };
 
 // > >= == < <== Overload

@@ -1,8 +1,6 @@
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <sys/select.h>
 #include <netinet/in.h>
-#include <arpa/inet.h>
 #include <netinet/tcp.h> // TCP_NODELAY
 #include <string.h>
 #include <strings.h>
@@ -16,12 +14,6 @@
 #define TCP_BUFFER_SIZE 1024
 
 using namespace std;
-
-static char* iptostr(unsigned ip) {
-	struct in_addr addr;
-	memcpy(&addr, &ip, 4);
-	return inet_ntoa(addr);
-}
 
 // Initialize File Descriptor, Set No Blocking , No Delay, Address Reuse, KeepAlive
 Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), inbuf_(""), outbuf_("") {
@@ -89,7 +81,7 @@ int Socket::Connect(const string &ip, int port, int second) {
 	} else {
 		// Connection In Progress
 		EventDriver::Instance()->AddEvent(sockfd_, this);
-		return 0;
+		return SOCK_CONNECTTING;
 	}
 }
 
