@@ -14,7 +14,7 @@
 #define WARNING(format, vargs...) 		Log::Instance()->Record(LOG_WARNING, __FILE__, __LINE__, __func__, format, ##vargs) 
 #define ERROR(format, vargs...) 		Log::Instance()->Record(LOG_ERROR, __FILE__, __LINE__, __func__, format, ##vargs) 
 #define CRIT(format, vargs...) 			Log::Instance()->Record(LOG_CRIT, __FILE__, __LINE__, __func__, format, ##vargs) 
-#define ALERT(format, vargs...) 		Log::Instance()->Record(LOG_ALERT, __FILE__, __LINE__,_ __func__, format, ##vargs) 
+#define ALERT(format, vargs...) 		Log::Instance()->Record(LOG_ALERT, __FILE__, __LINE__, __func__, format, ##vargs) 
 #define EMERG(format, vargs...) 		Log::Instance()->Record(LOG_EMERG, __FILE__, __LINE__, __func__, format, ##vargs) 
 
 

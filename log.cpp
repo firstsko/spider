@@ -205,10 +205,14 @@ void Log::Rotate() {
 }
 
 void Log::Flush() {
-	Rotate();
 	if (!enable_buff_) {
 		return;
 	}
+
+	if (buff_offset_ == 0) {
+		return;
+	}
+
 	dprintf(fd_, "%s", pbuff_);
 	memset(pbuff_, 0, LOG_CACHE_SIZE);
 	buff_offset_ = 0;

@@ -69,6 +69,7 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 	int ret = 0;
 	int fd = create_timerfd();
 	if (fd < 0) {
+		ALERT("Failed To Create Timer Fd");
 		return fd;
 	}
 
