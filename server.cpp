@@ -1,4 +1,5 @@
 #include <sys/socket.h>
+#include <execinfo.h>
 #include <signal.h>
 #include <unistd.h>
 #include <iostream>
@@ -21,13 +22,47 @@ int flush_log(void* data) {
 	Log::Instance()->Flush();
 	return 0;
 }
-	
+
+void dump_stacktrace(int signal) {
+	printf("Segmentation Fault!\n");
+	CRIT("Segmentation Fault!");
+	// Flush Log
+	Log::Instance()->Flush();
+
+	void *stack[10];
+	size_t size;
+	char **symbols;
+	size = backtrace(stack, 10);
+	symbols = backtrace_symbols(stack, size);
+
+	if (symbols == NULL) {
+		ERROR("backtrace_symbols");
+		perror("backtrace_symbols");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("Obtained %lu Stack Frames\n", size);
+	CRIT("Obtained %lu Stack Frames", size);
+	for (size_t i = 0; i < size; i++) {
+		CRIT("%s", symbols[i]);
+		printf("%s\n", symbols[i]);
+	}
+
+	free(symbols);
+	ERROR("Process Abort!");
+	Log::Instance()->Flush();
+	printf("Process Abort!\n");
+	exit(EXIT_FAILURE);
+}
+
 int main(int argc , char **argv) {
 	if (argc != 2) {
 		printf("usage: %s port_number\n", basename(argv[0]));
 		exit(EXIT_FAILURE);
 	}
 
+	// When Segmentation Fault Occurs, Print Diagnose Information
+	signal(SIGSEGV, dump_stacktrace);
 	signal(SIGPIPE, SIG_IGN);
 	
 	int port = atoi(argv[1]);

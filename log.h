@@ -36,6 +36,7 @@ std::string now_str();
 class Log {
 public:
 	~Log() {
+		Flush();
 		close(fd_);
 		if (pbuff_ != NULL) {
 			free(pbuff_);
