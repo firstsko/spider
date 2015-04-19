@@ -15,6 +15,12 @@
 
 using namespace std;
 
+static char* iptostr(unsigned ip) {
+	struct in_addr addr;
+	memcpy(&addr, &ip, 4);
+	return inet_ntoa(addr);
+}
+
 // Initialize File Descriptor, Set No Blocking , No Delay, Address Reuse, KeepAlive
 Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), inbuf_(""), outbuf_("") {
 	SetNonBlocking();

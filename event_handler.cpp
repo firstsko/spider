@@ -1,6 +1,13 @@
 #include "event_handler.h"
+#include <arpa/inet.h>
 
 using namespace std;
+
+static char* iptostr(unsigned ip) {
+	struct in_addr addr;
+	memcpy(&addr, &ip, 4);
+	return inet_ntoa(addr);
+}
 
 int CheckConnectTimeout(void *data) {
 	Socket *sk = (Socket *)data;

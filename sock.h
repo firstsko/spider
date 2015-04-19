@@ -11,12 +11,6 @@
 
 #include "server.h"
 
-static char* iptostr(unsigned ip) {
-	struct in_addr addr;
-	memcpy(&addr, &ip, 4);
-	return inet_ntoa(addr);
-}
-
 typedef enum {
 	SOCK_IDLE,
 	SOCK_LISTENNING,
