@@ -19,8 +19,6 @@ public:
 	Timer(int fd, bool only_once):timerfd_(fd), once_run_(only_once), tick_times_(0) {
 		interval_.tv_sec = 0;
 		interval_.tv_nsec = 0;
-		next_.tv_sec = 0;
-		next_.tv_nsec = 0;
 	}
 	
 	~Timer() {
@@ -34,8 +32,6 @@ public:
 	int SetInterval(int sec, int msec);
 
 	void GetInterval (int &sec, int &msec) const;
-
-	int Countdown();
 
 	bool OnceOnly() {
 		return once_run_;
@@ -59,7 +55,6 @@ private:
 	bool once_run_;
 	uint64_t tick_times_;
 	Timer_t interval_;	
-	Timer_t next_;	
 	int (*callback_) (void *);
 	void *args_;
 };

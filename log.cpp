@@ -75,7 +75,7 @@ Log::Log(bool enable_buff): fd_(-1), level_(LOG_DEBUG), path_("./log"), prefix_(
 	pbuff_ = NULL;
 	enable_buff_ = enable_buff;
 	
-	// Set 64 KB Cache
+	// Set 128 KB Cache
 	if (enable_buff_) {
 		pbuff_ = (char *) malloc(LOG_CACHE_SIZE * sizeof(char));
 		if (pbuff_ == NULL) {

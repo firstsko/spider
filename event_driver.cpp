@@ -6,7 +6,7 @@
 using namespace std;
 
 static int create_timerfd() {
-	int timerfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);
+	int timerfd = timerfd_create(CLOCK_REALTIME, TFD_NONBLOCK | TFD_CLOEXEC);
 	if (timerfd < 0) {
 		printf("Failed In timerfd_create\n");
 		
@@ -69,6 +69,7 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 	int ret = 0;
 	int fd = create_timerfd();
 	if (fd < 0) {
+		printf("Failed To Create Timer Fd\n");
 		ALERT("Failed To Create Timer Fd");
 		return fd;
 	}
@@ -83,11 +84,14 @@ int EventDriver::AddTimer(int sec, int msec, bool once_only, int (*callback) (vo
 	epoll_event event;
 	event.data.fd = fd;
 	event.events = EPOLLIN | EPOLLET; 
+	// Timer Use Level Trigger
+//	event.events = EPOLLIN; 
 
 	ret = epoll_ctl(epfd_, EPOLL_CTL_ADD, fd, &event);
 	
 	if (ret != 0) {
-		printf("Fail To Add Epoll Timer\n");
+		printf("Failed To Add Epoll Timer\n");
+		ALERT("Fail To Add Epoll Timer\n");
 		return ret;
 	}
 
@@ -110,8 +114,25 @@ void EventDriver::Tick(int fd, void *args) {
 		return;
 	}
 
+	// Edge-Trigger, Drain All Data
+	uint64_t times;
+	while(true) {
+		int ret = read(fd, &times, sizeof(times));
+		if (ret < 0) {
+			if (errno == EAGAIN || errno == EWOULDBLOCK) {
+				break;
+			} else if (errno == EINTR) {
+				continue;
+			} else {
+				DelTimer(it->second);
+				return;
+			}
+		}
+	}
+
 	it->second->ActivateCb(args);
 	if (it->second->OnceOnly()) {
+		printf("Only Once\n");
 		DelTimer(it->second);
 	}
 
