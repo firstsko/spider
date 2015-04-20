@@ -22,12 +22,11 @@ public:
 	// As A Client Launch A Connection
 	int OnConnect(const std::string &ip, int port, int timeout = 10);
 
-	// Close Connection With Peer
-	int CloseConnect();
-	
-	int SendRequest();
+	int SendRequest(void *message);
 
-	int SendResponse();
+	int SendResponse(void *message);
+
+	int SendMessage(void *message);
 
 private:
 	Socket *sk_;

@@ -34,3 +34,22 @@ int EventHandler::OnConnect(const string &ip,  int port, int timeout) {
 		return -1;
 	}
 }
+	
+int EventHandler::SendRequest(void *message) {
+
+
+	return 0;
+}
+
+int EventHandler::SendResponse(void *message) {
+
+
+	return 0;
+}
+
+// Not Doing Real Socket I/O Actions, Merely Append The Socket Object's output_ buff
+int EventHandler::SendMessage(void *message) {
+
+
+	return 0;
+}
