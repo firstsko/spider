@@ -9,27 +9,23 @@
 
 class Channel {
 public:
-	Channel():sk_(NULL) {
+	Channel(){
 
 	}
 
-	~Channel() {
-		if (sk_ != NULL) {
-			delete sk_;
-		}
+	~Channel(){
 	}
 	
 	// As A Client Launch A Connection
-	int OnConnect(const std::string &ip, int port, int timeout = 10);
+	int OnConnect(Socket *sk, const std::string &ip, int port, int timeout = 10);
 
-	int SendRequest(void *message, size_t len);
+	int SendRequest(Socket *sk, void *message, size_t len);
 
-	int SendResponse(void *message, size_t len);
+	int SendResponse(Socket *sk, void *message, size_t len);
 
-	int SendMessage(void *message, size_t len);
+	int SendMessage(Socket *sk, void *message, size_t len);
 
 private:
-	Socket *sk_;
 };
 
 #endif
