@@ -1,5 +1,5 @@
-server: server.o event_driver.o sock.o timer.o log.o ini.o channel.o
-	g++ -Wall -o server server.o sock.o timer.o event_driver.o log.o ini.o channel.o -g -lrt
+server: server.o event_driver.o sock.o timer.o log.o ini.o channel.o event_handler.o
+	g++ -Wall -o server server.o sock.o timer.o event_driver.o log.o ini.o channel.o event_handler.o -g -lrt
 server.o:server.cpp
 	g++ -Wall -o server.o server.cpp -g -c
 sock.o:sock.cpp
@@ -14,5 +14,7 @@ ini.o:ini.cpp
 	g++ -Wall -o ini.o ini.cpp -g -c
 channel.o:channel.cpp
 	g++ -Wall -o channel.o channel.cpp -g -c
+event_handler.o:event_handler.cpp
+	g++ -Wall -o event_handler.o event_handler.cpp -g -c
 clean:
 	rm -rf server *.o
