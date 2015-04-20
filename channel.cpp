@@ -1,5 +1,6 @@
-#include "channel.h"
 #include <arpa/inet.h>
+
+#include "channel.h"
 
 using namespace std;
 
@@ -37,19 +38,17 @@ int Channel::OnConnect(Socket *sk, const string &ip,  int port, int timeout) {
 	
 int Channel::SendRequest(Socket *sk, void *message, size_t len) {
 
-
 	return 0;
 }
 
 int Channel::SendResponse(Socket *sk, void *message, size_t len) {
-
 
 	return 0;
 }
 
 // Not Doing Real Socket I/O Actions, Merely Append The Socket Object's output_ buff
 int Channel::SendMessage(Socket *sk, void *message, size_t len) {
-
+	memcpy(sk->GetWriteIndex(), message, len);	
 
 	return 0;
 }

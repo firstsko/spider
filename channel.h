@@ -2,6 +2,7 @@
 #define _CHANNEL_
 
 #include <string>
+#include <string.h>
 
 #include "event_driver.h"
 #include "server.h"

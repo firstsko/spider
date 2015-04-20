@@ -11,8 +11,6 @@
 #include "sock.h"
 #include "event_driver.h"
 
-#define TCP_BUFFER_SIZE 1024
-
 using namespace std;
 
 static char* iptostr(unsigned ip) {
@@ -22,7 +20,18 @@ static char* iptostr(unsigned ip) {
 }
 
 // Initialize File Descriptor, Set No Blocking , No Delay, Address Reuse, KeepAlive
-Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), inbuf_(""), outbuf_("") {
+Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0), append_offset_(0), inbuf_(NULL), outbuf_(NULL) {
+	inbuf_ = (char *)malloc(SOCKET_BUFFER_SIZE * sizeof(char));
+	if (inbuf_ == NULL) {
+		ALERT("Cannot Allocate In Buffer");
+	}
+	outbuf_ = (char *)malloc(SOCKET_BUFFER_SIZE * sizeof(char));
+	if (inbuf_ == NULL) {
+		ALERT("Cannot Allocate Out Buffer");
+	}
+	ClearRBuffer();
+	ClearWBuffer();
+
 	SetNonBlocking();
 	SetNoTcpDelay();
 	SetResueAddr();
@@ -30,7 +39,16 @@ Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), inbuf_(""), outbuf_("") {
 }
 
 Socket::~Socket() {
-	ClearBuf();
+	if (inbuf_ != NULL) {
+		free(inbuf_);
+		inbuf_ = NULL;
+	}
+
+	if (outbuf_ != NULL) {
+		free(outbuf_);
+		outbuf_ = NULL;
+	}
+
 	if (state_ != SOCK_CLOSED) {
 		Close();		
 	}
@@ -151,12 +169,11 @@ int Socket::BindListen(int port) {
 int Socket::Read() {
 	int len = 0;		
 	int bytes = 0;
-	char buf[TCP_BUFFER_SIZE] = {0};
 
 	while (true) {
-		memset(buf, 0, TCP_BUFFER_SIZE);
-		len = recv(sockfd_, buf, TCP_BUFFER_SIZE - 1, 0);
+		len = recv(sockfd_, inbuf_ + r_offset_, SOCKET_BUFFER_SIZE - 1, 0);
 		bytes += len;
+		r_offset_ += len;
 		if (len < 0)  {
 			// All Data Drained For Edge-Trigger, No More Data, Wait For Next Round
 			if (errno == EAGAIN || errno == EWOULDBLOCK) {
@@ -176,9 +193,7 @@ int Socket::Read() {
 			Close(); 
 			state_ = SOCK_CLOSED;
 			break;
-		} else {
-			inbuf_.append(buf);
-		}
+		} 
 	}
 
 	// User Can Check Return Value To Determine Where Connection Is OK
@@ -207,18 +222,16 @@ int Socket::Write() {
 	}
 
 	// No Data To Send
-	if (outbuf_.empty()) {
+	if (append_offset_ == 0) {
 		INFO("No Data To Send");
 		return 0;
 	}
 
-	int sendsize = outbuf_.size();	
-	INFO("Send Size %d", sendsize);
 	int len = 0;		
 	int bytes = 0;
 
 	while (true) {
-		len = send(sockfd_, outbuf_.c_str() + bytes, sendsize, 0);
+		len = send(sockfd_, outbuf_ + w_offset_, SOCKET_BUFFER_SIZE, 0);
 		if (len < 0) {
 			if (errno == EAGAIN || errno == EWOULDBLOCK) {
 				// All Data Sent In Non-Blocking Socket
@@ -233,10 +246,11 @@ int Socket::Write() {
 			}
 		} else {
 			bytes += len;
-
-			// All Data Sent
-			if (bytes >= sendsize) {
-				break;	
+			w_offset_ += len;
+			append_offset_ -= len;
+			// All Date Sent
+			if (append_offset_ == 0) {
+				ClearWBuffer();
 			}
 		}
 	}

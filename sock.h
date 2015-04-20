@@ -11,6 +11,9 @@
 
 #include "server.h"
 
+// 20KB InBuffer And OutBuffer
+#define SOCKET_BUFFER_SIZE (20*1024)
+
 typedef enum {
 	SOCK_IDLE,
 	SOCK_LISTENNING,
@@ -61,12 +64,27 @@ class Socket
 
 	int SetTcpOutBuffsize(size_t size);
 
-	void ClearBuf() {
-		inbuf_.clear();
-		outbuf_.clear();
+	void ShutdownAll();
+
+	void ClearRBuffer() {
+		memset(inbuf_, 0, SOCKET_BUFFER_SIZE * sizeof(char));
+		r_offset_ = 0;
 	}
 
-	void ShutdownAll();
+	void ClearWBuffer() {
+		memset(outbuf_, 0, SOCKET_BUFFER_SIZE * sizeof(char));
+		w_offset_ = 0;
+		append_offset_ = 0;
+	}
+
+	char *GetWriteIndex() {
+		return outbuf_ + append_offset_;
+	}
+
+	// Add Data To Output Buffer, Wait To Be Sent
+	void AppendSend(void *message, size_t len) {
+		append_offset_ += len;
+	}
 
 	// Will Send All Remaining Data In TCP Sending Buffer And Then Send A TCP_FIN
 	void ShutdownW();
@@ -103,9 +121,12 @@ private:
 	int sockfd_;
 	sockaddr_in peer_;
 	Sockstate_t state_;
-
-	std::string inbuf_; 
-	std::string outbuf_; 
+	
+	size_t r_offset_;
+	size_t w_offset_;
+	size_t append_offset_;
+	char *inbuf_;
+	char *outbuf_;
 };
 
 #endif 
