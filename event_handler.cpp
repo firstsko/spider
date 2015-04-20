@@ -9,7 +9,7 @@ static char* iptostr(unsigned ip) {
 	return inet_ntoa(addr);
 }
 
-int CheckConnectTimeout(void *data) {
+int CheckConnectTimeoutCb(void *data) {
 	Socket *sk = (Socket *)data;
 	if (sk->State() != SOCK_TCP_ENSTABLISHED) {
 		ALERT("Connection To %s:%d Time Out", iptostr(sk->GetPeerAddr().sin_addr.s_addr), sk->GetPeerAddr().sin_port);
@@ -28,7 +28,7 @@ int EventHandler::OnConnect(const string &ip,  int port, int timeout) {
 		return 0;
 	} else if (ret == SOCK_CONNECTTING) {
 		// After Timeout, Check If The Socket Is Writable
-		EventDriver::Instance()->AddTimer(timeout, 0, true, CheckConnectTimeout, sk_);
+		EventDriver::Instance()->AddTimer(timeout, 0, true, CheckConnectTimeoutCb, sk_);
 		return SOCK_CONNECTTING; 
 	} else {
 		return -1;

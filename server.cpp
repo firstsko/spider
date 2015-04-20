@@ -28,8 +28,8 @@ void flush_log(void) {
 }
 
 void ctrl_c_handler(int signal) {
-	EMERG("Proccess Interupted By Signal(%d) SIGINT(CTRL+C)", signal);
-	printf("Proccess Interupted By SIGINT(CTRL+C)\n");
+	EMERG("Process Interupted By Signal(%d) SIGINT(CTRL+C)", signal);
+	printf("Process Interupted By SIGINT(CTRL+C)\n");
 	Log::Instance()->Flush();
 	exit(EXIT_FAILURE);
 }
@@ -95,7 +95,7 @@ int main(int argc , char **argv) {
 	// Every 100ms Flush Log Cache Buffer
 	driver->AddTimer(0, 100, false, flush_log, NULL);
 
-	driver->AddTimer(0, 500, true, bar, NULL);
+	driver->AddTimer(0, 500, false, bar, NULL);
 
 	driver->StartLoop();
 
