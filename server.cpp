@@ -35,8 +35,8 @@ void ctrl_c_handler(int signal) {
 }
 
 void dump_stacktrace(int signal) {
-	printf("Segmentation Fault!\n");
-	CRIT("Segmentation Fault!");
+	printf("Signal(%d) Segmentation Fault!\n", signal);
+	CRIT("Signal(%d) Segmentation Fault!", signal);
 	// Flush Log
 	Log::Instance()->Flush();
 
@@ -47,8 +47,8 @@ void dump_stacktrace(int signal) {
 	symbols = backtrace_symbols(stack, size);
 
 	if (symbols == NULL) {
-		CRIT("no backtrace_symbols");
-		perror("no backtrace_symbols");
+		CRIT("No Backtrace Symbols");
+		perror("No Backtrace Symbols");
 		exit(EXIT_FAILURE);
 	}
 
