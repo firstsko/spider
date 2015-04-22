@@ -20,7 +20,7 @@ static char* iptostr(unsigned ip) {
 }
 
 // Initialize File Descriptor, Set No Blocking, No Delay, Address Reuse, KeepAlive
-Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0), append_offset_(0), inbuf_(NULL), outbuf_(NULL) {
+Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0), append_offset_(0), inbuf_(NULL), outbuf_(NULL), type_(TYPE_TCP) {
 	inbuf_ = (char *)malloc(SOCKET_BUFFER_SIZE * sizeof(char));
 	if (inbuf_ == NULL) {
 		ALERT("Cannot Allocate In Buffer");

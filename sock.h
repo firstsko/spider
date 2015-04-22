@@ -26,6 +26,12 @@ typedef enum {
 	SOCK_SHUT_WRITE,
 } Sockstate_t;
 
+typedef enum {
+	TYPE_TCP,
+	TYPE_UDP,
+	TYPE_RAW,
+} Socktype_t;
+
 // Only For TCP Stream And Only For Non-Blocking Operations
 class Socket
 {
@@ -127,6 +133,7 @@ private:
 	size_t append_offset_;
 	char *inbuf_;
 	char *outbuf_;
+	Socktype_t type_;
 };
 
 #endif 
