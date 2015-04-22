@@ -1,0 +1,51 @@
+package message;
+
+enum MessageType {
+	LOGIN_REQUEST = 10001;
+	LOGIN_RESPONSE = 10002;
+
+	FRIEND_LIST_REQUEST = 10003;
+	FRIEND_LIST_RESPONSE = 10004;
+}
+
+message Message {
+	required Header header 	= 10;
+	optional Body body 		= 20;
+}
+
+message Header {
+	required MessageType type 	= 10;
+	required string flow_no 	= 20;
+	optional uint32 length 		= 30;
+}
+
+extend Body {
+	optional LoginRequest login_request					= 10001;
+	optional LoginResponse login_response				= 10002;
+
+	optional FriendListRequest friend_list_request 		= 10003;  
+	optional FriendListResponse friend_list_response 	= 10004;  
+}
+
+message Response {
+	required int32 retcode 			= 10;
+	optional string error_msg 		= 20;
+}
+
+message LoginRequest {
+	required string login_name 		= 10;
+	required string passwd 			= 20;
+}
+
+message LoginResponse {
+	required Response rc 		= 10;
+}
+
+message FriendListRequest {
+	required string login_name = 10;
+}
+
+message FriendListResponse {
+	required Response rc 		= 10;
+	repeated string friend_list	= 20;
+}

@@ -18,5 +18,7 @@ event_handler.o:event_handler.cpp
 	g++ -Wall -o event_handler.o event_handler.cpp -g -c
 message.o:message.cpp
 	g++ -Wall -o message.o message.cpp -g -c
+all:
+	mv server ../bin
 clean:
 	rm -rf server *.o
