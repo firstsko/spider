@@ -20,7 +20,7 @@ public:
 	// As A Client Launch A Connection
 	int OnConnect(const std::string &ip, int port, int timeout = 10);
 
-	int SendRequest(void *message, size_t len);
+	int SendRequest(const std::string &ip, int port, void *message, size_t len);
 
 	int SendResponse(void *message, size_t len);
 
@@ -28,7 +28,6 @@ public:
 
 private:
 	Socket* sk_;
-
 };
 
 #endif

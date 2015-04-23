@@ -15,7 +15,7 @@
 using namespace std;
 
 // Collect Current TCP Connections
-map<Socket *, sockaddr_in> gmap_tcpdest;
+map<sockaddr_in, Socket *> gmap_tcpdest;
 
 static char* iptostr(unsigned ip) {
 	struct in_addr addr;
@@ -138,7 +138,7 @@ int Socket::Accept(int listen_fd) {
 			peer->SetPeerAddr(peer_addr);
 			EventDriver::Instance()->AddEvent(peer_fd, peer);
 			// Record Socket's Peer Address
-			gmap_tcpdest[peer] = peer_addr;
+			gmap_tcpdest.insert(make_pair(peer_addr, peer));
 		}
 	}
 
@@ -225,7 +225,7 @@ int Socket::Write() {
 
 		INFO("Connection With Server %s:%d Enstablished", iptostr(peer_.sin_addr.s_addr), peer_.sin_port);
 		state_ = SOCK_TCP_ENSTABLISHED;
-		gmap_tcpdest[this] = peer_;
+		gmap_tcpdest.insert(make_pair(peer_, this));
 		return 0;
 	}
 
@@ -294,4 +294,24 @@ int Socket::SetTcpOutBuffsize(size_t size) {
 		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
 	return ret;
+}
+
+static inline bool operator==(const sockaddr_in &foo, const sockaddr_in &bar) {
+	return (foo.sin_addr.s_addr == bar.sin_addr.s_addr);
+}
+
+static inline bool operator>(const sockaddr_in &foo, const sockaddr_in &bar) {
+	return (foo.sin_addr.s_addr > bar.sin_addr.s_addr);
+}
+
+static inline bool operator<(const sockaddr_in &foo, const sockaddr_in &bar) {
+	return (foo.sin_addr.s_addr < bar.sin_addr.s_addr);
+}
+
+static inline bool operator>=(const sockaddr_in &foo, const sockaddr_in &bar) {
+	return (foo.sin_addr.s_addr >= bar.sin_addr.s_addr);
+}
+
+static inline bool operator<=(const sockaddr_in &foo, const sockaddr_in &bar) {
+	return (foo.sin_addr.s_addr <= bar.sin_addr.s_addr);
 }

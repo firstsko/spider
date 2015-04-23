@@ -62,37 +62,37 @@ private:
 // > >= == < <== Overload
 inline bool operator>(const Timer_t &foo, const Timer_t &bar) {
 	uint64_t sum_foo = 1000000000 * foo.tv_sec + foo.tv_nsec;
-	uint64_t bar_foo = 1000000000 * bar.tv_sec + bar.tv_nsec;
+	uint64_t sum_bar = 1000000000 * bar.tv_sec + bar.tv_nsec;
 
-	return (sum_foo > bar_foo);
+	return (sum_foo > sum_bar);
 }
 
 inline bool operator>=(const Timer_t &foo, const Timer_t &bar) {
 	uint64_t sum_foo = 1000000000 * foo.tv_sec + foo.tv_nsec;
-	uint64_t bar_foo = 1000000000 * bar.tv_sec + bar.tv_nsec;
+	uint64_t sum_bar = 1000000000 * bar.tv_sec + bar.tv_nsec;
 	
-	return (sum_foo >= bar_foo);
+	return (sum_foo >= sum_bar);
 }
 
 inline bool operator==(const Timer_t &foo, const Timer_t &bar) {
 	uint64_t sum_foo = 1000000000 * foo.tv_sec + foo.tv_nsec;
-	uint64_t bar_foo = 1000000000 * bar.tv_sec + bar.tv_nsec;
+	uint64_t sum_bar = 1000000000 * bar.tv_sec + bar.tv_nsec;
 	
-	return (sum_foo == bar_foo);
+	return (sum_foo == sum_bar);
 }
 
 inline bool operator<(const Timer_t &foo, const Timer_t &bar) {
 	uint64_t sum_foo = 1000000000 * foo.tv_sec + foo.tv_nsec;
-	uint64_t bar_foo = 1000000000 * bar.tv_sec + bar.tv_nsec;
+	uint64_t sum_bar = 1000000000 * bar.tv_sec + bar.tv_nsec;
 
-	return (sum_foo < bar_foo);
+	return (sum_foo < sum_bar);
 }
 
 inline bool operator<=(const Timer_t &foo, const Timer_t &bar) {
 	uint64_t sum_foo = 1000000000 * foo.tv_sec + foo.tv_nsec;
-	uint64_t bar_foo = 1000000000 * bar.tv_sec + bar.tv_nsec;
+	uint64_t sum_bar = 1000000000 * bar.tv_sec + bar.tv_nsec;
 
-	return (sum_foo <= bar_foo);
+	return (sum_foo <= sum_bar);
 }
 
 #endif 

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+extern map<sockaddr_in, Socket *> gmap_tcpdest;
+
 static char* iptostr(unsigned ip) {
 	struct in_addr addr;
 	memcpy(&addr, &ip, 4);
@@ -37,9 +39,25 @@ int Channel::OnConnect(const string &ip,  int port, int timeout) {
 	}
 }
 	
-int Channel::SendRequest(void *message, size_t len) {
+int Channel::SendRequest(const string &ip, int port, void *message, size_t len) {
+	int ret = 0;
+	struct sockaddr_in address;	
+	bzero(&address, sizeof(address));
+	address.sin_family = AF_INET;
 
-	return 0;
+	inet_pton(AF_INET, ip.c_str(), &address.sin_addr);
+	address.sin_port = htons(port);
+
+	// Check If We Have Already Have A TCP Connection To Peer
+	map<sockaddr_in, Socket *>::iterator it = gmap_tcpdest.find(sockaddr_in);
+	if (it != gmap_tcpdest.end()) {
+		sk_ = it->second; 	
+		SendMessage(message, len);
+	} else {
+		OnConnect(ip, port);
+	}
+
+	return ret;
 }
 
 int Channel::SendResponse(void *message, size_t len) {
