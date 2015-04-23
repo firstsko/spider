@@ -18,15 +18,17 @@ public:
 	}
 	
 	// As A Client Launch A Connection
-	int OnConnect(Socket *sk, const std::string &ip, int port, int timeout = 10);
+	int OnConnect(const std::string &ip, int port, int timeout = 10);
 
-	int SendRequest(Socket *sk, void *message, size_t len);
+	int SendRequest(void *message, size_t len);
 
-	int SendResponse(Socket *sk, void *message, size_t len);
+	int SendResponse(void *message, size_t len);
 
-	int SendMessage(Socket *sk, void *message, size_t len);
+	int SendMessage(void *message, size_t len);
 
 private:
+	Socket* sk_;
+
 };
 
 #endif
