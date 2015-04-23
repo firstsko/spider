@@ -7,11 +7,15 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <time.h>
+#include <map>
 
 #include "sock.h"
 #include "event_driver.h"
 
 using namespace std;
+
+// Collect Current TCP Connections
+map<Socket *, sockaddr_in> gmap_tcpdest;
 
 static char* iptostr(unsigned ip) {
 	struct in_addr addr;
@@ -133,6 +137,8 @@ int Socket::Accept(int listen_fd) {
 			peer->SetState(SOCK_TCP_ENSTABLISHED);
 			peer->SetPeerAddr(peer_addr);
 			EventDriver::Instance()->AddEvent(peer_fd, peer);
+			// Record Socket's Peer Address
+			gmap_tcpdest[peer] = peer_addr;
 		}
 	}
 
@@ -219,6 +225,7 @@ int Socket::Write() {
 
 		INFO("Connection With Server %s:%d Enstablished", iptostr(peer_.sin_addr.s_addr), peer_.sin_port);
 		state_ = SOCK_TCP_ENSTABLISHED;
+		gmap_tcpdest[this] = peer_;
 		return 0;
 	}
 

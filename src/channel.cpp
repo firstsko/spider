@@ -11,11 +11,12 @@ static char* iptostr(unsigned ip) {
 }
 
 int CheckConnectTimeoutCb(void *data) {
-	sk_ = (Socket *)data;
-	if (sk_->State() != SOCK_TCP_ENSTABLISHED) {
-		ALERT("Connection To %s:%d Time Out", iptostr(sk_->GetPeerAddr().sin_addr.s_addr), sk_->GetPeerAddr().sin_port);
-		delete sk_;
-		sk_ = NULL;
+	Socket *sk = (Socket *)data;
+	if (sk->State() != SOCK_TCP_ENSTABLISHED) {
+		ALERT("Connection To %s:%d Time Out", iptostr(sk->GetPeerAddr().sin_addr.s_addr), sk->GetPeerAddr().sin_port);
+		EventDriver::Instance()->DelEvent(sk->GetFd());
+		delete sk;
+		sk = NULL;
 		return -1;
 	}
 	return 0;
