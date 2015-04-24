@@ -294,23 +294,3 @@ int Socket::SetTcpOutBuffsize(size_t size) {
 	}
 	return ret;
 }
-
-static inline bool operator==(const sockaddr_in &foo, const sockaddr_in &bar) {
-	return (foo.sin_addr.s_addr == bar.sin_addr.s_addr);
-}
-
-static inline bool operator>(const sockaddr_in &foo, const sockaddr_in &bar) {
-	return (foo.sin_addr.s_addr > bar.sin_addr.s_addr);
-}
-
-static inline bool operator<(const sockaddr_in &foo, const sockaddr_in &bar) {
-	return (foo.sin_addr.s_addr < bar.sin_addr.s_addr);
-}
-
-static inline bool operator>=(const sockaddr_in &foo, const sockaddr_in &bar) {
-	return (foo.sin_addr.s_addr >= bar.sin_addr.s_addr);
-}
-
-static inline bool operator<=(const sockaddr_in &foo, const sockaddr_in &bar) {
-	return (foo.sin_addr.s_addr <= bar.sin_addr.s_addr);
-}

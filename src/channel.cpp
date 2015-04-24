@@ -49,7 +49,7 @@ int Channel::SendRequest(const string &ip, int port, void *message, size_t len) 
 	address.sin_port = htons(port);
 
 	// Check If We Have Already Have A TCP Connection To Peer
-	map<sockaddr_in, Socket *>::iterator it = gmap_tcpdest.find(sockaddr_in);
+	map<sockaddr_in, Socket *>::iterator it = gmap_tcpdest.find(address);
 	if (it != gmap_tcpdest.end()) {
 		sk_ = it->second; 	
 		SendMessage(message, len);
