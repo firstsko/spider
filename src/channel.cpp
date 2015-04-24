@@ -55,6 +55,8 @@ int Channel::SendRequest(const string &ip, int port, void *message, size_t len) 
 		SendMessage(message, len);
 	} else {
 		OnConnect(ip, port);
+		// When Writable, SendMessage, If Failed To Connect, Message Will Be Lost  
+		SendMessage(message, len);
 	}
 
 	return ret;

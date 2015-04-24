@@ -226,7 +226,6 @@ int Socket::Write() {
 		INFO("Connection With Server %s:%d Enstablished", iptostr(peer_.sin_addr.s_addr), peer_.sin_port);
 		state_ = SOCK_TCP_ENSTABLISHED;
 		gmap_tcpdest.insert(make_pair(peer_, this));
-		return 0;
 	}
 
 	// No Data To Send
