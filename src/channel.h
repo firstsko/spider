@@ -1,6 +1,7 @@
 #ifndef _CHANNEL_
 #define _CHANNEL_
 
+#include <sys/time.h>
 #include <string>
 #include <string.h>
 
@@ -27,7 +28,11 @@ public:
 	int SendMessage(void *message, size_t len);
 
 private:
+	void UpdateTime();
+
+private:
 	Socket* sk_;
+	struct timeval tv_;
 };
 
 #endif

@@ -9,7 +9,7 @@
 #include "timer.h"
 #include "log.h"
 
-static const char *version = "Spider0.0.2";
+static const char *version = "Spider0.0.3";
 
 using namespace std;
 
