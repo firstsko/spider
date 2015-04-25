@@ -14,9 +14,13 @@ message Message {
 }
 
 message Header {
-	required MessageType type 	= 10;
 	required string flow_no 	= 20;
-	optional uint32 length 		= 30;
+	required uint32 length 		= 30;
+}
+
+message Body {
+	required MessageType type 	= 10;
+	extensions  10000 to 100000;
 }
 
 extend Body {
@@ -24,7 +28,7 @@ extend Body {
 	optional LoginResponse login_response				= 10002;
 
 	optional FriendListRequest friend_list_request 		= 10003;  
-	optional FriendListResponse friend_list_response 	= 10004;  
+	optional FriendListResponse friend_list_response 	= 10004;
 }
 
 message Response {
