@@ -8,6 +8,7 @@
 #include "event_driver.h"
 #include "timer.h"
 #include "log.h"
+#include "message.pb.h"
 
 static const char *version = "Spider0.0.3";
 
