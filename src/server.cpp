@@ -95,8 +95,7 @@ int main(int argc , char **argv) {
 	driver->AddEvent(fd, server, EDGE_TRIGGER);
 	// Every 100ms Flush Log Cache Buffer
 	driver->AddTimer(0, 100, false, flush_log, NULL);
-
-	driver->AddTimer(0, 500, false, bar, NULL);
+	//driver->AddTimer(0, 500, false, bar, NULL);
 
 	driver->StartLoop();
 
