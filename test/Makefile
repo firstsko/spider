@@ -1,14 +1,13 @@
-SRC = *.cpp ../proto/*.cc
+SRC = *.cpp
 CC = g++
-CFLAG = -g -ggdb -Wall -Wno-deprecated
-INCLUDE = -I ../proto
-LINK = -L ../lib -L /usr/local/lib
-LIB = ../lib/libmsg.a
-LINKER = -static -lprotobuf #-lmsg  
-EXE = client
-
+CFLAG =-g -Wall 
+INCLUDE =-I../proto
+LINK =-L../lib
+LIB =../lib/libmsg.a
+LINKER =-lprotobuf -lmsg  
+EXE =client
 all:
-	$(CC) $(CFLAG) $(LINK) $(LINKER) $(INCLUDE) $(SRC) -o $(EXE)
+	$(CC) $(INCLUDE) $(SRC) $(CFLAG) $(LINK) $(LINKER) -o $(EXE)
 clean:
 	rm -rf *.o 
 	rm -rf $(EXE)

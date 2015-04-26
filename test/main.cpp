@@ -9,7 +9,8 @@
 #include <string.h>
 #include <strings.h>
 
-#include <message.pb.h>
+#include "message.pb.h"
+
 using namespace message;
 
 int main(int argc, char **argv) {
