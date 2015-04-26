@@ -88,6 +88,9 @@ int main(int argc , char **argv) {
 	INFO("%s Server Start, pid %d, Listen Fd %d On TCP Port %d", version, getpid(), server->GetFd(), port);
 	printf("%s %s Server Start, pid %d, Listen Fd %d On TCP Port %d\n", now_str().c_str(), version, getpid(), server->GetFd(), port);
 
+	// Disappear From Terminal
+	daemon(1, 1);
+
 	EventDriver *driver = EventDriver::Instance();
 	driver->CreateDriver();
 
