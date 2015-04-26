@@ -11,7 +11,7 @@
 
 class Channel {
 public:
-	Channel(){
+	Channel(Socket *sk):sk_(sk){
 
 	}
 
