@@ -1,6 +1,6 @@
 SRC = *.cpp
 CC = g++
-CFLAG = -g -ggdb -Wall -Wno-deprecated
+CFLAG = -g -ggdb -Wall 
 INCLUDE = -I ../proto
 LINK = -L ../lib
 LINKER = -lmsg
