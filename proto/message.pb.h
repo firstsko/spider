@@ -212,10 +212,10 @@ class Header : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string flow_no = 20;
+  // required string flow_no = 10;
   inline bool has_flow_no() const;
   inline void clear_flow_no();
-  static const int kFlowNoFieldNumber = 20;
+  static const int kFlowNoFieldNumber = 10;
   inline const ::std::string& flow_no() const;
   inline void set_flow_no(const ::std::string& value);
   inline void set_flow_no(const char* value);
@@ -224,12 +224,26 @@ class Header : public ::google::protobuf::Message {
   inline ::std::string* release_flow_no();
   inline void set_allocated_flow_no(::std::string* flow_no);
 
-  // required uint32 length = 30;
+  // required uint32 length = 20;
   inline bool has_length() const;
   inline void clear_length();
-  static const int kLengthFieldNumber = 30;
+  static const int kLengthFieldNumber = 20;
   inline ::google::protobuf::uint32 length() const;
   inline void set_length(::google::protobuf::uint32 value);
+
+  // required uint32 src_fsm = 30;
+  inline bool has_src_fsm() const;
+  inline void clear_src_fsm();
+  static const int kSrcFsmFieldNumber = 30;
+  inline ::google::protobuf::uint32 src_fsm() const;
+  inline void set_src_fsm(::google::protobuf::uint32 value);
+
+  // required uint32 dst_fsm = 40;
+  inline bool has_dst_fsm() const;
+  inline void clear_dst_fsm();
+  static const int kDstFsmFieldNumber = 40;
+  inline ::google::protobuf::uint32 dst_fsm() const;
+  inline void set_dst_fsm(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:message.Header)
  private:
@@ -237,6 +251,10 @@ class Header : public ::google::protobuf::Message {
   inline void clear_has_flow_no();
   inline void set_has_length();
   inline void clear_has_length();
+  inline void set_has_src_fsm();
+  inline void clear_has_src_fsm();
+  inline void set_has_dst_fsm();
+  inline void clear_has_dst_fsm();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -244,6 +262,8 @@ class Header : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::std::string* flow_no_;
   ::google::protobuf::uint32 length_;
+  ::google::protobuf::uint32 src_fsm_;
+  ::google::protobuf::uint32 dst_fsm_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
@@ -898,7 +918,7 @@ inline void Message::set_allocated_body(::message::Body* body) {
 
 // Header
 
-// required string flow_no = 20;
+// required string flow_no = 10;
 inline bool Header::has_flow_no() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -974,7 +994,7 @@ inline void Header::set_allocated_flow_no(::std::string* flow_no) {
   // @@protoc_insertion_point(field_set_allocated:message.Header.flow_no)
 }
 
-// required uint32 length = 30;
+// required uint32 length = 20;
 inline bool Header::has_length() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -996,6 +1016,54 @@ inline void Header::set_length(::google::protobuf::uint32 value) {
   set_has_length();
   length_ = value;
   // @@protoc_insertion_point(field_set:message.Header.length)
+}
+
+// required uint32 src_fsm = 30;
+inline bool Header::has_src_fsm() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Header::set_has_src_fsm() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Header::clear_has_src_fsm() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Header::clear_src_fsm() {
+  src_fsm_ = 0u;
+  clear_has_src_fsm();
+}
+inline ::google::protobuf::uint32 Header::src_fsm() const {
+  // @@protoc_insertion_point(field_get:message.Header.src_fsm)
+  return src_fsm_;
+}
+inline void Header::set_src_fsm(::google::protobuf::uint32 value) {
+  set_has_src_fsm();
+  src_fsm_ = value;
+  // @@protoc_insertion_point(field_set:message.Header.src_fsm)
+}
+
+// required uint32 dst_fsm = 40;
+inline bool Header::has_dst_fsm() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void Header::set_has_dst_fsm() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void Header::clear_has_dst_fsm() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void Header::clear_dst_fsm() {
+  dst_fsm_ = 0u;
+  clear_has_dst_fsm();
+}
+inline ::google::protobuf::uint32 Header::dst_fsm() const {
+  // @@protoc_insertion_point(field_get:message.Header.dst_fsm)
+  return dst_fsm_;
+}
+inline void Header::set_dst_fsm(::google::protobuf::uint32 value) {
+  set_has_dst_fsm();
+  dst_fsm_ = value;
+  // @@protoc_insertion_point(field_set:message.Header.dst_fsm)
 }
 
 // -------------------------------------------------------------------

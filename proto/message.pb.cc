@@ -72,9 +72,11 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Message));
   Header_descriptor_ = file->message_type(1);
-  static const int Header_offsets_[2] = {
+  static const int Header_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, flow_no_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, length_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, src_fsm_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, dst_fsm_),
   };
   Header_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -241,25 +243,26 @@ void protobuf_AddDesc_message_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rmessage.proto\022\007message\"G\n\007Message\022\037\n\006h"
     "eader\030\n \002(\0132\017.message.Header\022\033\n\004body\030\024 \001"
-    "(\0132\r.message.Body\")\n\006Header\022\017\n\007flow_no\030\024"
-    " \002(\t\022\016\n\006length\030\036 \002(\r\"3\n\004Body\022\"\n\004type\030\n \002"
-    "(\0162\024.message.MessageType*\007\010\220N\020\241\215\006\".\n\010Res"
-    "ponse\022\017\n\007retcode\030\n \002(\005\022\021\n\terror_msg\030\024 \001("
-    "\t\"2\n\014LoginRequest\022\022\n\nlogin_name\030\n \002(\t\022\016\n"
-    "\006passwd\030\024 \002(\t\".\n\rLoginResponse\022\035\n\002rc\030\n \002"
-    "(\0132\021.message.Response\"\'\n\021FriendListReque"
-    "st\022\022\n\nlogin_name\030\n \002(\t\"H\n\022FriendListResp"
-    "onse\022\035\n\002rc\030\n \002(\0132\021.message.Response\022\023\n\013f"
-    "riend_list\030\024 \003(\t*k\n\013MessageType\022\022\n\rLOGIN"
-    "_REQUEST\020\221N\022\023\n\016LOGIN_RESPONSE\020\222N\022\030\n\023FRIE"
-    "ND_LIST_REQUEST\020\223N\022\031\n\024FRIEND_LIST_RESPON"
-    "SE\020\224N:<\n\rlogin_request\022\r.message.Body\030\221N"
-    " \001(\0132\025.message.LoginRequest:>\n\016login_res"
-    "ponse\022\r.message.Body\030\222N \001(\0132\026.message.Lo"
-    "ginResponse:G\n\023friend_list_request\022\r.mes"
-    "sage.Body\030\223N \001(\0132\032.message.FriendListReq"
-    "uest:I\n\024friend_list_response\022\r.message.B"
-    "ody\030\224N \001(\0132\033.message.FriendListResponse", 839);
+    "(\0132\r.message.Body\"K\n\006Header\022\017\n\007flow_no\030\n"
+    " \002(\t\022\016\n\006length\030\024 \002(\r\022\017\n\007src_fsm\030\036 \002(\r\022\017\n"
+    "\007dst_fsm\030( \002(\r\"3\n\004Body\022\"\n\004type\030\n \002(\0162\024.m"
+    "essage.MessageType*\007\010\220N\020\241\215\006\".\n\010Response\022"
+    "\017\n\007retcode\030\n \002(\005\022\021\n\terror_msg\030\024 \001(\t\"2\n\014L"
+    "oginRequest\022\022\n\nlogin_name\030\n \002(\t\022\016\n\006passw"
+    "d\030\024 \002(\t\".\n\rLoginResponse\022\035\n\002rc\030\n \002(\0132\021.m"
+    "essage.Response\"\'\n\021FriendListRequest\022\022\n\n"
+    "login_name\030\n \002(\t\"H\n\022FriendListResponse\022\035"
+    "\n\002rc\030\n \002(\0132\021.message.Response\022\023\n\013friend_"
+    "list\030\024 \003(\t*k\n\013MessageType\022\022\n\rLOGIN_REQUE"
+    "ST\020\221N\022\023\n\016LOGIN_RESPONSE\020\222N\022\030\n\023FRIEND_LIS"
+    "T_REQUEST\020\223N\022\031\n\024FRIEND_LIST_RESPONSE\020\224N:"
+    "<\n\rlogin_request\022\r.message.Body\030\221N \001(\0132\025"
+    ".message.LoginRequest:>\n\016login_response\022"
+    "\r.message.Body\030\222N \001(\0132\026.message.LoginRes"
+    "ponse:G\n\023friend_list_request\022\r.message.B"
+    "ody\030\223N \001(\0132\032.message.FriendListRequest:I"
+    "\n\024friend_list_response\022\r.message.Body\030\224N"
+    " \001(\0132\033.message.FriendListResponse", 873);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.proto", &protobuf_RegisterTypes);
   Message::default_instance_ = new Message();
@@ -605,6 +608,8 @@ void Message::Swap(Message* other) {
 #ifndef _MSC_VER
 const int Header::kFlowNoFieldNumber;
 const int Header::kLengthFieldNumber;
+const int Header::kSrcFsmFieldNumber;
+const int Header::kDstFsmFieldNumber;
 #endif  // !_MSC_VER
 
 Header::Header()
@@ -628,6 +633,8 @@ void Header::SharedCtor() {
   _cached_size_ = 0;
   flow_no_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   length_ = 0u;
+  src_fsm_ = 0u;
+  dst_fsm_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -666,14 +673,28 @@ Header* Header::New() const {
 }
 
 void Header::Clear() {
-  if (_has_bits_[0 / 32] & 3) {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<Header*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 15) {
+    ZR_(length_, dst_fsm_);
     if (has_flow_no()) {
       if (flow_no_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         flow_no_->clear();
       }
     }
-    length_ = 0u;
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -688,9 +709,9 @@ bool Header::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string flow_no = 20;
-      case 20: {
-        if (tag == 162) {
+      // required string flow_no = 10;
+      case 10: {
+        if (tag == 82) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_flow_no()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -700,18 +721,48 @@ bool Header::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(240)) goto parse_length;
+        if (input->ExpectTag(160)) goto parse_length;
         break;
       }
 
-      // required uint32 length = 30;
-      case 30: {
-        if (tag == 240) {
+      // required uint32 length = 20;
+      case 20: {
+        if (tag == 160) {
          parse_length:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &length_)));
           set_has_length();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(240)) goto parse_src_fsm;
+        break;
+      }
+
+      // required uint32 src_fsm = 30;
+      case 30: {
+        if (tag == 240) {
+         parse_src_fsm:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &src_fsm_)));
+          set_has_src_fsm();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(320)) goto parse_dst_fsm;
+        break;
+      }
+
+      // required uint32 dst_fsm = 40;
+      case 40: {
+        if (tag == 320) {
+         parse_dst_fsm:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &dst_fsm_)));
+          set_has_dst_fsm();
         } else {
           goto handle_unusual;
         }
@@ -744,19 +795,29 @@ failure:
 void Header::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:message.Header)
-  // required string flow_no = 20;
+  // required string flow_no = 10;
   if (has_flow_no()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->flow_no().data(), this->flow_no().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "flow_no");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      20, this->flow_no(), output);
+      10, this->flow_no(), output);
   }
 
-  // required uint32 length = 30;
+  // required uint32 length = 20;
   if (has_length()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(30, this->length(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(20, this->length(), output);
+  }
+
+  // required uint32 src_fsm = 30;
+  if (has_src_fsm()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(30, this->src_fsm(), output);
+  }
+
+  // required uint32 dst_fsm = 40;
+  if (has_dst_fsm()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->dst_fsm(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -769,7 +830,7 @@ void Header::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Header::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:message.Header)
-  // required string flow_no = 20;
+  // required string flow_no = 10;
   if (has_flow_no()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->flow_no().data(), this->flow_no().length(),
@@ -777,12 +838,22 @@ void Header::SerializeWithCachedSizes(
       "flow_no");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        20, this->flow_no(), target);
+        10, this->flow_no(), target);
   }
 
-  // required uint32 length = 30;
+  // required uint32 length = 20;
   if (has_length()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(30, this->length(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(20, this->length(), target);
+  }
+
+  // required uint32 src_fsm = 30;
+  if (has_src_fsm()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(30, this->src_fsm(), target);
+  }
+
+  // required uint32 dst_fsm = 40;
+  if (has_dst_fsm()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->dst_fsm(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -797,18 +868,32 @@ int Header::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string flow_no = 20;
+    // required string flow_no = 10;
     if (has_flow_no()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->flow_no());
     }
 
-    // required uint32 length = 30;
+    // required uint32 length = 20;
     if (has_length()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->length());
+    }
+
+    // required uint32 src_fsm = 30;
+    if (has_src_fsm()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->src_fsm());
+    }
+
+    // required uint32 dst_fsm = 40;
+    if (has_dst_fsm()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->dst_fsm());
     }
 
   }
@@ -844,6 +929,12 @@ void Header::MergeFrom(const Header& from) {
     if (from.has_length()) {
       set_length(from.length());
     }
+    if (from.has_src_fsm()) {
+      set_src_fsm(from.src_fsm());
+    }
+    if (from.has_dst_fsm()) {
+      set_dst_fsm(from.dst_fsm());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -861,7 +952,7 @@ void Header::CopyFrom(const Header& from) {
 }
 
 bool Header::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -870,6 +961,8 @@ void Header::Swap(Header* other) {
   if (other != this) {
     std::swap(flow_no_, other->flow_no_);
     std::swap(length_, other->length_);
+    std::swap(src_fsm_, other->src_fsm_);
+    std::swap(dst_fsm_, other->dst_fsm_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
