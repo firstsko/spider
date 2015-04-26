@@ -212,17 +212,12 @@ class Header : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string flow_no = 10;
+  // required uint32 flow_no = 10;
   inline bool has_flow_no() const;
   inline void clear_flow_no();
   static const int kFlowNoFieldNumber = 10;
-  inline const ::std::string& flow_no() const;
-  inline void set_flow_no(const ::std::string& value);
-  inline void set_flow_no(const char* value);
-  inline void set_flow_no(const char* value, size_t size);
-  inline ::std::string* mutable_flow_no();
-  inline ::std::string* release_flow_no();
-  inline void set_allocated_flow_no(::std::string* flow_no);
+  inline ::google::protobuf::uint32 flow_no() const;
+  inline void set_flow_no(::google::protobuf::uint32 value);
 
   // required uint32 length = 20;
   inline bool has_length() const;
@@ -260,7 +255,7 @@ class Header : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* flow_no_;
+  ::google::protobuf::uint32 flow_no_;
   ::google::protobuf::uint32 length_;
   ::google::protobuf::uint32 src_fsm_;
   ::google::protobuf::uint32 dst_fsm_;
@@ -918,7 +913,7 @@ inline void Message::set_allocated_body(::message::Body* body) {
 
 // Header
 
-// required string flow_no = 10;
+// required uint32 flow_no = 10;
 inline bool Header::has_flow_no() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -929,69 +924,17 @@ inline void Header::clear_has_flow_no() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void Header::clear_flow_no() {
-  if (flow_no_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    flow_no_->clear();
-  }
+  flow_no_ = 0u;
   clear_has_flow_no();
 }
-inline const ::std::string& Header::flow_no() const {
+inline ::google::protobuf::uint32 Header::flow_no() const {
   // @@protoc_insertion_point(field_get:message.Header.flow_no)
-  return *flow_no_;
-}
-inline void Header::set_flow_no(const ::std::string& value) {
-  set_has_flow_no();
-  if (flow_no_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    flow_no_ = new ::std::string;
-  }
-  flow_no_->assign(value);
-  // @@protoc_insertion_point(field_set:message.Header.flow_no)
-}
-inline void Header::set_flow_no(const char* value) {
-  set_has_flow_no();
-  if (flow_no_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    flow_no_ = new ::std::string;
-  }
-  flow_no_->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.Header.flow_no)
-}
-inline void Header::set_flow_no(const char* value, size_t size) {
-  set_has_flow_no();
-  if (flow_no_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    flow_no_ = new ::std::string;
-  }
-  flow_no_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.Header.flow_no)
-}
-inline ::std::string* Header::mutable_flow_no() {
-  set_has_flow_no();
-  if (flow_no_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    flow_no_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:message.Header.flow_no)
   return flow_no_;
 }
-inline ::std::string* Header::release_flow_no() {
-  clear_has_flow_no();
-  if (flow_no_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = flow_no_;
-    flow_no_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void Header::set_allocated_flow_no(::std::string* flow_no) {
-  if (flow_no_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete flow_no_;
-  }
-  if (flow_no) {
-    set_has_flow_no();
-    flow_no_ = flow_no;
-  } else {
-    clear_has_flow_no();
-    flow_no_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:message.Header.flow_no)
+inline void Header::set_flow_no(::google::protobuf::uint32 value) {
+  set_has_flow_no();
+  flow_no_ = value;
+  // @@protoc_insertion_point(field_set:message.Header.flow_no)
 }
 
 // required uint32 length = 20;

@@ -244,7 +244,7 @@ void protobuf_AddDesc_message_2eproto() {
     "\n\rmessage.proto\022\007message\"G\n\007Message\022\037\n\006h"
     "eader\030\n \002(\0132\017.message.Header\022\033\n\004body\030\024 \001"
     "(\0132\r.message.Body\"K\n\006Header\022\017\n\007flow_no\030\n"
-    " \002(\t\022\016\n\006length\030\024 \002(\r\022\017\n\007src_fsm\030\036 \002(\r\022\017\n"
+    " \002(\r\022\016\n\006length\030\024 \002(\r\022\017\n\007src_fsm\030\036 \002(\r\022\017\n"
     "\007dst_fsm\030( \002(\r\"3\n\004Body\022\"\n\004type\030\n \002(\0162\024.m"
     "essage.MessageType*\007\010\220N\020\241\215\006\".\n\010Response\022"
     "\017\n\007retcode\030\n \002(\005\022\021\n\terror_msg\030\024 \001(\t\"2\n\014L"
@@ -629,9 +629,8 @@ Header::Header(const Header& from)
 }
 
 void Header::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  flow_no_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  flow_no_ = 0u;
   length_ = 0u;
   src_fsm_ = 0u;
   dst_fsm_ = 0u;
@@ -644,9 +643,6 @@ Header::~Header() {
 }
 
 void Header::SharedDtor() {
-  if (flow_no_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete flow_no_;
-  }
   if (this != default_instance_) {
   }
 }
@@ -683,14 +679,7 @@ void Header::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 15) {
-    ZR_(length_, dst_fsm_);
-    if (has_flow_no()) {
-      if (flow_no_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        flow_no_->clear();
-      }
-    }
-  }
+  ZR_(flow_no_, dst_fsm_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -709,15 +698,13 @@ bool Header::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string flow_no = 10;
+      // required uint32 flow_no = 10;
       case 10: {
-        if (tag == 82) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_flow_no()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->flow_no().data(), this->flow_no().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "flow_no");
+        if (tag == 80) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &flow_no_)));
+          set_has_flow_no();
         } else {
           goto handle_unusual;
         }
@@ -795,14 +782,9 @@ failure:
 void Header::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:message.Header)
-  // required string flow_no = 10;
+  // required uint32 flow_no = 10;
   if (has_flow_no()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->flow_no().data(), this->flow_no().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "flow_no");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      10, this->flow_no(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->flow_no(), output);
   }
 
   // required uint32 length = 20;
@@ -830,15 +812,9 @@ void Header::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Header::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:message.Header)
-  // required string flow_no = 10;
+  // required uint32 flow_no = 10;
   if (has_flow_no()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->flow_no().data(), this->flow_no().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "flow_no");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->flow_no(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(10, this->flow_no(), target);
   }
 
   // required uint32 length = 20;
@@ -868,10 +844,10 @@ int Header::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string flow_no = 10;
+    // required uint32 flow_no = 10;
     if (has_flow_no()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->flow_no());
     }
 
