@@ -43,6 +43,12 @@ Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0
 	SetKeepAlive();
 }
 
+void Socket::Close() {
+	close(sockfd_);
+	state_ = SOCK_CLOSED;
+	INFO("Close Connection With Client %s:%d", iptostr(peer_.sin_addr.s_addr), ntohs(peer_.sin_port));
+}
+
 Socket::~Socket() {
 	if (inbuf_ != NULL) {
 		free(inbuf_);
@@ -198,7 +204,6 @@ int Socket::Read() {
 		} else if (len == 0) {
 			// TCP_FIN Recieved From Peer, Close Connection
 			Close(); 
-			state_ = SOCK_CLOSED;
 			break;
 		} 
 	}

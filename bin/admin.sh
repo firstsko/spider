@@ -6,6 +6,9 @@ then
 	exit 1
 fi
 
+curdir=`dirname $0`
+cd $curdir
+
 if [ $1 = "start" ]
 then
 	pidnum=`ps -ef|grep "\./server"|grep -v grep|wc -l`

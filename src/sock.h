@@ -10,6 +10,7 @@
 #include <string>
 
 #include "server.h"
+#include "log.h"
 
 // 20KB InBuffer And OutBuffer
 #define SOCKET_BUFFER_SIZE (20*1024)
@@ -40,17 +41,14 @@ class Socket
 	
 	~Socket();
 
+	void Close();
+
 	int GetFd() {
 		return sockfd_;
 	}
 
 	Sockstate_t State() {
 		return state_;
-	}
-
-	void Close() {
-		close(sockfd_);
-		state_ = SOCK_CLOSED;
 	}
 
 	int BindListen(int port);

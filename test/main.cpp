@@ -41,22 +41,23 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	Message message;
-	Header header;
-	header.set_flow_no(1234);
-	header.set_length(0);
-	header.set_src_fsm(4321);
-	header.set_dst_fsm(3123);
-	message.set_allocated_header(&header);
+	Message *message = new Message;
+	Header *header = new Header;
+	header->set_flow_no(1234);
+	header->set_length(0);
+	header->set_src_fsm(4321);
+	header->set_dst_fsm(3123);
+	message->set_allocated_header(header);
 
-	int size = message.ByteSize();
+	int size = message->ByteSize();
 	printf("Message Size: %d \n", size);
 	void *buffer = malloc(size);
-	message.SerializeToArray(buffer, size);
+	message->SerializeToArray(buffer, size);
 	
 	send(sockfd, buffer, size, 0);
-
-	free(buffer);
 	
+	delete message;
+	free(buffer);
+
 	return 0;
 }
