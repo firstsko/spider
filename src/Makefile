@@ -3,7 +3,7 @@ CC = g++
 CFLAG = -g -ggdb -Wall 
 INCLUDE = -I ../proto
 LINK = -L ../lib
-LINKER = -lmsg
+LINKER = -lmsg -lrt
 
 EXE = server
 BIN = ../bin
