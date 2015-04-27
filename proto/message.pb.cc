@@ -74,9 +74,9 @@ void protobuf_AssignDesc_message_2eproto() {
   Header_descriptor_ = file->message_type(1);
   static const int Header_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, flow_no_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, length_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, src_fsm_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, dst_fsm_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, type_),
   };
   Header_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -91,7 +91,6 @@ void protobuf_AssignDesc_message_2eproto() {
       sizeof(Header));
   Body_descriptor_ = file->message_type(2);
   static const int Body_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Body, type_),
   };
   Body_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -243,26 +242,26 @@ void protobuf_AddDesc_message_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rmessage.proto\022\007message\"G\n\007Message\022\037\n\006h"
     "eader\030\n \002(\0132\017.message.Header\022\033\n\004body\030\024 \001"
-    "(\0132\r.message.Body\"K\n\006Header\022\017\n\007flow_no\030\n"
-    " \002(\r\022\016\n\006length\030\024 \002(\r\022\017\n\007src_fsm\030\036 \002(\r\022\017\n"
-    "\007dst_fsm\030( \002(\r\"3\n\004Body\022\"\n\004type\030\n \002(\0162\024.m"
-    "essage.MessageType*\007\010\220N\020\241\215\006\".\n\010Response\022"
-    "\017\n\007retcode\030\n \002(\005\022\021\n\terror_msg\030\024 \001(\t\"2\n\014L"
-    "oginRequest\022\022\n\nlogin_name\030\n \002(\t\022\016\n\006passw"
-    "d\030\024 \002(\t\".\n\rLoginResponse\022\035\n\002rc\030\n \002(\0132\021.m"
-    "essage.Response\"\'\n\021FriendListRequest\022\022\n\n"
-    "login_name\030\n \002(\t\"H\n\022FriendListResponse\022\035"
-    "\n\002rc\030\n \002(\0132\021.message.Response\022\023\n\013friend_"
-    "list\030\024 \003(\t*k\n\013MessageType\022\022\n\rLOGIN_REQUE"
-    "ST\020\221N\022\023\n\016LOGIN_RESPONSE\020\222N\022\030\n\023FRIEND_LIS"
-    "T_REQUEST\020\223N\022\031\n\024FRIEND_LIST_RESPONSE\020\224N:"
-    "<\n\rlogin_request\022\r.message.Body\030\221N \001(\0132\025"
-    ".message.LoginRequest:>\n\016login_response\022"
-    "\r.message.Body\030\222N \001(\0132\026.message.LoginRes"
-    "ponse:G\n\023friend_list_request\022\r.message.B"
-    "ody\030\223N \001(\0132\032.message.FriendListRequest:I"
-    "\n\024friend_list_response\022\r.message.Body\030\224N"
-    " \001(\0132\033.message.FriendListResponse", 873);
+    "(\0132\r.message.Body\"_\n\006Header\022\017\n\007flow_no\030\n"
+    " \002(\r\022\017\n\007src_fsm\030\024 \002(\r\022\017\n\007dst_fsm\030\036 \002(\r\022\""
+    "\n\004type\030( \002(\0162\024.message.MessageType\"\017\n\004Bo"
+    "dy*\007\010\220N\020\241\215\006\".\n\010Response\022\017\n\007retcode\030\n \002(\005"
+    "\022\021\n\terror_msg\030\024 \001(\t\"2\n\014LoginRequest\022\022\n\nl"
+    "ogin_name\030\n \002(\t\022\016\n\006passwd\030\024 \002(\t\".\n\rLogin"
+    "Response\022\035\n\002rc\030\n \002(\0132\021.message.Response\""
+    "\'\n\021FriendListRequest\022\022\n\nlogin_name\030\n \002(\t"
+    "\"H\n\022FriendListResponse\022\035\n\002rc\030\n \002(\0132\021.mes"
+    "sage.Response\022\023\n\013friend_list\030\024 \003(\t*k\n\013Me"
+    "ssageType\022\022\n\rLOGIN_REQUEST\020\221N\022\023\n\016LOGIN_R"
+    "ESPONSE\020\222N\022\030\n\023FRIEND_LIST_REQUEST\020\223N\022\031\n\024"
+    "FRIEND_LIST_RESPONSE\020\224N:<\n\rlogin_request"
+    "\022\r.message.Body\030\221N \001(\0132\025.message.LoginRe"
+    "quest:>\n\016login_response\022\r.message.Body\030\222"
+    "N \001(\0132\026.message.LoginResponse:G\n\023friend_"
+    "list_request\022\r.message.Body\030\223N \001(\0132\032.mes"
+    "sage.FriendListRequest:I\n\024friend_list_re"
+    "sponse\022\r.message.Body\030\224N \001(\0132\033.message.F"
+    "riendListResponse", 857);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.proto", &protobuf_RegisterTypes);
   Message::default_instance_ = new Message();
@@ -607,9 +606,9 @@ void Message::Swap(Message* other) {
 
 #ifndef _MSC_VER
 const int Header::kFlowNoFieldNumber;
-const int Header::kLengthFieldNumber;
 const int Header::kSrcFsmFieldNumber;
 const int Header::kDstFsmFieldNumber;
+const int Header::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 Header::Header()
@@ -631,9 +630,9 @@ Header::Header(const Header& from)
 void Header::SharedCtor() {
   _cached_size_ = 0;
   flow_no_ = 0u;
-  length_ = 0u;
   src_fsm_ = 0u;
   dst_fsm_ = 0u;
+  type_ = 10001;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -679,7 +678,10 @@ void Header::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(flow_no_, dst_fsm_);
+  if (_has_bits_[0 / 32] & 15) {
+    ZR_(flow_no_, dst_fsm_);
+    type_ = 10001;
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -708,28 +710,13 @@ bool Header::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(160)) goto parse_length;
+        if (input->ExpectTag(160)) goto parse_src_fsm;
         break;
       }
 
-      // required uint32 length = 20;
+      // required uint32 src_fsm = 20;
       case 20: {
         if (tag == 160) {
-         parse_length:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &length_)));
-          set_has_length();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(240)) goto parse_src_fsm;
-        break;
-      }
-
-      // required uint32 src_fsm = 30;
-      case 30: {
-        if (tag == 240) {
          parse_src_fsm:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -738,18 +725,38 @@ bool Header::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(320)) goto parse_dst_fsm;
+        if (input->ExpectTag(240)) goto parse_dst_fsm;
         break;
       }
 
-      // required uint32 dst_fsm = 40;
-      case 40: {
-        if (tag == 320) {
+      // required uint32 dst_fsm = 30;
+      case 30: {
+        if (tag == 240) {
          parse_dst_fsm:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &dst_fsm_)));
           set_has_dst_fsm();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(320)) goto parse_type;
+        break;
+      }
+
+      // required .message.MessageType type = 40;
+      case 40: {
+        if (tag == 320) {
+         parse_type:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::message::MessageType_IsValid(value)) {
+            set_type(static_cast< ::message::MessageType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(40, value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -787,19 +794,20 @@ void Header::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->flow_no(), output);
   }
 
-  // required uint32 length = 20;
-  if (has_length()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(20, this->length(), output);
-  }
-
-  // required uint32 src_fsm = 30;
+  // required uint32 src_fsm = 20;
   if (has_src_fsm()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(30, this->src_fsm(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(20, this->src_fsm(), output);
   }
 
-  // required uint32 dst_fsm = 40;
+  // required uint32 dst_fsm = 30;
   if (has_dst_fsm()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->dst_fsm(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(30, this->dst_fsm(), output);
+  }
+
+  // required .message.MessageType type = 40;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      40, this->type(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -817,19 +825,20 @@ void Header::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(10, this->flow_no(), target);
   }
 
-  // required uint32 length = 20;
-  if (has_length()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(20, this->length(), target);
-  }
-
-  // required uint32 src_fsm = 30;
+  // required uint32 src_fsm = 20;
   if (has_src_fsm()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(30, this->src_fsm(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(20, this->src_fsm(), target);
   }
 
-  // required uint32 dst_fsm = 40;
+  // required uint32 dst_fsm = 30;
   if (has_dst_fsm()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->dst_fsm(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(30, this->dst_fsm(), target);
+  }
+
+  // required .message.MessageType type = 40;
+  if (has_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      40, this->type(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -851,25 +860,24 @@ int Header::ByteSize() const {
           this->flow_no());
     }
 
-    // required uint32 length = 20;
-    if (has_length()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->length());
-    }
-
-    // required uint32 src_fsm = 30;
+    // required uint32 src_fsm = 20;
     if (has_src_fsm()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->src_fsm());
     }
 
-    // required uint32 dst_fsm = 40;
+    // required uint32 dst_fsm = 30;
     if (has_dst_fsm()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->dst_fsm());
+    }
+
+    // required .message.MessageType type = 40;
+    if (has_type()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
   }
@@ -902,14 +910,14 @@ void Header::MergeFrom(const Header& from) {
     if (from.has_flow_no()) {
       set_flow_no(from.flow_no());
     }
-    if (from.has_length()) {
-      set_length(from.length());
-    }
     if (from.has_src_fsm()) {
       set_src_fsm(from.src_fsm());
     }
     if (from.has_dst_fsm()) {
       set_dst_fsm(from.dst_fsm());
+    }
+    if (from.has_type()) {
+      set_type(from.type());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -936,9 +944,9 @@ bool Header::IsInitialized() const {
 void Header::Swap(Header* other) {
   if (other != this) {
     std::swap(flow_no_, other->flow_no_);
-    std::swap(length_, other->length_);
     std::swap(src_fsm_, other->src_fsm_);
     std::swap(dst_fsm_, other->dst_fsm_);
+    std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -957,7 +965,6 @@ void Header::Swap(Header* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Body::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 Body::Body()
@@ -978,7 +985,6 @@ Body::Body(const Body& from)
 
 void Body::SharedCtor() {
   _cached_size_ = 0;
-  type_ = 10001;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1015,7 +1021,6 @@ Body* Body::New() const {
 
 void Body::Clear() {
   _extensions_.Clear();
-  type_ = 10001;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1029,43 +1034,19 @@ bool Body::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .message.MessageType type = 10;
-      case 10: {
-        if (tag == 80) {
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          if (::message::MessageType_IsValid(value)) {
-            set_type(static_cast< ::message::MessageType >(value));
-          } else {
-            mutable_unknown_fields()->AddVarint(10, value);
-          }
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        if ((80000u <= tag && tag < 800008u)) {
-          DO_(_extensions_.ParseField(tag, input, default_instance_,
-                                      mutable_unknown_fields()));
-          continue;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
     }
+    if ((80000u <= tag && tag < 800008u)) {
+      DO_(_extensions_.ParseField(tag, input, default_instance_,
+                                  mutable_unknown_fields()));
+      continue;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, mutable_unknown_fields()));
   }
 success:
   // @@protoc_insertion_point(parse_success:message.Body)
@@ -1079,12 +1060,6 @@ failure:
 void Body::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:message.Body)
-  // required .message.MessageType type = 10;
-  if (has_type()) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      10, this->type(), output);
-  }
-
   // Extension range [10000, 100001)
   _extensions_.SerializeWithCachedSizes(
       10000, 100001, output);
@@ -1099,12 +1074,6 @@ void Body::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Body::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:message.Body)
-  // required .message.MessageType type = 10;
-  if (has_type()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      10, this->type(), target);
-  }
-
   // Extension range [10000, 100001)
   target = _extensions_.SerializeWithCachedSizesToArray(
       10000, 100001, target);
@@ -1120,14 +1089,6 @@ void Body::SerializeWithCachedSizes(
 int Body::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .message.MessageType type = 10;
-    if (has_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
-    }
-
-  }
   total_size += _extensions_.ByteSize();
 
   if (!unknown_fields().empty()) {
@@ -1155,11 +1116,6 @@ void Body::MergeFrom(const ::google::protobuf::Message& from) {
 
 void Body::MergeFrom(const Body& from) {
   GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_type()) {
-      set_type(from.type());
-    }
-  }
   _extensions_.MergeFrom(from._extensions_);
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1177,7 +1133,6 @@ void Body::CopyFrom(const Body& from) {
 }
 
 bool Body::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
 
   if (!_extensions_.IsInitialized()) return false;  return true;
@@ -1185,8 +1140,6 @@ bool Body::IsInitialized() const {
 
 void Body::Swap(Body* other) {
   if (other != this) {
-    std::swap(type_, other->type_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
     _extensions_.Swap(&other->_extensions_);

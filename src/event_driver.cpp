@@ -159,10 +159,9 @@ void EventDriver::StartLoop(int timeout_usec) {
 		
 			// Connection Closed By Peer
 			if (events[i].events & EPOLLRDHUP) {
-
 				if ((it = event_container_.find(event_fd)) != event_container_.end()) {
-					it->second->Close();
 					DelEvent(event_fd);
+					it->second->Close();
 				}
 			}
 			// Recieve New Data

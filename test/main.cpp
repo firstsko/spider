@@ -13,6 +13,11 @@
 
 using namespace message;
 
+typedef struct {
+	unsigned length;
+	unsigned message_id; 
+} header;
+
 int main(int argc, char **argv) {
 	if (argc != 3) {
 		printf("usage: %s ip port\n", basename(argv[0]));
@@ -42,19 +47,24 @@ int main(int argc, char **argv) {
 	}
 
 	Message *message = new Message;
-	Header *header = new Header;
-	header->set_flow_no(1234);
-	header->set_length(0);
-	header->set_src_fsm(4321);
-	header->set_dst_fsm(3123);
-	message->set_allocated_header(header);
+	Header *head = new Header;
+	head->set_flow_no(1234);
+	head->set_src_fsm(4321);
+	head->set_dst_fsm(3123);
+	head->set_type(LOGIN_REQUEST);
+	message->set_allocated_header(head);
 
 	int size = message->ByteSize();
-	printf("Message Size: %d \n", size);
-	void *buffer = malloc(size);
-	message->SerializeToArray(buffer, size);
+	int length = size + sizeof(header);
+	printf("Message Size: %d Header Size:%d \n", length, length - size);
+	void *buffer = malloc(length);
+	header h;
+	h.length = htonl(length);
+	h.message_id = htonl(LOGIN_REQUEST);
+	memcpy(buffer, &h, sizeof(h));
+	message->SerializeToArray((char *)buffer + sizeof(header), size);
 	
-	send(sockfd, buffer, size, 0);
+	printf("Bytes Send %lu\n", send(sockfd, buffer, length, 0));
 	
 	delete message;
 	free(buffer);

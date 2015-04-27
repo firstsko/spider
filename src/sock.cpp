@@ -187,6 +187,7 @@ int Socket::Read() {
 		len = recv(sockfd_, inbuf_ + r_offset_, SOCKET_BUFFER_SIZE - 1, 0);
 		bytes += len;
 		r_offset_ += len;
+
 		if (len < 0)  {
 			// All Data Drained For Edge-Trigger, No More Data, Wait For Next Round
 			if (errno == EAGAIN || errno == EWOULDBLOCK) {
@@ -206,6 +207,9 @@ int Socket::Read() {
 			Close(); 
 			break;
 		} 
+
+
+
 	}
 
 	// User Can Check Return Value To Determine Where Connection Is OK

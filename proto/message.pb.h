@@ -219,46 +219,46 @@ class Header : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 flow_no() const;
   inline void set_flow_no(::google::protobuf::uint32 value);
 
-  // required uint32 length = 20;
-  inline bool has_length() const;
-  inline void clear_length();
-  static const int kLengthFieldNumber = 20;
-  inline ::google::protobuf::uint32 length() const;
-  inline void set_length(::google::protobuf::uint32 value);
-
-  // required uint32 src_fsm = 30;
+  // required uint32 src_fsm = 20;
   inline bool has_src_fsm() const;
   inline void clear_src_fsm();
-  static const int kSrcFsmFieldNumber = 30;
+  static const int kSrcFsmFieldNumber = 20;
   inline ::google::protobuf::uint32 src_fsm() const;
   inline void set_src_fsm(::google::protobuf::uint32 value);
 
-  // required uint32 dst_fsm = 40;
+  // required uint32 dst_fsm = 30;
   inline bool has_dst_fsm() const;
   inline void clear_dst_fsm();
-  static const int kDstFsmFieldNumber = 40;
+  static const int kDstFsmFieldNumber = 30;
   inline ::google::protobuf::uint32 dst_fsm() const;
   inline void set_dst_fsm(::google::protobuf::uint32 value);
+
+  // required .message.MessageType type = 40;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 40;
+  inline ::message::MessageType type() const;
+  inline void set_type(::message::MessageType value);
 
   // @@protoc_insertion_point(class_scope:message.Header)
  private:
   inline void set_has_flow_no();
   inline void clear_has_flow_no();
-  inline void set_has_length();
-  inline void clear_has_length();
   inline void set_has_src_fsm();
   inline void clear_has_src_fsm();
   inline void set_has_dst_fsm();
   inline void clear_has_dst_fsm();
+  inline void set_has_type();
+  inline void clear_has_type();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::uint32 flow_no_;
-  ::google::protobuf::uint32 length_;
   ::google::protobuf::uint32 src_fsm_;
   ::google::protobuf::uint32 dst_fsm_;
+  int type_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
@@ -321,18 +321,9 @@ class Body : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .message.MessageType type = 10;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 10;
-  inline ::message::MessageType type() const;
-  inline void set_type(::message::MessageType value);
-
   GOOGLE_PROTOBUF_EXTENSION_ACCESSORS(Body)
   // @@protoc_insertion_point(class_scope:message.Body)
  private:
-  inline void set_has_type();
-  inline void clear_has_type();
 
   ::google::protobuf::internal::ExtensionSet _extensions_;
 
@@ -340,7 +331,6 @@ class Body : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  int type_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
@@ -937,39 +927,15 @@ inline void Header::set_flow_no(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:message.Header.flow_no)
 }
 
-// required uint32 length = 20;
-inline bool Header::has_length() const {
+// required uint32 src_fsm = 20;
+inline bool Header::has_src_fsm() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Header::set_has_length() {
+inline void Header::set_has_src_fsm() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Header::clear_has_length() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Header::clear_length() {
-  length_ = 0u;
-  clear_has_length();
-}
-inline ::google::protobuf::uint32 Header::length() const {
-  // @@protoc_insertion_point(field_get:message.Header.length)
-  return length_;
-}
-inline void Header::set_length(::google::protobuf::uint32 value) {
-  set_has_length();
-  length_ = value;
-  // @@protoc_insertion_point(field_set:message.Header.length)
-}
-
-// required uint32 src_fsm = 30;
-inline bool Header::has_src_fsm() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void Header::set_has_src_fsm() {
-  _has_bits_[0] |= 0x00000004u;
-}
 inline void Header::clear_has_src_fsm() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void Header::clear_src_fsm() {
   src_fsm_ = 0u;
@@ -985,15 +951,15 @@ inline void Header::set_src_fsm(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:message.Header.src_fsm)
 }
 
-// required uint32 dst_fsm = 40;
+// required uint32 dst_fsm = 30;
 inline bool Header::has_dst_fsm() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void Header::set_has_dst_fsm() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void Header::clear_has_dst_fsm() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void Header::clear_dst_fsm() {
   dst_fsm_ = 0u;
@@ -1009,34 +975,34 @@ inline void Header::set_dst_fsm(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:message.Header.dst_fsm)
 }
 
-// -------------------------------------------------------------------
-
-// Body
-
-// required .message.MessageType type = 10;
-inline bool Body::has_type() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// required .message.MessageType type = 40;
+inline bool Header::has_type() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void Body::set_has_type() {
-  _has_bits_[0] |= 0x00000001u;
+inline void Header::set_has_type() {
+  _has_bits_[0] |= 0x00000008u;
 }
-inline void Body::clear_has_type() {
-  _has_bits_[0] &= ~0x00000001u;
+inline void Header::clear_has_type() {
+  _has_bits_[0] &= ~0x00000008u;
 }
-inline void Body::clear_type() {
+inline void Header::clear_type() {
   type_ = 10001;
   clear_has_type();
 }
-inline ::message::MessageType Body::type() const {
-  // @@protoc_insertion_point(field_get:message.Body.type)
+inline ::message::MessageType Header::type() const {
+  // @@protoc_insertion_point(field_get:message.Header.type)
   return static_cast< ::message::MessageType >(type_);
 }
-inline void Body::set_type(::message::MessageType value) {
+inline void Header::set_type(::message::MessageType value) {
   assert(::message::MessageType_IsValid(value));
   set_has_type();
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.Body.type)
+  // @@protoc_insertion_point(field_set:message.Header.type)
 }
+
+// -------------------------------------------------------------------
+
+// Body
 
 // -------------------------------------------------------------------
 
