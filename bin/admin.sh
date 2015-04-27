@@ -44,7 +44,6 @@ then
 		for pid in `ps -ef|grep "./server"|grep -v grep|awk '{print $2}'`
 		do
 			target_exe=`readlink /proc/$pid/exe | awk '{print $1}'`
-			#如果target_exe非空字符串
 			if [ -n "$target_exe" ]
 			then
 				local_exe=`pwd`"/server"
