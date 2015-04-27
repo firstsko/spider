@@ -1,7 +1,6 @@
 SRC = *.cc
 CC = g++
-CFLAG = -g -m64 -fPIC -ggdb -Wall -c -Wno-deprecated
-
+CFLAG = -g -m64 -fPIC -ggdb -Wall -c 
 EXE = libmsg.a
 LIB = ../lib
 all:
