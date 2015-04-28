@@ -3,7 +3,7 @@
 
 #include "message.pb.h"
 
-using namesace message;
+using namespace message;
 
 typedef struct {
 	unsigned length;
