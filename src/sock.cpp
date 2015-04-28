@@ -217,6 +217,16 @@ int Socket::Read() {
 		Header_t *head;
 		head = (Header_t *)inbuf_;
 		int msg_len = ntohl(head->length);
+		if (msg_len > SOCKET_BUFFER_SIZE) {
+			INFO("Socket Inbuffer Not Enough, Allocate Space Again");
+			free(inbuf_);
+			inbuf_ = (char *)malloc((msg_len + 1) * sizeof(char));
+			if (inbuf_ == NULL) {
+				EMERG("Cannot Allocate Out Buffer, Process Will Exit");
+				exit(EXIT_FAILURE);
+			}
+		}
+	
 		// int msg_id = ntohl(head->message_id);
 		if (bytes < msg_len) {
 			return bytes;
@@ -231,6 +241,15 @@ int Socket::Read() {
 			memset(inbuf_ + bytes - msg_len, 0, msg_len);
 			r_offset_ = bytes - msg_len;			
 		} 
+
+		if (msg_len > SOCKET_BUFFER_SIZE) {
+			free(inbuf_);
+			inbuf_ = (char *)malloc(SOCKET_BUFFER_SIZE * sizeof(char));
+			if (inbuf_ == NULL) {
+				EMERG("Cannot Allocate Out Buffer, Process Will Exit");
+				exit(EXIT_FAILURE);
+			}
+		}
 	}	
 
 	// User Can Check Return Value To Determine Where Connection Is OK
