@@ -27,7 +27,6 @@ int CheckConnectTimeoutCb(void *data) {
 // Connect With A Timeout
 int Channel::OnConnect(const string &ip,  int port, int timeout) {
 	int ret = sk_->Connect(ip, port, timeout);
-	UpdateTime();
 	if (ret == 0) {
 		INFO("Connection Complete Immediately");
 		return 0;
@@ -54,7 +53,6 @@ int Channel::SendRequest(const string &ip, int port, void *message, size_t len) 
 	if (it != gmap_tcpdest.end()) {
 		sk_ = it->second; 	
 		SendMessage(message, len);
-		UpdateTime();
 	} else {
 		OnConnect(ip, port);
 		// When Writable, SendMessage, If Failed To Connect, Message Will Be Lost  
@@ -73,8 +71,4 @@ int Channel::SendResponse(void *message, size_t len) {
 int Channel::SendMessage(void *message, size_t len) {
 	memcpy(sk_->GetWriteIndex(), message, len);	
 	return 0;
-}
-
-void Channel::UpdateTime() {
-    gettimeofday(&tv_, NULL);
 }

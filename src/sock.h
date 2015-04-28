@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <time.h>
 
 #include <string>
 
@@ -102,6 +103,14 @@ class Socket
 	sockaddr_in GetPeerAddr() {
 		return peer_;
 	}
+
+	void UpdateTimeStamp() {
+		last_io_time_ = time(NULL);
+	}
+
+	int GetLastTimeStamp() {
+		return last_io_time_;
+	}
 	
 private:
 	// Non-Blocking I/O
@@ -138,6 +147,8 @@ private:
 	int recv_buff_size_;
 	int send_buff_size_;
 	Socktype_t type_;
+
+	int last_io_time_;
 };
 
 static inline bool operator==(const sockaddr_in &foo, const sockaddr_in &bar) {

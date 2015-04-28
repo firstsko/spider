@@ -88,14 +88,12 @@ int main(int argc , char **argv) {
 
 	printf("End LogBench: %s\n", now_str().c_str()); */
 	Socket *server = new Socket(fd);
-
 	server->BindListen(port);
-
-	INFO("%s Server Start, pid %d, Listen Fd %d On TCP Port %d", version, getpid(), server->GetFd(), port);
-	printf("%s %s Server Start, pid %d, Listen Fd %d On TCP Port %d\n", now_str().c_str(), version, getpid(), server->GetFd(), port);
 
 	// Disappear From Terminal
 	daemon(1, 1);
+	INFO("%s Server Start, pid %d, Listen Fd %d On TCP Port %d", version, getpid(), server->GetFd(), port);
+	printf("%s %s Server Start, pid %d, Listen Fd %d On TCP Port %d\n", now_str().c_str(), version, getpid(), server->GetFd(), port);
 
 	EventDriver *driver = EventDriver::Instance();
 	driver->CreateDriver();
@@ -104,7 +102,7 @@ int main(int argc , char **argv) {
 	driver->AddEvent(fd, server, EDGE_TRIGGER);
 	// Every 100ms Flush Log Cache Buffer
 	driver->AddTimer(0, 100, false, flush_log, NULL);
-	driver->AddTimer(0, 500, false, bar, NULL);
+	//driver->AddTimer(0, 500, false, bar, NULL);
 
 	driver->StartLoop();
 

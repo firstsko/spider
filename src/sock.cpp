@@ -5,7 +5,6 @@
 #include <strings.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <time.h>
 #include <map>
 
 #include "sock.h"
@@ -45,12 +44,16 @@ Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0
 
 	recv_buff_size_ = GetTcpInBuffsize();
 	send_buff_size_ = GetTcpOutBuffsize();
+	last_io_time_ = time(NULL);
 }
 
 void Socket::Close() {
-	close(sockfd_);
-	state_ = SOCK_CLOSED;
-	INFO("Close Connection With Client %s:%d", iptostr(peer_.sin_addr.s_addr), ntohs(peer_.sin_port));
+	// Avoiding Double Close In Destructor
+	if (state_ != SOCK_CLOSED) {
+		close(sockfd_);
+		state_ = SOCK_CLOSED;
+		INFO("Close Connection With Client %s:%d", iptostr(peer_.sin_addr.s_addr), ntohs(peer_.sin_port));
+	}
 }
 
 Socket::~Socket() {
@@ -184,6 +187,7 @@ int Socket::BindListen(int port) {
 }
 
 int Socket::Read() {
+	UpdateTimeStamp();
 	int len = 0;		
 	int bytes = 0;
 
@@ -257,6 +261,7 @@ int Socket::Read() {
 }
 
 int Socket::Write() {
+	UpdateTimeStamp();
 	// On Connection Complete And Socket Become Writable
 	if (state_ == SOCK_CONNECTTING) {
 		int ret = 0;

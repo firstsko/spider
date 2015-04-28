@@ -28,11 +28,7 @@ public:
 	int SendMessage(void *message, size_t len);
 
 private:
-	void UpdateTime();
-
-private:
 	Socket* sk_;
-	struct timeval tv_;
 };
 
 #endif
