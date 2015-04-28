@@ -213,7 +213,8 @@ void Log::Flush() {
 	}
 
 	Rotate();
-	dprintf(fd_, "%s", pbuff_);
+	//dprintf(fd_, "%s", pbuff_);
+	write(fd_, pbuff_, buff_offset_);
 	memset(pbuff_, 0, LOG_CACHE_SIZE);
 	buff_offset_ = 0;
 }

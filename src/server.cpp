@@ -81,6 +81,12 @@ int main(int argc , char **argv) {
 	int port = atoi(argv[1]);
 	int fd = socket(PF_INET, SOCK_STREAM, 0);
 
+	/*printf("Start LogBench: %s\n", now_str().c_str());
+	for (int i = 0; i < 1000000; i++) {
+		INFO("Hello World , Come On Bitch, Fuck you Don't Run Hahahaha, Sun of Beach");
+	}
+
+	printf("End LogBench: %s\n", now_str().c_str()); */
 	Socket *server = new Socket(fd);
 
 	server->BindListen(port);
@@ -98,7 +104,7 @@ int main(int argc , char **argv) {
 	driver->AddEvent(fd, server, EDGE_TRIGGER);
 	// Every 100ms Flush Log Cache Buffer
 	driver->AddTimer(0, 100, false, flush_log, NULL);
-	//driver->AddTimer(0, 500, false, bar, NULL);
+	driver->AddTimer(0, 500, false, bar, NULL);
 
 	driver->StartLoop();
 
