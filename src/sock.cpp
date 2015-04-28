@@ -303,3 +303,23 @@ int Socket::SetTcpOutBuffsize(size_t size) {
 	}
 	return ret;
 }
+
+int Socket::GetTcpInBuffsize() {
+	int size;
+	int	len = sizeof(size);
+	int ret = getsockopt(sockfd_, SOL_SOCKET, SO_RCVBUF, &size, (socklen_t*) &len);
+	if (ret < 0) {
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
+	}
+	return size;
+}
+
+int Socket::GetTcpOutBuffsize() {
+	int size;
+	int	len = sizeof(size);
+	int ret = getsockopt(sockfd_, SOL_SOCKET, SO_SNDBUF, &size, (socklen_t*) &len);
+	if (ret < 0) {
+		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
+	}
+	return size;
+}

@@ -68,6 +68,10 @@ class Socket
 
 	int SetTcpOutBuffsize(size_t size);
 
+	int GetTcpInBuffsize();
+
+	int GetTcpOutBuffsize();
+
 	void ShutdownAll();
 
 	void ClearRBuffer() {
