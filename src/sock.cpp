@@ -1,5 +1,4 @@
 #include <sys/types.h>
-#include <sys/select.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h> // TCP_NODELAY
 #include <string.h>
@@ -11,8 +10,10 @@
 
 #include "sock.h"
 #include "event_driver.h"
+#include "message.h"
 
 using namespace std;
+using namespace message;
 
 // Collect Current TCP Connections
 map<sockaddr_in, Socket *> gmap_tcpdest;
@@ -210,10 +211,27 @@ int Socket::Read() {
 			Close(); 
 			break;
 		} 
-
-
-
 	}
+
+	if (bytes > (int)sizeof(Header_t)) {
+		Header_t *head;
+		head = (Header_t *)inbuf_;
+		int msg_len = ntohl(head->length);
+		// int msg_id = ntohl(head->message_id);
+		if (bytes < msg_len) {
+			return bytes;
+		} else if (bytes == msg_len) {
+		//	Message *msg_ptr = (Message *) inbuf_; 
+		//	DispathMesasage(*msg_ptr);
+			ClearRBuffer();	
+		} else {
+		//	Message *msg_ptr = (Message *) inbuf_; 
+		//	DispathMesasage(*msg_ptr);
+			memcpy(inbuf_, inbuf_ + msg_len, bytes - msg_len);
+			memset(inbuf_ + bytes - msg_len, 0, msg_len);
+			r_offset_ = bytes - msg_len;			
+		} 
+	}	
 
 	// User Can Check Return Value To Determine Where Connection Is OK
 	return bytes;
