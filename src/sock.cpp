@@ -222,7 +222,7 @@ int Socket::Read() {
 			free(inbuf_);
 			inbuf_ = (char *)malloc((msg_len + 1) * sizeof(char));
 			if (inbuf_ == NULL) {
-				EMERG("Cannot Allocate Out Buffer, Process Will Exit");
+				EMERG("Cannot Allocate In Buffer, Process Will Exit");
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -246,7 +246,7 @@ int Socket::Read() {
 			free(inbuf_);
 			inbuf_ = (char *)malloc(SOCKET_BUFFER_SIZE * sizeof(char));
 			if (inbuf_ == NULL) {
-				EMERG("Cannot Allocate Out Buffer, Process Will Exit");
+				EMERG("Cannot Allocate In Buffer, Process Will Exit");
 				exit(EXIT_FAILURE);
 			}
 		}
