@@ -41,6 +41,9 @@ Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0
 	SetNoTcpDelay();
 	SetResueAddr();
 	SetKeepAlive();
+
+	recv_buff_size_ = GetTcpInBuffsize();
+	send_buff_size_ = GetTcpOutBuffsize();
 }
 
 void Socket::Close() {
@@ -293,6 +296,7 @@ int Socket::SetTcpInBuffsize(size_t size) {
 	if (ret < 0) {
 		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
+	recv_buff_size_ = size;
 	return ret;
 }
 
@@ -301,6 +305,7 @@ int Socket::SetTcpOutBuffsize(size_t size) {
 	if (ret < 0) {
 		ERROR("Errno: %d, ErrStr: %s", errno, strerror(errno));
 	}
+	send_buff_size_ = size;
 	return ret;
 }
 

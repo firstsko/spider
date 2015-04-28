@@ -135,6 +135,8 @@ private:
 	size_t append_offset_;
 	char *inbuf_;
 	char *outbuf_;
+	int recv_buff_size_;
+	int send_buff_size_;
 	Socktype_t type_;
 };
 

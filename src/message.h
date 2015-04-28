@@ -3,6 +3,10 @@
 
 #include  "message.pb.h"
 
+typedef struct {
+	unsigned length;
+	unsigned message_id; 
+} message_header;
 
 
 
