@@ -1,4 +1,3 @@
-#include <string>
 #include "message.h"
 
 using namespace std;
