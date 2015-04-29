@@ -1,4 +1,4 @@
-package message;
+package spider;
 
 enum MessageType {
 	LOGIN_REQUEST = 10001;
@@ -8,7 +8,7 @@ enum MessageType {
 	FRIEND_LIST_RESPONSE = 10004;
 }
 
-message Message {
+message SMessage {
 	required Header header 	= 10;
 	optional Body body 		= 20;
 }

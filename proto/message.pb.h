@@ -27,14 +27,14 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace spider {
 
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_message_2eproto();
 void protobuf_AssignDesc_message_2eproto();
 void protobuf_ShutdownFile_message_2eproto();
 
-class Message;
+class SMessage;
 class Header;
 class Body;
 class Response;
@@ -66,14 +66,14 @@ inline bool MessageType_Parse(
 }
 // ===================================================================
 
-class Message : public ::google::protobuf::Message {
+class SMessage : public ::google::protobuf::Message {
  public:
-  Message();
-  virtual ~Message();
+  SMessage();
+  virtual ~SMessage();
 
-  Message(const Message& from);
+  SMessage(const SMessage& from);
 
-  inline Message& operator=(const Message& from) {
+  inline SMessage& operator=(const SMessage& from) {
     CopyFrom(from);
     return *this;
   }
@@ -87,17 +87,17 @@ class Message : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Message& default_instance();
+  static const SMessage& default_instance();
 
-  void Swap(Message* other);
+  void Swap(SMessage* other);
 
   // implements Message ----------------------------------------------
 
-  Message* New() const;
+  SMessage* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Message& from);
-  void MergeFrom(const Message& from);
+  void CopyFrom(const SMessage& from);
+  void MergeFrom(const SMessage& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -119,25 +119,25 @@ class Message : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .message.Header header = 10;
+  // required .spider.Header header = 10;
   inline bool has_header() const;
   inline void clear_header();
   static const int kHeaderFieldNumber = 10;
-  inline const ::message::Header& header() const;
-  inline ::message::Header* mutable_header();
-  inline ::message::Header* release_header();
-  inline void set_allocated_header(::message::Header* header);
+  inline const ::spider::Header& header() const;
+  inline ::spider::Header* mutable_header();
+  inline ::spider::Header* release_header();
+  inline void set_allocated_header(::spider::Header* header);
 
-  // optional .message.Body body = 20;
+  // optional .spider.Body body = 20;
   inline bool has_body() const;
   inline void clear_body();
   static const int kBodyFieldNumber = 20;
-  inline const ::message::Body& body() const;
-  inline ::message::Body* mutable_body();
-  inline ::message::Body* release_body();
-  inline void set_allocated_body(::message::Body* body);
+  inline const ::spider::Body& body() const;
+  inline ::spider::Body* mutable_body();
+  inline ::spider::Body* release_body();
+  inline void set_allocated_body(::spider::Body* body);
 
-  // @@protoc_insertion_point(class_scope:message.Message)
+  // @@protoc_insertion_point(class_scope:spider.SMessage)
  private:
   inline void set_has_header();
   inline void clear_has_header();
@@ -148,14 +148,14 @@ class Message : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::message::Header* header_;
-  ::message::Body* body_;
+  ::spider::Header* header_;
+  ::spider::Body* body_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
 
   void InitAsDefaultInstance();
-  static Message* default_instance_;
+  static SMessage* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -233,14 +233,14 @@ class Header : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 dst_fsm() const;
   inline void set_dst_fsm(::google::protobuf::uint32 value);
 
-  // required .message.MessageType type = 40;
+  // required .spider.MessageType type = 40;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 40;
-  inline ::message::MessageType type() const;
-  inline void set_type(::message::MessageType value);
+  inline ::spider::MessageType type() const;
+  inline void set_type(::spider::MessageType value);
 
-  // @@protoc_insertion_point(class_scope:message.Header)
+  // @@protoc_insertion_point(class_scope:spider.Header)
  private:
   inline void set_has_flow_no();
   inline void clear_has_flow_no();
@@ -322,7 +322,7 @@ class Body : public ::google::protobuf::Message {
   // accessors -------------------------------------------------------
 
   GOOGLE_PROTOBUF_EXTENSION_ACCESSORS(Body)
-  // @@protoc_insertion_point(class_scope:message.Body)
+  // @@protoc_insertion_point(class_scope:spider.Body)
  private:
 
   ::google::protobuf::internal::ExtensionSet _extensions_;
@@ -412,7 +412,7 @@ class Response : public ::google::protobuf::Message {
   inline ::std::string* release_error_msg();
   inline void set_allocated_error_msg(::std::string* error_msg);
 
-  // @@protoc_insertion_point(class_scope:message.Response)
+  // @@protoc_insertion_point(class_scope:spider.Response)
  private:
   inline void set_has_retcode();
   inline void clear_has_retcode();
@@ -511,7 +511,7 @@ class LoginRequest : public ::google::protobuf::Message {
   inline ::std::string* release_passwd();
   inline void set_allocated_passwd(::std::string* passwd);
 
-  // @@protoc_insertion_point(class_scope:message.LoginRequest)
+  // @@protoc_insertion_point(class_scope:spider.LoginRequest)
  private:
   inline void set_has_login_name();
   inline void clear_has_login_name();
@@ -586,16 +586,16 @@ class LoginResponse : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .message.Response rc = 10;
+  // required .spider.Response rc = 10;
   inline bool has_rc() const;
   inline void clear_rc();
   static const int kRcFieldNumber = 10;
-  inline const ::message::Response& rc() const;
-  inline ::message::Response* mutable_rc();
-  inline ::message::Response* release_rc();
-  inline void set_allocated_rc(::message::Response* rc);
+  inline const ::spider::Response& rc() const;
+  inline ::spider::Response* mutable_rc();
+  inline ::spider::Response* release_rc();
+  inline void set_allocated_rc(::spider::Response* rc);
 
-  // @@protoc_insertion_point(class_scope:message.LoginResponse)
+  // @@protoc_insertion_point(class_scope:spider.LoginResponse)
  private:
   inline void set_has_rc();
   inline void clear_has_rc();
@@ -604,7 +604,7 @@ class LoginResponse : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::message::Response* rc_;
+  ::spider::Response* rc_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
@@ -679,7 +679,7 @@ class FriendListRequest : public ::google::protobuf::Message {
   inline ::std::string* release_login_name();
   inline void set_allocated_login_name(::std::string* login_name);
 
-  // @@protoc_insertion_point(class_scope:message.FriendListRequest)
+  // @@protoc_insertion_point(class_scope:spider.FriendListRequest)
  private:
   inline void set_has_login_name();
   inline void clear_has_login_name();
@@ -751,14 +751,14 @@ class FriendListResponse : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .message.Response rc = 10;
+  // required .spider.Response rc = 10;
   inline bool has_rc() const;
   inline void clear_rc();
   static const int kRcFieldNumber = 10;
-  inline const ::message::Response& rc() const;
-  inline ::message::Response* mutable_rc();
-  inline ::message::Response* release_rc();
-  inline void set_allocated_rc(::message::Response* rc);
+  inline const ::spider::Response& rc() const;
+  inline ::spider::Response* mutable_rc();
+  inline ::spider::Response* release_rc();
+  inline void set_allocated_rc(::spider::Response* rc);
 
   // repeated string friend_list = 20;
   inline int friend_list_size() const;
@@ -776,7 +776,7 @@ class FriendListResponse : public ::google::protobuf::Message {
   inline const ::google::protobuf::RepeatedPtrField< ::std::string>& friend_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_friend_list();
 
-  // @@protoc_insertion_point(class_scope:message.FriendListResponse)
+  // @@protoc_insertion_point(class_scope:spider.FriendListResponse)
  private:
   inline void set_has_rc();
   inline void clear_has_rc();
@@ -785,7 +785,7 @@ class FriendListResponse : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::message::Response* rc_;
+  ::spider::Response* rc_;
   ::google::protobuf::RepeatedPtrField< ::std::string> friend_list_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
@@ -797,57 +797,57 @@ class FriendListResponse : public ::google::protobuf::Message {
 // ===================================================================
 
 static const int kLoginRequestFieldNumber = 10001;
-extern ::google::protobuf::internal::ExtensionIdentifier< ::message::Body,
-    ::google::protobuf::internal::MessageTypeTraits< ::message::LoginRequest >, 11, false >
+extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::LoginRequest >, 11, false >
   login_request;
 static const int kLoginResponseFieldNumber = 10002;
-extern ::google::protobuf::internal::ExtensionIdentifier< ::message::Body,
-    ::google::protobuf::internal::MessageTypeTraits< ::message::LoginResponse >, 11, false >
+extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::LoginResponse >, 11, false >
   login_response;
 static const int kFriendListRequestFieldNumber = 10003;
-extern ::google::protobuf::internal::ExtensionIdentifier< ::message::Body,
-    ::google::protobuf::internal::MessageTypeTraits< ::message::FriendListRequest >, 11, false >
+extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::FriendListRequest >, 11, false >
   friend_list_request;
 static const int kFriendListResponseFieldNumber = 10004;
-extern ::google::protobuf::internal::ExtensionIdentifier< ::message::Body,
-    ::google::protobuf::internal::MessageTypeTraits< ::message::FriendListResponse >, 11, false >
+extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::FriendListResponse >, 11, false >
   friend_list_response;
 
 // ===================================================================
 
-// Message
+// SMessage
 
-// required .message.Header header = 10;
-inline bool Message::has_header() const {
+// required .spider.Header header = 10;
+inline bool SMessage::has_header() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Message::set_has_header() {
+inline void SMessage::set_has_header() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Message::clear_has_header() {
+inline void SMessage::clear_has_header() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Message::clear_header() {
-  if (header_ != NULL) header_->::message::Header::Clear();
+inline void SMessage::clear_header() {
+  if (header_ != NULL) header_->::spider::Header::Clear();
   clear_has_header();
 }
-inline const ::message::Header& Message::header() const {
-  // @@protoc_insertion_point(field_get:message.Message.header)
+inline const ::spider::Header& SMessage::header() const {
+  // @@protoc_insertion_point(field_get:spider.SMessage.header)
   return header_ != NULL ? *header_ : *default_instance_->header_;
 }
-inline ::message::Header* Message::mutable_header() {
+inline ::spider::Header* SMessage::mutable_header() {
   set_has_header();
-  if (header_ == NULL) header_ = new ::message::Header;
-  // @@protoc_insertion_point(field_mutable:message.Message.header)
+  if (header_ == NULL) header_ = new ::spider::Header;
+  // @@protoc_insertion_point(field_mutable:spider.SMessage.header)
   return header_;
 }
-inline ::message::Header* Message::release_header() {
+inline ::spider::Header* SMessage::release_header() {
   clear_has_header();
-  ::message::Header* temp = header_;
+  ::spider::Header* temp = header_;
   header_ = NULL;
   return temp;
 }
-inline void Message::set_allocated_header(::message::Header* header) {
+inline void SMessage::set_allocated_header(::spider::Header* header) {
   delete header_;
   header_ = header;
   if (header) {
@@ -855,40 +855,40 @@ inline void Message::set_allocated_header(::message::Header* header) {
   } else {
     clear_has_header();
   }
-  // @@protoc_insertion_point(field_set_allocated:message.Message.header)
+  // @@protoc_insertion_point(field_set_allocated:spider.SMessage.header)
 }
 
-// optional .message.Body body = 20;
-inline bool Message::has_body() const {
+// optional .spider.Body body = 20;
+inline bool SMessage::has_body() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Message::set_has_body() {
+inline void SMessage::set_has_body() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Message::clear_has_body() {
+inline void SMessage::clear_has_body() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Message::clear_body() {
-  if (body_ != NULL) body_->::message::Body::Clear();
+inline void SMessage::clear_body() {
+  if (body_ != NULL) body_->::spider::Body::Clear();
   clear_has_body();
 }
-inline const ::message::Body& Message::body() const {
-  // @@protoc_insertion_point(field_get:message.Message.body)
+inline const ::spider::Body& SMessage::body() const {
+  // @@protoc_insertion_point(field_get:spider.SMessage.body)
   return body_ != NULL ? *body_ : *default_instance_->body_;
 }
-inline ::message::Body* Message::mutable_body() {
+inline ::spider::Body* SMessage::mutable_body() {
   set_has_body();
-  if (body_ == NULL) body_ = new ::message::Body;
-  // @@protoc_insertion_point(field_mutable:message.Message.body)
+  if (body_ == NULL) body_ = new ::spider::Body;
+  // @@protoc_insertion_point(field_mutable:spider.SMessage.body)
   return body_;
 }
-inline ::message::Body* Message::release_body() {
+inline ::spider::Body* SMessage::release_body() {
   clear_has_body();
-  ::message::Body* temp = body_;
+  ::spider::Body* temp = body_;
   body_ = NULL;
   return temp;
 }
-inline void Message::set_allocated_body(::message::Body* body) {
+inline void SMessage::set_allocated_body(::spider::Body* body) {
   delete body_;
   body_ = body;
   if (body) {
@@ -896,7 +896,7 @@ inline void Message::set_allocated_body(::message::Body* body) {
   } else {
     clear_has_body();
   }
-  // @@protoc_insertion_point(field_set_allocated:message.Message.body)
+  // @@protoc_insertion_point(field_set_allocated:spider.SMessage.body)
 }
 
 // -------------------------------------------------------------------
@@ -918,13 +918,13 @@ inline void Header::clear_flow_no() {
   clear_has_flow_no();
 }
 inline ::google::protobuf::uint32 Header::flow_no() const {
-  // @@protoc_insertion_point(field_get:message.Header.flow_no)
+  // @@protoc_insertion_point(field_get:spider.Header.flow_no)
   return flow_no_;
 }
 inline void Header::set_flow_no(::google::protobuf::uint32 value) {
   set_has_flow_no();
   flow_no_ = value;
-  // @@protoc_insertion_point(field_set:message.Header.flow_no)
+  // @@protoc_insertion_point(field_set:spider.Header.flow_no)
 }
 
 // required uint32 src_fsm = 20;
@@ -942,13 +942,13 @@ inline void Header::clear_src_fsm() {
   clear_has_src_fsm();
 }
 inline ::google::protobuf::uint32 Header::src_fsm() const {
-  // @@protoc_insertion_point(field_get:message.Header.src_fsm)
+  // @@protoc_insertion_point(field_get:spider.Header.src_fsm)
   return src_fsm_;
 }
 inline void Header::set_src_fsm(::google::protobuf::uint32 value) {
   set_has_src_fsm();
   src_fsm_ = value;
-  // @@protoc_insertion_point(field_set:message.Header.src_fsm)
+  // @@protoc_insertion_point(field_set:spider.Header.src_fsm)
 }
 
 // required uint32 dst_fsm = 30;
@@ -966,16 +966,16 @@ inline void Header::clear_dst_fsm() {
   clear_has_dst_fsm();
 }
 inline ::google::protobuf::uint32 Header::dst_fsm() const {
-  // @@protoc_insertion_point(field_get:message.Header.dst_fsm)
+  // @@protoc_insertion_point(field_get:spider.Header.dst_fsm)
   return dst_fsm_;
 }
 inline void Header::set_dst_fsm(::google::protobuf::uint32 value) {
   set_has_dst_fsm();
   dst_fsm_ = value;
-  // @@protoc_insertion_point(field_set:message.Header.dst_fsm)
+  // @@protoc_insertion_point(field_set:spider.Header.dst_fsm)
 }
 
-// required .message.MessageType type = 40;
+// required .spider.MessageType type = 40;
 inline bool Header::has_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -989,15 +989,15 @@ inline void Header::clear_type() {
   type_ = 10001;
   clear_has_type();
 }
-inline ::message::MessageType Header::type() const {
-  // @@protoc_insertion_point(field_get:message.Header.type)
-  return static_cast< ::message::MessageType >(type_);
+inline ::spider::MessageType Header::type() const {
+  // @@protoc_insertion_point(field_get:spider.Header.type)
+  return static_cast< ::spider::MessageType >(type_);
 }
-inline void Header::set_type(::message::MessageType value) {
-  assert(::message::MessageType_IsValid(value));
+inline void Header::set_type(::spider::MessageType value) {
+  assert(::spider::MessageType_IsValid(value));
   set_has_type();
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.Header.type)
+  // @@protoc_insertion_point(field_set:spider.Header.type)
 }
 
 // -------------------------------------------------------------------
@@ -1023,13 +1023,13 @@ inline void Response::clear_retcode() {
   clear_has_retcode();
 }
 inline ::google::protobuf::int32 Response::retcode() const {
-  // @@protoc_insertion_point(field_get:message.Response.retcode)
+  // @@protoc_insertion_point(field_get:spider.Response.retcode)
   return retcode_;
 }
 inline void Response::set_retcode(::google::protobuf::int32 value) {
   set_has_retcode();
   retcode_ = value;
-  // @@protoc_insertion_point(field_set:message.Response.retcode)
+  // @@protoc_insertion_point(field_set:spider.Response.retcode)
 }
 
 // optional string error_msg = 20;
@@ -1049,7 +1049,7 @@ inline void Response::clear_error_msg() {
   clear_has_error_msg();
 }
 inline const ::std::string& Response::error_msg() const {
-  // @@protoc_insertion_point(field_get:message.Response.error_msg)
+  // @@protoc_insertion_point(field_get:spider.Response.error_msg)
   return *error_msg_;
 }
 inline void Response::set_error_msg(const ::std::string& value) {
@@ -1058,7 +1058,7 @@ inline void Response::set_error_msg(const ::std::string& value) {
     error_msg_ = new ::std::string;
   }
   error_msg_->assign(value);
-  // @@protoc_insertion_point(field_set:message.Response.error_msg)
+  // @@protoc_insertion_point(field_set:spider.Response.error_msg)
 }
 inline void Response::set_error_msg(const char* value) {
   set_has_error_msg();
@@ -1066,7 +1066,7 @@ inline void Response::set_error_msg(const char* value) {
     error_msg_ = new ::std::string;
   }
   error_msg_->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.Response.error_msg)
+  // @@protoc_insertion_point(field_set_char:spider.Response.error_msg)
 }
 inline void Response::set_error_msg(const char* value, size_t size) {
   set_has_error_msg();
@@ -1074,14 +1074,14 @@ inline void Response::set_error_msg(const char* value, size_t size) {
     error_msg_ = new ::std::string;
   }
   error_msg_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.Response.error_msg)
+  // @@protoc_insertion_point(field_set_pointer:spider.Response.error_msg)
 }
 inline ::std::string* Response::mutable_error_msg() {
   set_has_error_msg();
   if (error_msg_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     error_msg_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:message.Response.error_msg)
+  // @@protoc_insertion_point(field_mutable:spider.Response.error_msg)
   return error_msg_;
 }
 inline ::std::string* Response::release_error_msg() {
@@ -1105,7 +1105,7 @@ inline void Response::set_allocated_error_msg(::std::string* error_msg) {
     clear_has_error_msg();
     error_msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:message.Response.error_msg)
+  // @@protoc_insertion_point(field_set_allocated:spider.Response.error_msg)
 }
 
 // -------------------------------------------------------------------
@@ -1129,7 +1129,7 @@ inline void LoginRequest::clear_login_name() {
   clear_has_login_name();
 }
 inline const ::std::string& LoginRequest::login_name() const {
-  // @@protoc_insertion_point(field_get:message.LoginRequest.login_name)
+  // @@protoc_insertion_point(field_get:spider.LoginRequest.login_name)
   return *login_name_;
 }
 inline void LoginRequest::set_login_name(const ::std::string& value) {
@@ -1138,7 +1138,7 @@ inline void LoginRequest::set_login_name(const ::std::string& value) {
     login_name_ = new ::std::string;
   }
   login_name_->assign(value);
-  // @@protoc_insertion_point(field_set:message.LoginRequest.login_name)
+  // @@protoc_insertion_point(field_set:spider.LoginRequest.login_name)
 }
 inline void LoginRequest::set_login_name(const char* value) {
   set_has_login_name();
@@ -1146,7 +1146,7 @@ inline void LoginRequest::set_login_name(const char* value) {
     login_name_ = new ::std::string;
   }
   login_name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.LoginRequest.login_name)
+  // @@protoc_insertion_point(field_set_char:spider.LoginRequest.login_name)
 }
 inline void LoginRequest::set_login_name(const char* value, size_t size) {
   set_has_login_name();
@@ -1154,14 +1154,14 @@ inline void LoginRequest::set_login_name(const char* value, size_t size) {
     login_name_ = new ::std::string;
   }
   login_name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.LoginRequest.login_name)
+  // @@protoc_insertion_point(field_set_pointer:spider.LoginRequest.login_name)
 }
 inline ::std::string* LoginRequest::mutable_login_name() {
   set_has_login_name();
   if (login_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     login_name_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:message.LoginRequest.login_name)
+  // @@protoc_insertion_point(field_mutable:spider.LoginRequest.login_name)
   return login_name_;
 }
 inline ::std::string* LoginRequest::release_login_name() {
@@ -1185,7 +1185,7 @@ inline void LoginRequest::set_allocated_login_name(::std::string* login_name) {
     clear_has_login_name();
     login_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:message.LoginRequest.login_name)
+  // @@protoc_insertion_point(field_set_allocated:spider.LoginRequest.login_name)
 }
 
 // required string passwd = 20;
@@ -1205,7 +1205,7 @@ inline void LoginRequest::clear_passwd() {
   clear_has_passwd();
 }
 inline const ::std::string& LoginRequest::passwd() const {
-  // @@protoc_insertion_point(field_get:message.LoginRequest.passwd)
+  // @@protoc_insertion_point(field_get:spider.LoginRequest.passwd)
   return *passwd_;
 }
 inline void LoginRequest::set_passwd(const ::std::string& value) {
@@ -1214,7 +1214,7 @@ inline void LoginRequest::set_passwd(const ::std::string& value) {
     passwd_ = new ::std::string;
   }
   passwd_->assign(value);
-  // @@protoc_insertion_point(field_set:message.LoginRequest.passwd)
+  // @@protoc_insertion_point(field_set:spider.LoginRequest.passwd)
 }
 inline void LoginRequest::set_passwd(const char* value) {
   set_has_passwd();
@@ -1222,7 +1222,7 @@ inline void LoginRequest::set_passwd(const char* value) {
     passwd_ = new ::std::string;
   }
   passwd_->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.LoginRequest.passwd)
+  // @@protoc_insertion_point(field_set_char:spider.LoginRequest.passwd)
 }
 inline void LoginRequest::set_passwd(const char* value, size_t size) {
   set_has_passwd();
@@ -1230,14 +1230,14 @@ inline void LoginRequest::set_passwd(const char* value, size_t size) {
     passwd_ = new ::std::string;
   }
   passwd_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.LoginRequest.passwd)
+  // @@protoc_insertion_point(field_set_pointer:spider.LoginRequest.passwd)
 }
 inline ::std::string* LoginRequest::mutable_passwd() {
   set_has_passwd();
   if (passwd_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     passwd_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:message.LoginRequest.passwd)
+  // @@protoc_insertion_point(field_mutable:spider.LoginRequest.passwd)
   return passwd_;
 }
 inline ::std::string* LoginRequest::release_passwd() {
@@ -1261,14 +1261,14 @@ inline void LoginRequest::set_allocated_passwd(::std::string* passwd) {
     clear_has_passwd();
     passwd_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:message.LoginRequest.passwd)
+  // @@protoc_insertion_point(field_set_allocated:spider.LoginRequest.passwd)
 }
 
 // -------------------------------------------------------------------
 
 // LoginResponse
 
-// required .message.Response rc = 10;
+// required .spider.Response rc = 10;
 inline bool LoginResponse::has_rc() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1279,26 +1279,26 @@ inline void LoginResponse::clear_has_rc() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void LoginResponse::clear_rc() {
-  if (rc_ != NULL) rc_->::message::Response::Clear();
+  if (rc_ != NULL) rc_->::spider::Response::Clear();
   clear_has_rc();
 }
-inline const ::message::Response& LoginResponse::rc() const {
-  // @@protoc_insertion_point(field_get:message.LoginResponse.rc)
+inline const ::spider::Response& LoginResponse::rc() const {
+  // @@protoc_insertion_point(field_get:spider.LoginResponse.rc)
   return rc_ != NULL ? *rc_ : *default_instance_->rc_;
 }
-inline ::message::Response* LoginResponse::mutable_rc() {
+inline ::spider::Response* LoginResponse::mutable_rc() {
   set_has_rc();
-  if (rc_ == NULL) rc_ = new ::message::Response;
-  // @@protoc_insertion_point(field_mutable:message.LoginResponse.rc)
+  if (rc_ == NULL) rc_ = new ::spider::Response;
+  // @@protoc_insertion_point(field_mutable:spider.LoginResponse.rc)
   return rc_;
 }
-inline ::message::Response* LoginResponse::release_rc() {
+inline ::spider::Response* LoginResponse::release_rc() {
   clear_has_rc();
-  ::message::Response* temp = rc_;
+  ::spider::Response* temp = rc_;
   rc_ = NULL;
   return temp;
 }
-inline void LoginResponse::set_allocated_rc(::message::Response* rc) {
+inline void LoginResponse::set_allocated_rc(::spider::Response* rc) {
   delete rc_;
   rc_ = rc;
   if (rc) {
@@ -1306,7 +1306,7 @@ inline void LoginResponse::set_allocated_rc(::message::Response* rc) {
   } else {
     clear_has_rc();
   }
-  // @@protoc_insertion_point(field_set_allocated:message.LoginResponse.rc)
+  // @@protoc_insertion_point(field_set_allocated:spider.LoginResponse.rc)
 }
 
 // -------------------------------------------------------------------
@@ -1330,7 +1330,7 @@ inline void FriendListRequest::clear_login_name() {
   clear_has_login_name();
 }
 inline const ::std::string& FriendListRequest::login_name() const {
-  // @@protoc_insertion_point(field_get:message.FriendListRequest.login_name)
+  // @@protoc_insertion_point(field_get:spider.FriendListRequest.login_name)
   return *login_name_;
 }
 inline void FriendListRequest::set_login_name(const ::std::string& value) {
@@ -1339,7 +1339,7 @@ inline void FriendListRequest::set_login_name(const ::std::string& value) {
     login_name_ = new ::std::string;
   }
   login_name_->assign(value);
-  // @@protoc_insertion_point(field_set:message.FriendListRequest.login_name)
+  // @@protoc_insertion_point(field_set:spider.FriendListRequest.login_name)
 }
 inline void FriendListRequest::set_login_name(const char* value) {
   set_has_login_name();
@@ -1347,7 +1347,7 @@ inline void FriendListRequest::set_login_name(const char* value) {
     login_name_ = new ::std::string;
   }
   login_name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.FriendListRequest.login_name)
+  // @@protoc_insertion_point(field_set_char:spider.FriendListRequest.login_name)
 }
 inline void FriendListRequest::set_login_name(const char* value, size_t size) {
   set_has_login_name();
@@ -1355,14 +1355,14 @@ inline void FriendListRequest::set_login_name(const char* value, size_t size) {
     login_name_ = new ::std::string;
   }
   login_name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.FriendListRequest.login_name)
+  // @@protoc_insertion_point(field_set_pointer:spider.FriendListRequest.login_name)
 }
 inline ::std::string* FriendListRequest::mutable_login_name() {
   set_has_login_name();
   if (login_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     login_name_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:message.FriendListRequest.login_name)
+  // @@protoc_insertion_point(field_mutable:spider.FriendListRequest.login_name)
   return login_name_;
 }
 inline ::std::string* FriendListRequest::release_login_name() {
@@ -1386,14 +1386,14 @@ inline void FriendListRequest::set_allocated_login_name(::std::string* login_nam
     clear_has_login_name();
     login_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:message.FriendListRequest.login_name)
+  // @@protoc_insertion_point(field_set_allocated:spider.FriendListRequest.login_name)
 }
 
 // -------------------------------------------------------------------
 
 // FriendListResponse
 
-// required .message.Response rc = 10;
+// required .spider.Response rc = 10;
 inline bool FriendListResponse::has_rc() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1404,26 +1404,26 @@ inline void FriendListResponse::clear_has_rc() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void FriendListResponse::clear_rc() {
-  if (rc_ != NULL) rc_->::message::Response::Clear();
+  if (rc_ != NULL) rc_->::spider::Response::Clear();
   clear_has_rc();
 }
-inline const ::message::Response& FriendListResponse::rc() const {
-  // @@protoc_insertion_point(field_get:message.FriendListResponse.rc)
+inline const ::spider::Response& FriendListResponse::rc() const {
+  // @@protoc_insertion_point(field_get:spider.FriendListResponse.rc)
   return rc_ != NULL ? *rc_ : *default_instance_->rc_;
 }
-inline ::message::Response* FriendListResponse::mutable_rc() {
+inline ::spider::Response* FriendListResponse::mutable_rc() {
   set_has_rc();
-  if (rc_ == NULL) rc_ = new ::message::Response;
-  // @@protoc_insertion_point(field_mutable:message.FriendListResponse.rc)
+  if (rc_ == NULL) rc_ = new ::spider::Response;
+  // @@protoc_insertion_point(field_mutable:spider.FriendListResponse.rc)
   return rc_;
 }
-inline ::message::Response* FriendListResponse::release_rc() {
+inline ::spider::Response* FriendListResponse::release_rc() {
   clear_has_rc();
-  ::message::Response* temp = rc_;
+  ::spider::Response* temp = rc_;
   rc_ = NULL;
   return temp;
 }
-inline void FriendListResponse::set_allocated_rc(::message::Response* rc) {
+inline void FriendListResponse::set_allocated_rc(::spider::Response* rc) {
   delete rc_;
   rc_ = rc;
   if (rc) {
@@ -1431,7 +1431,7 @@ inline void FriendListResponse::set_allocated_rc(::message::Response* rc) {
   } else {
     clear_has_rc();
   }
-  // @@protoc_insertion_point(field_set_allocated:message.FriendListResponse.rc)
+  // @@protoc_insertion_point(field_set_allocated:spider.FriendListResponse.rc)
 }
 
 // repeated string friend_list = 20;
@@ -1442,65 +1442,65 @@ inline void FriendListResponse::clear_friend_list() {
   friend_list_.Clear();
 }
 inline const ::std::string& FriendListResponse::friend_list(int index) const {
-  // @@protoc_insertion_point(field_get:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_get:spider.FriendListResponse.friend_list)
   return friend_list_.Get(index);
 }
 inline ::std::string* FriendListResponse::mutable_friend_list(int index) {
-  // @@protoc_insertion_point(field_mutable:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_mutable:spider.FriendListResponse.friend_list)
   return friend_list_.Mutable(index);
 }
 inline void FriendListResponse::set_friend_list(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_set:spider.FriendListResponse.friend_list)
   friend_list_.Mutable(index)->assign(value);
 }
 inline void FriendListResponse::set_friend_list(int index, const char* value) {
   friend_list_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_set_char:spider.FriendListResponse.friend_list)
 }
 inline void FriendListResponse::set_friend_list(int index, const char* value, size_t size) {
   friend_list_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_set_pointer:spider.FriendListResponse.friend_list)
 }
 inline ::std::string* FriendListResponse::add_friend_list() {
   return friend_list_.Add();
 }
 inline void FriendListResponse::add_friend_list(const ::std::string& value) {
   friend_list_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_add:spider.FriendListResponse.friend_list)
 }
 inline void FriendListResponse::add_friend_list(const char* value) {
   friend_list_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_add_char:spider.FriendListResponse.friend_list)
 }
 inline void FriendListResponse::add_friend_list(const char* value, size_t size) {
   friend_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_add_pointer:spider.FriendListResponse.friend_list)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 FriendListResponse::friend_list() const {
-  // @@protoc_insertion_point(field_list:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_list:spider.FriendListResponse.friend_list)
   return friend_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 FriendListResponse::mutable_friend_list() {
-  // @@protoc_insertion_point(field_mutable_list:message.FriendListResponse.friend_list)
+  // @@protoc_insertion_point(field_mutable_list:spider.FriendListResponse.friend_list)
   return &friend_list_;
 }
 
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace message
+}  // namespace spider
 
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::message::MessageType> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::spider::MessageType> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::MessageType>() {
-  return ::message::MessageType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::spider::MessageType>() {
+  return ::spider::MessageType_descriptor();
 }
 
 }  // namespace google
