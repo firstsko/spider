@@ -11,26 +11,26 @@ cd $curdir
 
 if [ $1 = "start" ]
 then
-	pidnum=`ps -ef|grep "\./server"|grep -v grep|wc -l`
+	pidnum=`ps -ef|grep "\./spider-server"|grep -v grep|wc -l`
 	if [ $pidnum -lt 1 ]
 	then
-        ./server 8888
+        ./spider-server 8888
 	else
-		for pid in `ps -ef|grep "./server"|grep -v grep|awk '{print $2}'`
+		for pid in `ps -ef|grep "./spider-server"|grep -v grep|awk '{print $2}'`
 		do
 			target_exe=`readlink /proc/$pid/exe | awk '{print $1}'`
 			if [ -n "$target_exe" ]
 			then
-				local_exe=`pwd`"/server"
+				local_exe=`pwd`"/spider-server"
 				if [ $target_exe == $local_exe ]
 				then
 					echo "program already started."
 					exit
 				else
-        			./server 8888
+        			./spider-server 8888
 				fi
 			else
-        			./server 8888
+        			./spider-server 8888
 				break
 			fi	
 		done
@@ -39,24 +39,24 @@ fi
 
 if [ $1 = "stop" ]
 then
-	pidnum=`ps -ef|grep "./server"|grep -v grep|wc -l`
+	pidnum=`ps -ef|grep "./spider-server"|grep -v grep|wc -l`
 	if [ $pidnum -lt 1 ]
 	then
 		echo "no program killed."
 	else
-		for pid in `ps -ef|grep "./server"|grep -v grep|awk '{print $2}'`
+		for pid in `ps -ef|grep "./spider-server"|grep -v grep|awk '{print $2}'`
 		do
 			target_exe=`readlink /proc/$pid/exe | awk '{print $1}'`
 			if [ -n "$target_exe" ]
 			then
-				local_exe=`pwd`"/server"
+				local_exe=`pwd`"/spider-server"
 				if [ $target_exe == $local_exe ]
 				then
 					kill -10 $pid
 				fi
 			fi
 		done
-		echo "server stopped."
+		echo "spider-server stopped."
 	fi
 fi
 
