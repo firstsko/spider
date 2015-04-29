@@ -23,6 +23,16 @@ static char* iptostr(unsigned ip) {
 	return inet_ntoa(addr);
 }
 
+static void on_message(void *buffer, int size) {
+	google::protobuf::Message *msg_ptr = CreateMessage("spider.SMessage");
+	msg_ptr->ParseFromArray(buffer, size);
+	SMessage* psmessage = (SMessage *)msg_ptr;
+	//fsm process psmessage
+	delete msg_ptr;
+	msg_ptr = NULL;
+	psmessage = NULL;
+}
+
 // Initialize File Descriptor, Set No Blocking, No Delay, Address Reuse, KeepAlive
 Socket::Socket(int fd):sockfd_(fd), state_(SOCK_IDLE), r_offset_(0), w_offset_(0), append_offset_(0), inbuf_(NULL), outbuf_(NULL), 
 	type_(TYPE_TCP)
@@ -232,16 +242,14 @@ int Socket::Read() {
 			}
 		}
 	
-		// int msg_id = ntohl(head->message_id);
 		if (bytes < msg_len) {
 			return bytes;
 		} else if (bytes == msg_len) {
-		//	Message *msg_ptr = (Message *) inbuf_; 
-		//	DispathMesasage(*msg_ptr);
+			on_message((void *)inbuf_, r_offset_);
 			ClearRBuffer();	
 		} else {
-		//	Message *msg_ptr = (Message *) inbuf_; 
-		//	DispathMesasage(*msg_ptr);
+			on_message((void *)inbuf_, r_offset_);
+			// Reset Offset Manually
 			memcpy(inbuf_, inbuf_ + msg_len, bytes - msg_len);
 			memset(inbuf_ + bytes - msg_len, 0, msg_len);
 			r_offset_ = bytes - msg_len;			
