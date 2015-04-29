@@ -8,7 +8,7 @@ EXE = spider-server
 BIN = ../bin
 
 all:
-	$(CC) $(CFLAG) $(LINK) $(LINKER) $(INCLUDE) $(SRC) -o $(EXE)
+	$(CC) $(INCLUDE) $(SRC) $(CFLAG) $(LINK) $(LINKER) -o $(EXE)
 	../bin/admin.sh stop
 	cp $(EXE) $(BIN)
 clean:
