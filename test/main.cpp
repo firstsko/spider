@@ -11,7 +11,7 @@
 
 #include "message.pb.h"
 
-using namespace message;
+using namespace spider;
 
 typedef struct {
 	unsigned length;
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	Message *message = new Message;
+	SMessage *message = new SMessage;
 	Header *head = new Header;
 	head->set_flow_no(1234);
 	head->set_src_fsm(4321);

@@ -2,9 +2,9 @@ SRC = *.cpp
 CC = g++
 CFLAG = -g -ggdb -Wall 
 INCLUDE = -I ../proto
-LINK = -L ../lib
-LINKER = -lprotobuf -lmsg -lrt 
-EXE = server
+LINK = -L ../lib -L/usr/local/lib
+LINKER =-lprotobuf -lmsg -lrt 
+EXE = spider-server
 BIN = ../bin
 
 all:
