@@ -27,6 +27,8 @@ static void on_message(void *buffer, int size) {
 	google::protobuf::Message *msg_ptr = CreateMessage("spider.SMessage");
 	msg_ptr->ParseFromArray(buffer, size);
 	SMessage* psmessage = (SMessage *)msg_ptr;
+	int message_id = (psmessage->body()).type();
+
 	//fsm process psmessage
 	delete msg_ptr;
 	msg_ptr = NULL;
