@@ -15,7 +15,7 @@ typedef enum {
 	FSM_FINISH = 100,
 } Status_t; 
 
-typedef int (*state_cb_t) (void *);
+typedef Status_t (*state_cb_t) (void *);
 
 // Finite State Machine
 class Fsm: public Channel {
@@ -27,11 +27,10 @@ public:
 	static int OnMessage(SMessage *);
 
 private:
-	int Fsm_id_;
+	int machine_id_;
 	Status_t status_;
 	
 	std::map<int state, state_cb_t> fsm_callbacks_; 
-
 };
 
 #endif
