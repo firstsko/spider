@@ -15,8 +15,8 @@ FsmContainer* FsmContainer::Instance() {
 	return p_container_;
 }
 
-int FsmContainer::AddStateMachine(int message_type, Fsm *pfsm) {
-	fsm_container_.insert(make_pair(message_type, pfsm));
+int FsmContainer::AddStateMachine(int machine_id, Fsm *pfsm) {
+	fsm_container_.insert(make_pair(machine_id, pfsm));
 	return 0;
 }
 

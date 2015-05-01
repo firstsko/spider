@@ -9,13 +9,18 @@
 #include "server.h"
 #include "sock.h"
 
+// Channel Not Actually Own The Socket
 class Channel {
 public:
-	Channel(Socket *sk):sk_(sk){
+	Channel() {
 
 	}
 
-	~Channel(){
+	Channel(Socket *sk):sk_(sk) {
+
+	}
+
+	~Channel() {
 	}
 	
 	// As A Client Launch A Connection
@@ -26,6 +31,10 @@ public:
 	int SendResponse(void *message, size_t len);
 
 	int SendMessage(void *message, size_t len);
+	
+	void SetSocket(Socket *sk) {
+		sk_ = sk;
+	}
 
 private:
 	Socket* sk_;

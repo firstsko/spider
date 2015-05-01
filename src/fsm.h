@@ -19,7 +19,7 @@ typedef enum {
 typedef Status_t (*state_cb_t) (void *);
 
 // Finite State Machine
-class Fsm {
+class Fsm:public Channel {
 public:
 	Fsm();
 

@@ -10,9 +10,9 @@ class FsmContainer {
 public:
 	~FsmContainer();
 
-	int AddStateMachine(int message_type, Fsm *pfsm);
+	int AddStateMachine(int message_id, Fsm *pfsm);
 
-	int ActivateCb(SMessage *pmessage, int message_type, int dst_state);
+	int ActivateCb(SMessage *pmessage, int message_id, int dst_state);
 	
 	int DelStateMachine(int message_type);
 
