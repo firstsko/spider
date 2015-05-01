@@ -23,16 +23,16 @@ private:
 	FsmFactory() {};
 
 private:
-	std::map <int, FsmCreate_t> fsm_factory_;
+	std::map<int, FsmCreate_t> fsm_factory_;
 
 private:
 	static FsmFactory *pfactory_;
 };
 
-#define REFLECT_CREATE(Classname, type)			            					\
-	static Fsm *ClassName##CreateMySelf();										\
-	static Fsm *ClassName##CreateMySelf() {										\
-		return new Classname();													\
-	}							                            					\
-	static int ret  __attribute__((unused))  = FsmFactory::Instance()->AddStateMachine(type, Classname##CreateMySelf); 
+#define REFLECT_CREATE(Classname, type) \
+		static Fsm *ClassName##CreateMySelf() { \
+			return new Classname(); \
+		} \
+		static int ret __attribute__((unused)) = FsmFactory::Instance()->AddStateMachine(type, Classname##CreateMySelf);
+
 #endif

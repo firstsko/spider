@@ -3,14 +3,11 @@
 
 #include "fsm.h"
 
-
-// Finite State Machine
 class HeartBeat:public Fsm {
 public:
 	HeartBeat();
 
 	~HeartBeat();
-
 
 private:
 	
