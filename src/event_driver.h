@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <map>
-#include <list>
 
 #include "sock.h"
 #include "timer.h"

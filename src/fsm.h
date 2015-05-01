@@ -1,8 +1,7 @@
 #ifndef _FINITE_STATE_MACHINE_
 #define _FINITE_STATE_MACHINE_
 
-#include <string>
-#include <string.h>
+#include <map>
 
 #include "channel.h"
 #include "server.h"
@@ -14,7 +13,9 @@ typedef enum {
 	FSM_START = 0,
 	FSM_NEXT = 1,
 	FSM_FINISH = 100,
-} State_t; 
+} Status_t; 
+
+typedef int (*state_cb_t) (void *);
 
 // Finite State Machine
 class Fsm: public Channel {
@@ -23,9 +24,14 @@ public:
 
 	~Fsm();
 
+	static int OnMessage(SMessage *);
+
 private:
 	int Fsm_id_;
-	State_t state_;
+	Status_t status_;
+	
+	std::map<int state, state_cb_t> fsm_callbacks_; 
+
 };
 
 #endif

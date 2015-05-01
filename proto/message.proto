@@ -17,7 +17,9 @@ message Header {
 	required uint32 flow_no 	= 10;
 	required uint32 src_fsm 	= 20;
 	required uint32 dst_fsm 	= 30;
-	required MessageType type 	= 40;
+	required uint32 srt_state 	= 40;
+	required uint32 dst_state 	= 50;
+	required MessageType type 	= 60;
 }
 
 message Body {

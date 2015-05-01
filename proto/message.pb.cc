@@ -72,10 +72,12 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SMessage));
   Header_descriptor_ = file->message_type(1);
-  static const int Header_offsets_[4] = {
+  static const int Header_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, flow_no_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, src_fsm_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, dst_fsm_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, srt_state_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, dst_state_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, type_),
   };
   Header_reflection_ =
@@ -242,26 +244,27 @@ void protobuf_AddDesc_message_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rmessage.proto\022\006spider\"F\n\010SMessage\022\036\n\006h"
     "eader\030\n \002(\0132\016.spider.Header\022\032\n\004body\030\024 \001("
-    "\0132\014.spider.Body\"^\n\006Header\022\017\n\007flow_no\030\n \002"
-    "(\r\022\017\n\007src_fsm\030\024 \002(\r\022\017\n\007dst_fsm\030\036 \002(\r\022!\n\004"
-    "type\030( \002(\0162\023.spider.MessageType\"\017\n\004Body*"
-    "\007\010\220N\020\241\215\006\".\n\010Response\022\017\n\007retcode\030\n \002(\005\022\021\n"
-    "\terror_msg\030\024 \001(\t\"2\n\014LoginRequest\022\022\n\nlogi"
-    "n_name\030\n \002(\t\022\016\n\006passwd\030\024 \002(\t\"-\n\rLoginRes"
-    "ponse\022\034\n\002rc\030\n \002(\0132\020.spider.Response\"\'\n\021F"
-    "riendListRequest\022\022\n\nlogin_name\030\n \002(\t\"G\n\022"
-    "FriendListResponse\022\034\n\002rc\030\n \002(\0132\020.spider."
-    "Response\022\023\n\013friend_list\030\024 \003(\t*k\n\013Message"
-    "Type\022\022\n\rLOGIN_REQUEST\020\221N\022\023\n\016LOGIN_RESPON"
-    "SE\020\222N\022\030\n\023FRIEND_LIST_REQUEST\020\223N\022\031\n\024FRIEN"
-    "D_LIST_RESPONSE\020\224N::\n\rlogin_request\022\014.sp"
-    "ider.Body\030\221N \001(\0132\024.spider.LoginRequest:<"
-    "\n\016login_response\022\014.spider.Body\030\222N \001(\0132\025."
-    "spider.LoginResponse:E\n\023friend_list_requ"
-    "est\022\014.spider.Body\030\223N \001(\0132\031.spider.Friend"
-    "ListRequest:G\n\024friend_list_response\022\014.sp"
-    "ider.Body\030\224N \001(\0132\032.spider.FriendListResp"
-    "onse", 844);
+    "\0132\014.spider.Body\"\204\001\n\006Header\022\017\n\007flow_no\030\n "
+    "\002(\r\022\017\n\007src_fsm\030\024 \002(\r\022\017\n\007dst_fsm\030\036 \002(\r\022\021\n"
+    "\tsrt_state\030( \002(\r\022\021\n\tdst_state\0302 \002(\r\022!\n\004t"
+    "ype\030< \002(\0162\023.spider.MessageType\"\017\n\004Body*\007"
+    "\010\220N\020\241\215\006\".\n\010Response\022\017\n\007retcode\030\n \002(\005\022\021\n\t"
+    "error_msg\030\024 \001(\t\"2\n\014LoginRequest\022\022\n\nlogin"
+    "_name\030\n \002(\t\022\016\n\006passwd\030\024 \002(\t\"-\n\rLoginResp"
+    "onse\022\034\n\002rc\030\n \002(\0132\020.spider.Response\"\'\n\021Fr"
+    "iendListRequest\022\022\n\nlogin_name\030\n \002(\t\"G\n\022F"
+    "riendListResponse\022\034\n\002rc\030\n \002(\0132\020.spider.R"
+    "esponse\022\023\n\013friend_list\030\024 \003(\t*k\n\013MessageT"
+    "ype\022\022\n\rLOGIN_REQUEST\020\221N\022\023\n\016LOGIN_RESPONS"
+    "E\020\222N\022\030\n\023FRIEND_LIST_REQUEST\020\223N\022\031\n\024FRIEND"
+    "_LIST_RESPONSE\020\224N::\n\rlogin_request\022\014.spi"
+    "der.Body\030\221N \001(\0132\024.spider.LoginRequest:<\n"
+    "\016login_response\022\014.spider.Body\030\222N \001(\0132\025.s"
+    "pider.LoginResponse:E\n\023friend_list_reque"
+    "st\022\014.spider.Body\030\223N \001(\0132\031.spider.FriendL"
+    "istRequest:G\n\024friend_list_response\022\014.spi"
+    "der.Body\030\224N \001(\0132\032.spider.FriendListRespo"
+    "nse", 883);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.proto", &protobuf_RegisterTypes);
   SMessage::default_instance_ = new SMessage();
@@ -608,6 +611,8 @@ void SMessage::Swap(SMessage* other) {
 const int Header::kFlowNoFieldNumber;
 const int Header::kSrcFsmFieldNumber;
 const int Header::kDstFsmFieldNumber;
+const int Header::kSrtStateFieldNumber;
+const int Header::kDstStateFieldNumber;
 const int Header::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
@@ -632,6 +637,8 @@ void Header::SharedCtor() {
   flow_no_ = 0u;
   src_fsm_ = 0u;
   dst_fsm_ = 0u;
+  srt_state_ = 0u;
+  dst_state_ = 0u;
   type_ = 10001;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -678,8 +685,8 @@ void Header::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 15) {
-    ZR_(flow_no_, dst_fsm_);
+  if (_has_bits_[0 / 32] & 63) {
+    ZR_(flow_no_, dst_state_);
     type_ = 10001;
   }
 
@@ -740,13 +747,43 @@ bool Header::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(320)) goto parse_type;
+        if (input->ExpectTag(320)) goto parse_srt_state;
         break;
       }
 
-      // required .spider.MessageType type = 40;
+      // required uint32 srt_state = 40;
       case 40: {
         if (tag == 320) {
+         parse_srt_state:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &srt_state_)));
+          set_has_srt_state();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(400)) goto parse_dst_state;
+        break;
+      }
+
+      // required uint32 dst_state = 50;
+      case 50: {
+        if (tag == 400) {
+         parse_dst_state:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &dst_state_)));
+          set_has_dst_state();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(480)) goto parse_type;
+        break;
+      }
+
+      // required .spider.MessageType type = 60;
+      case 60: {
+        if (tag == 480) {
          parse_type:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -755,7 +792,7 @@ bool Header::MergePartialFromCodedStream(
           if (::spider::MessageType_IsValid(value)) {
             set_type(static_cast< ::spider::MessageType >(value));
           } else {
-            mutable_unknown_fields()->AddVarint(40, value);
+            mutable_unknown_fields()->AddVarint(60, value);
           }
         } else {
           goto handle_unusual;
@@ -804,10 +841,20 @@ void Header::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(30, this->dst_fsm(), output);
   }
 
-  // required .spider.MessageType type = 40;
+  // required uint32 srt_state = 40;
+  if (has_srt_state()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->srt_state(), output);
+  }
+
+  // required uint32 dst_state = 50;
+  if (has_dst_state()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(50, this->dst_state(), output);
+  }
+
+  // required .spider.MessageType type = 60;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      40, this->type(), output);
+      60, this->type(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -835,10 +882,20 @@ void Header::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(30, this->dst_fsm(), target);
   }
 
-  // required .spider.MessageType type = 40;
+  // required uint32 srt_state = 40;
+  if (has_srt_state()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->srt_state(), target);
+  }
+
+  // required uint32 dst_state = 50;
+  if (has_dst_state()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(50, this->dst_state(), target);
+  }
+
+  // required .spider.MessageType type = 60;
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      40, this->type(), target);
+      60, this->type(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -874,7 +931,21 @@ int Header::ByteSize() const {
           this->dst_fsm());
     }
 
-    // required .spider.MessageType type = 40;
+    // required uint32 srt_state = 40;
+    if (has_srt_state()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->srt_state());
+    }
+
+    // required uint32 dst_state = 50;
+    if (has_dst_state()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->dst_state());
+    }
+
+    // required .spider.MessageType type = 60;
     if (has_type()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -916,6 +987,12 @@ void Header::MergeFrom(const Header& from) {
     if (from.has_dst_fsm()) {
       set_dst_fsm(from.dst_fsm());
     }
+    if (from.has_srt_state()) {
+      set_srt_state(from.srt_state());
+    }
+    if (from.has_dst_state()) {
+      set_dst_state(from.dst_state());
+    }
     if (from.has_type()) {
       set_type(from.type());
     }
@@ -936,7 +1013,7 @@ void Header::CopyFrom(const Header& from) {
 }
 
 bool Header::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
   return true;
 }
@@ -946,6 +1023,8 @@ void Header::Swap(Header* other) {
     std::swap(flow_no_, other->flow_no_);
     std::swap(src_fsm_, other->src_fsm_);
     std::swap(dst_fsm_, other->dst_fsm_);
+    std::swap(srt_state_, other->srt_state_);
+    std::swap(dst_state_, other->dst_state_);
     std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

@@ -10,6 +10,7 @@
 #include "sock.h"
 #include "event_driver.h"
 #include "message.h"
+#include "fsm.h"
 
 using namespace std;
 using namespace spider;
@@ -25,11 +26,11 @@ static char* iptostr(unsigned ip) {
 
 static void on_message(void *buffer, int size) {
 	google::protobuf::Message *msg_ptr = CreateMessage("spider.SMessage");
-	msg_ptr->ParseFromArray(buffer, size);
+	msg_ptr->ParseFromArray(buffer + sizeof(Header_t), size);
 	SMessage* psmessage = (SMessage *)msg_ptr;
-	int message_id = (psmessage->body()).type();
 
-	//fsm process psmessage
+	Fsm::OnMessage(psmessage);
+
 	delete msg_ptr;
 	msg_ptr = NULL;
 	psmessage = NULL;
@@ -233,7 +234,7 @@ int Socket::Read() {
 	if (bytes > (int)sizeof(Header_t)) {
 		Header_t *head;
 		head = (Header_t *)inbuf_;
-		int msg_len = ntohl(head->length);
+		int msg_len = ntohl(head->length) + sizeof(Header_t);
 		if (msg_len > SOCKET_BUFFER_SIZE) {
 			INFO("Socket Inbuffer Not Enough, Allocate Space Again");
 			free(inbuf_);
