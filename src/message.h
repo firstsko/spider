@@ -14,11 +14,4 @@ typedef struct {
 
 google::protobuf::Message* CreateMessage(const std::string &name);
 
-typedef emum {
-	unsigned length;
-	unsigned message_id; 
-} 
-
-
-
 #endif

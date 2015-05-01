@@ -6,6 +6,7 @@
 #include "channel.h"
 #include "server.h"
 #include "sock.h"
+#include "message.h"
 
 typedef enum {
 	FSM_TIMEOUT = -2,
@@ -18,7 +19,7 @@ typedef enum {
 typedef Status_t (*state_cb_t) (void *);
 
 // Finite State Machine
-class Fsm: public Channel {
+class Fsm {
 public:
 	Fsm();
 
@@ -30,7 +31,7 @@ private:
 	int machine_id_;
 	Status_t status_;
 	
-	std::map<int state, state_cb_t> fsm_callbacks_; 
+	std::map<int, state_cb_t> fsm_callbacks_; 
 };
 
 #endif

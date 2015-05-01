@@ -26,7 +26,7 @@ static char* iptostr(unsigned ip) {
 
 static void on_message(void *buffer, int size) {
 	google::protobuf::Message *msg_ptr = CreateMessage("spider.SMessage");
-	msg_ptr->ParseFromArray(buffer + sizeof(Header_t), size);
+	msg_ptr->ParseFromArray((char *)buffer + sizeof(Header_t), size);
 	SMessage* psmessage = (SMessage *)msg_ptr;
 
 	Fsm::OnMessage(psmessage);

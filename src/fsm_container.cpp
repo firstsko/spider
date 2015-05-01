@@ -12,11 +12,11 @@ FsmContainer* FsmContainer::Instance() {
 	if (p_container_ == NULL) {
 		p_container_ = new FsmContainer();
 	}
-	return p_event_driver_;
+	return p_container_;
 }
 
 int FsmContainer::AddStateMachine(int message_type, Fsm *pfsm) {
-	fsm_container_.insert(make_pair(message_type, pfsm);
+	fsm_container_.insert(make_pair(message_type, pfsm));
 	return 0;
 }
 

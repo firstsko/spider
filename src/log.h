@@ -68,7 +68,6 @@ private:
 private:
 	int fd_;
 	unsigned max_size_;
-	unsigned written_bytes;
 	unsigned files_counter_;
 	Loglevel_t level_;
 

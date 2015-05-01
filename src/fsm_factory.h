@@ -6,15 +6,15 @@
 #include "sock.h"
 #include "fsm.h"
 
+typedef Fsm *(*FsmCreate_t)();
+
 class FsmFactory {
 public:
 	~FsmFactory();
 
-	int AddStateMachine(int message_type, Fsm *pfsm);
+	int AddStateMachine(int request_type, FsmCreate_t create_cb);
 
-	int ActivateCb(SMessage *pmessage, int message_type, int dst_state);
-	
-	int DelStateMachine(int message_type);
+	int DelStateMachine(int request_type);
 
 	static FsmFactory* Instance();
 
@@ -23,18 +23,14 @@ private:
 	FsmFactory() {};
 
 private:
-	std::map <int, Fsm *> fsm_factory_;
+	std::map <int, FsmCreate_t> fsm_factory_;
+	static FsmFactory *pfactory_;
 };
 
-#define DECLARE_CLASS_CREATE(class_name) \ 
-static CObject* CreateClass## class_name (); 
-
-#define IMPL_CLASS_CREATE(class_name) \ 
-static CObject* CreateClass## class_name (){  \ 
-       return new class_name;             \ 
-}; 
-
-#define REG_CLASS_CREATE(class_name) \ 
-RegisterFactoryCreate(class_name::CreateClass## class_name, #class_name); 
+#define REFLECT_CREATE(ClassName, Id)			            			\
+	static Fsm *ClassName##CreateMySelf() {								\
+		return new ClassName();		                        			\
+	}							                            			\
+	FsmFactory::Instance()->AddStateMachine(Id, ClassName##CreateMySelf);
 
 #endif
