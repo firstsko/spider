@@ -1,11 +1,14 @@
 package spider;
 
 enum MessageType {
-	LOGIN_REQUEST = 10001;
-	LOGIN_RESPONSE = 10002;
+	HEART_BEAT_REQUEST = 10001;
+	HEART_BEAT_RESPONSE = 10002;
 
-	FRIEND_LIST_REQUEST = 10003;
-	FRIEND_LIST_RESPONSE = 10004;
+	LOGIN_REQUEST = 10003;
+	LOGIN_RESPONSE = 10004;
+
+	FRIEND_LIST_REQUEST = 10005;
+	FRIEND_LIST_RESPONSE = 10006;
 }
 
 message SMessage {
@@ -27,16 +30,26 @@ message Body {
 }
 
 extend Body {
-	optional LoginRequest login_request					= 10001;
-	optional LoginResponse login_response				= 10002;
+	optional HeartBeatRequest heart_beat_request		= 10001;
+	optional HeartBeatResponse heart_beat_response		= 10002;
 
-	optional FriendListRequest friend_list_request 		= 10003;  
-	optional FriendListResponse friend_list_response 	= 10004;
+	optional LoginRequest login_request					= 10003;
+	optional LoginResponse login_response				= 10004;
+
+	optional FriendListRequest friend_list_request 		= 10005;  
+	optional FriendListResponse friend_list_response 	= 10006;
 }
 
 message Response {
 	required int32 retcode 			= 10;
 	optional string error_msg 		= 20;
+}
+
+message HeartBeatRequest {
+}
+
+message HeartBeatResponse {
+	required Response rc 			= 10;
 }
 
 message LoginRequest {

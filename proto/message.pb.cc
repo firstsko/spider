@@ -32,6 +32,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Response_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Response_reflection_ = NULL;
+const ::google::protobuf::Descriptor* HeartBeatRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  HeartBeatRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* HeartBeatResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  HeartBeatResponse_reflection_ = NULL;
 const ::google::protobuf::Descriptor* LoginRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   LoginRequest_reflection_ = NULL;
@@ -121,7 +127,36 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Response));
-  LoginRequest_descriptor_ = file->message_type(4);
+  HeartBeatRequest_descriptor_ = file->message_type(4);
+  static const int HeartBeatRequest_offsets_[1] = {
+  };
+  HeartBeatRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      HeartBeatRequest_descriptor_,
+      HeartBeatRequest::default_instance_,
+      HeartBeatRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HeartBeatRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HeartBeatRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(HeartBeatRequest));
+  HeartBeatResponse_descriptor_ = file->message_type(5);
+  static const int HeartBeatResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HeartBeatResponse, rc_),
+  };
+  HeartBeatResponse_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      HeartBeatResponse_descriptor_,
+      HeartBeatResponse::default_instance_,
+      HeartBeatResponse_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HeartBeatResponse, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HeartBeatResponse, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(HeartBeatResponse));
+  LoginRequest_descriptor_ = file->message_type(6);
   static const int LoginRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginRequest, login_name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginRequest, passwd_),
@@ -137,7 +172,7 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(LoginRequest));
-  LoginResponse_descriptor_ = file->message_type(5);
+  LoginResponse_descriptor_ = file->message_type(7);
   static const int LoginResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginResponse, rc_),
   };
@@ -152,7 +187,7 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(LoginResponse));
-  FriendListRequest_descriptor_ = file->message_type(6);
+  FriendListRequest_descriptor_ = file->message_type(8);
   static const int FriendListRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FriendListRequest, login_name_),
   };
@@ -167,7 +202,7 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FriendListRequest));
-  FriendListResponse_descriptor_ = file->message_type(7);
+  FriendListResponse_descriptor_ = file->message_type(9);
   static const int FriendListResponse_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FriendListResponse, rc_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FriendListResponse, friend_list_),
@@ -205,6 +240,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Response_descriptor_, &Response::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    HeartBeatRequest_descriptor_, &HeartBeatRequest::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    HeartBeatResponse_descriptor_, &HeartBeatResponse::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     LoginRequest_descriptor_, &LoginRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     LoginResponse_descriptor_, &LoginResponse::default_instance());
@@ -225,6 +264,10 @@ void protobuf_ShutdownFile_message_2eproto() {
   delete Body_reflection_;
   delete Response::default_instance_;
   delete Response_reflection_;
+  delete HeartBeatRequest::default_instance_;
+  delete HeartBeatRequest_reflection_;
+  delete HeartBeatResponse::default_instance_;
+  delete HeartBeatResponse_reflection_;
   delete LoginRequest::default_instance_;
   delete LoginRequest_reflection_;
   delete LoginResponse::default_instance_;
@@ -249,28 +292,36 @@ void protobuf_AddDesc_message_2eproto() {
     "\tsrt_state\030( \002(\r\022\021\n\tdst_state\0302 \002(\r\022!\n\004t"
     "ype\030< \002(\0162\023.spider.MessageType\"\017\n\004Body*\007"
     "\010\220N\020\241\215\006\".\n\010Response\022\017\n\007retcode\030\n \002(\005\022\021\n\t"
-    "error_msg\030\024 \001(\t\"2\n\014LoginRequest\022\022\n\nlogin"
-    "_name\030\n \002(\t\022\016\n\006passwd\030\024 \002(\t\"-\n\rLoginResp"
-    "onse\022\034\n\002rc\030\n \002(\0132\020.spider.Response\"\'\n\021Fr"
-    "iendListRequest\022\022\n\nlogin_name\030\n \002(\t\"G\n\022F"
-    "riendListResponse\022\034\n\002rc\030\n \002(\0132\020.spider.R"
-    "esponse\022\023\n\013friend_list\030\024 \003(\t*k\n\013MessageT"
-    "ype\022\022\n\rLOGIN_REQUEST\020\221N\022\023\n\016LOGIN_RESPONS"
-    "E\020\222N\022\030\n\023FRIEND_LIST_REQUEST\020\223N\022\031\n\024FRIEND"
-    "_LIST_RESPONSE\020\224N::\n\rlogin_request\022\014.spi"
-    "der.Body\030\221N \001(\0132\024.spider.LoginRequest:<\n"
-    "\016login_response\022\014.spider.Body\030\222N \001(\0132\025.s"
-    "pider.LoginResponse:E\n\023friend_list_reque"
-    "st\022\014.spider.Body\030\223N \001(\0132\031.spider.FriendL"
-    "istRequest:G\n\024friend_list_response\022\014.spi"
-    "der.Body\030\224N \001(\0132\032.spider.FriendListRespo"
-    "nse", 883);
+    "error_msg\030\024 \001(\t\"\022\n\020HeartBeatRequest\"1\n\021H"
+    "eartBeatResponse\022\034\n\002rc\030\n \002(\0132\020.spider.Re"
+    "sponse\"2\n\014LoginRequest\022\022\n\nlogin_name\030\n \002"
+    "(\t\022\016\n\006passwd\030\024 \002(\t\"-\n\rLoginResponse\022\034\n\002r"
+    "c\030\n \002(\0132\020.spider.Response\"\'\n\021FriendListR"
+    "equest\022\022\n\nlogin_name\030\n \002(\t\"G\n\022FriendList"
+    "Response\022\034\n\002rc\030\n \002(\0132\020.spider.Response\022\023"
+    "\n\013friend_list\030\024 \003(\t*\236\001\n\013MessageType\022\027\n\022H"
+    "EART_BEAT_REQUEST\020\221N\022\030\n\023HEART_BEAT_RESPO"
+    "NSE\020\222N\022\022\n\rLOGIN_REQUEST\020\223N\022\023\n\016LOGIN_RESP"
+    "ONSE\020\224N\022\030\n\023FRIEND_LIST_REQUEST\020\225N\022\031\n\024FRI"
+    "END_LIST_RESPONSE\020\226N:C\n\022heart_beat_reque"
+    "st\022\014.spider.Body\030\221N \001(\0132\030.spider.HeartBe"
+    "atRequest:E\n\023heart_beat_response\022\014.spide"
+    "r.Body\030\222N \001(\0132\031.spider.HeartBeatResponse"
+    "::\n\rlogin_request\022\014.spider.Body\030\223N \001(\0132\024"
+    ".spider.LoginRequest:<\n\016login_response\022\014"
+    ".spider.Body\030\224N \001(\0132\025.spider.LoginRespon"
+    "se:E\n\023friend_list_request\022\014.spider.Body\030"
+    "\225N \001(\0132\031.spider.FriendListRequest:G\n\024fri"
+    "end_list_response\022\014.spider.Body\030\226N \001(\0132\032"
+    ".spider.FriendListResponse", 1146);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.proto", &protobuf_RegisterTypes);
   SMessage::default_instance_ = new SMessage();
   Header::default_instance_ = new Header();
   Body::default_instance_ = new Body();
   Response::default_instance_ = new Response();
+  HeartBeatRequest::default_instance_ = new HeartBeatRequest();
+  HeartBeatResponse::default_instance_ = new HeartBeatResponse();
   LoginRequest::default_instance_ = new LoginRequest();
   LoginResponse::default_instance_ = new LoginResponse();
   FriendListRequest::default_instance_ = new FriendListRequest();
@@ -278,23 +329,33 @@ void protobuf_AddDesc_message_2eproto() {
   ::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(
     &::spider::Body::default_instance(),
     10001, 11, false, false,
-    &::spider::LoginRequest::default_instance());
+    &::spider::HeartBeatRequest::default_instance());
   ::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(
     &::spider::Body::default_instance(),
     10002, 11, false, false,
-    &::spider::LoginResponse::default_instance());
+    &::spider::HeartBeatResponse::default_instance());
   ::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(
     &::spider::Body::default_instance(),
     10003, 11, false, false,
-    &::spider::FriendListRequest::default_instance());
+    &::spider::LoginRequest::default_instance());
   ::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(
     &::spider::Body::default_instance(),
     10004, 11, false, false,
+    &::spider::LoginResponse::default_instance());
+  ::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(
+    &::spider::Body::default_instance(),
+    10005, 11, false, false,
+    &::spider::FriendListRequest::default_instance());
+  ::google::protobuf::internal::ExtensionSet::RegisterMessageExtension(
+    &::spider::Body::default_instance(),
+    10006, 11, false, false,
     &::spider::FriendListResponse::default_instance());
   SMessage::default_instance_->InitAsDefaultInstance();
   Header::default_instance_->InitAsDefaultInstance();
   Body::default_instance_->InitAsDefaultInstance();
   Response::default_instance_->InitAsDefaultInstance();
+  HeartBeatRequest::default_instance_->InitAsDefaultInstance();
+  HeartBeatResponse::default_instance_->InitAsDefaultInstance();
   LoginRequest::default_instance_->InitAsDefaultInstance();
   LoginResponse::default_instance_->InitAsDefaultInstance();
   FriendListRequest::default_instance_->InitAsDefaultInstance();
@@ -318,6 +379,8 @@ bool MessageType_IsValid(int value) {
     case 10002:
     case 10003:
     case 10004:
+    case 10005:
+    case 10006:
       return true;
     default:
       return false;
@@ -1522,6 +1585,411 @@ void Response::Swap(Response* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+HeartBeatRequest::HeartBeatRequest()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:spider.HeartBeatRequest)
+}
+
+void HeartBeatRequest::InitAsDefaultInstance() {
+}
+
+HeartBeatRequest::HeartBeatRequest(const HeartBeatRequest& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:spider.HeartBeatRequest)
+}
+
+void HeartBeatRequest::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+HeartBeatRequest::~HeartBeatRequest() {
+  // @@protoc_insertion_point(destructor:spider.HeartBeatRequest)
+  SharedDtor();
+}
+
+void HeartBeatRequest::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void HeartBeatRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* HeartBeatRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return HeartBeatRequest_descriptor_;
+}
+
+const HeartBeatRequest& HeartBeatRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_message_2eproto();
+  return *default_instance_;
+}
+
+HeartBeatRequest* HeartBeatRequest::default_instance_ = NULL;
+
+HeartBeatRequest* HeartBeatRequest::New() const {
+  return new HeartBeatRequest;
+}
+
+void HeartBeatRequest::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool HeartBeatRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:spider.HeartBeatRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, mutable_unknown_fields()));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:spider.HeartBeatRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:spider.HeartBeatRequest)
+  return false;
+#undef DO_
+}
+
+void HeartBeatRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:spider.HeartBeatRequest)
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:spider.HeartBeatRequest)
+}
+
+::google::protobuf::uint8* HeartBeatRequest::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:spider.HeartBeatRequest)
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:spider.HeartBeatRequest)
+  return target;
+}
+
+int HeartBeatRequest::ByteSize() const {
+  int total_size = 0;
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void HeartBeatRequest::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const HeartBeatRequest* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const HeartBeatRequest*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void HeartBeatRequest::MergeFrom(const HeartBeatRequest& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void HeartBeatRequest::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void HeartBeatRequest::CopyFrom(const HeartBeatRequest& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool HeartBeatRequest::IsInitialized() const {
+
+  return true;
+}
+
+void HeartBeatRequest::Swap(HeartBeatRequest* other) {
+  if (other != this) {
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata HeartBeatRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = HeartBeatRequest_descriptor_;
+  metadata.reflection = HeartBeatRequest_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int HeartBeatResponse::kRcFieldNumber;
+#endif  // !_MSC_VER
+
+HeartBeatResponse::HeartBeatResponse()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:spider.HeartBeatResponse)
+}
+
+void HeartBeatResponse::InitAsDefaultInstance() {
+  rc_ = const_cast< ::spider::Response*>(&::spider::Response::default_instance());
+}
+
+HeartBeatResponse::HeartBeatResponse(const HeartBeatResponse& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:spider.HeartBeatResponse)
+}
+
+void HeartBeatResponse::SharedCtor() {
+  _cached_size_ = 0;
+  rc_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+HeartBeatResponse::~HeartBeatResponse() {
+  // @@protoc_insertion_point(destructor:spider.HeartBeatResponse)
+  SharedDtor();
+}
+
+void HeartBeatResponse::SharedDtor() {
+  if (this != default_instance_) {
+    delete rc_;
+  }
+}
+
+void HeartBeatResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* HeartBeatResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return HeartBeatResponse_descriptor_;
+}
+
+const HeartBeatResponse& HeartBeatResponse::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_message_2eproto();
+  return *default_instance_;
+}
+
+HeartBeatResponse* HeartBeatResponse::default_instance_ = NULL;
+
+HeartBeatResponse* HeartBeatResponse::New() const {
+  return new HeartBeatResponse;
+}
+
+void HeartBeatResponse::Clear() {
+  if (has_rc()) {
+    if (rc_ != NULL) rc_->::spider::Response::Clear();
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool HeartBeatResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:spider.HeartBeatResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .spider.Response rc = 10;
+      case 10: {
+        if (tag == 82) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_rc()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:spider.HeartBeatResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:spider.HeartBeatResponse)
+  return false;
+#undef DO_
+}
+
+void HeartBeatResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:spider.HeartBeatResponse)
+  // required .spider.Response rc = 10;
+  if (has_rc()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      10, this->rc(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:spider.HeartBeatResponse)
+}
+
+::google::protobuf::uint8* HeartBeatResponse::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:spider.HeartBeatResponse)
+  // required .spider.Response rc = 10;
+  if (has_rc()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        10, this->rc(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:spider.HeartBeatResponse)
+  return target;
+}
+
+int HeartBeatResponse::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .spider.Response rc = 10;
+    if (has_rc()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->rc());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void HeartBeatResponse::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const HeartBeatResponse* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const HeartBeatResponse*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void HeartBeatResponse::MergeFrom(const HeartBeatResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_rc()) {
+      mutable_rc()->::spider::Response::MergeFrom(from.rc());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void HeartBeatResponse::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void HeartBeatResponse::CopyFrom(const HeartBeatResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool HeartBeatResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  if (has_rc()) {
+    if (!this->rc().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void HeartBeatResponse::Swap(HeartBeatResponse* other) {
+  if (other != this) {
+    std::swap(rc_, other->rc_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata HeartBeatResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = HeartBeatResponse_descriptor_;
+  metadata.reflection = HeartBeatResponse_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int LoginRequest::kLoginNameFieldNumber;
 const int LoginRequest::kPasswdFieldNumber;
 #endif  // !_MSC_VER
@@ -2580,6 +3048,12 @@ void FriendListResponse::Swap(FriendListResponse* other) {
   return metadata;
 }
 
+::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::HeartBeatRequest >, 11, false >
+  heart_beat_request(kHeartBeatRequestFieldNumber, ::spider::HeartBeatRequest::default_instance());
+::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::HeartBeatResponse >, 11, false >
+  heart_beat_response(kHeartBeatResponseFieldNumber, ::spider::HeartBeatResponse::default_instance());
 ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
     ::google::protobuf::internal::MessageTypeTraits< ::spider::LoginRequest >, 11, false >
   login_request(kLoginRequestFieldNumber, ::spider::LoginRequest::default_instance());

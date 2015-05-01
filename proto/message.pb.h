@@ -38,19 +38,23 @@ class SMessage;
 class Header;
 class Body;
 class Response;
+class HeartBeatRequest;
+class HeartBeatResponse;
 class LoginRequest;
 class LoginResponse;
 class FriendListRequest;
 class FriendListResponse;
 
 enum MessageType {
-  LOGIN_REQUEST = 10001,
-  LOGIN_RESPONSE = 10002,
-  FRIEND_LIST_REQUEST = 10003,
-  FRIEND_LIST_RESPONSE = 10004
+  HEART_BEAT_REQUEST = 10001,
+  HEART_BEAT_RESPONSE = 10002,
+  LOGIN_REQUEST = 10003,
+  LOGIN_RESPONSE = 10004,
+  FRIEND_LIST_REQUEST = 10005,
+  FRIEND_LIST_RESPONSE = 10006
 };
 bool MessageType_IsValid(int value);
-const MessageType MessageType_MIN = LOGIN_REQUEST;
+const MessageType MessageType_MIN = HEART_BEAT_REQUEST;
 const MessageType MessageType_MAX = FRIEND_LIST_RESPONSE;
 const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
 
@@ -454,6 +458,156 @@ class Response : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class HeartBeatRequest : public ::google::protobuf::Message {
+ public:
+  HeartBeatRequest();
+  virtual ~HeartBeatRequest();
+
+  HeartBeatRequest(const HeartBeatRequest& from);
+
+  inline HeartBeatRequest& operator=(const HeartBeatRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const HeartBeatRequest& default_instance();
+
+  void Swap(HeartBeatRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  HeartBeatRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const HeartBeatRequest& from);
+  void MergeFrom(const HeartBeatRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:spider.HeartBeatRequest)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_message_2eproto();
+  friend void protobuf_AssignDesc_message_2eproto();
+  friend void protobuf_ShutdownFile_message_2eproto();
+
+  void InitAsDefaultInstance();
+  static HeartBeatRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class HeartBeatResponse : public ::google::protobuf::Message {
+ public:
+  HeartBeatResponse();
+  virtual ~HeartBeatResponse();
+
+  HeartBeatResponse(const HeartBeatResponse& from);
+
+  inline HeartBeatResponse& operator=(const HeartBeatResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const HeartBeatResponse& default_instance();
+
+  void Swap(HeartBeatResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  HeartBeatResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const HeartBeatResponse& from);
+  void MergeFrom(const HeartBeatResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required .spider.Response rc = 10;
+  inline bool has_rc() const;
+  inline void clear_rc();
+  static const int kRcFieldNumber = 10;
+  inline const ::spider::Response& rc() const;
+  inline ::spider::Response* mutable_rc();
+  inline ::spider::Response* release_rc();
+  inline void set_allocated_rc(::spider::Response* rc);
+
+  // @@protoc_insertion_point(class_scope:spider.HeartBeatResponse)
+ private:
+  inline void set_has_rc();
+  inline void clear_has_rc();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::spider::Response* rc_;
+  friend void  protobuf_AddDesc_message_2eproto();
+  friend void protobuf_AssignDesc_message_2eproto();
+  friend void protobuf_ShutdownFile_message_2eproto();
+
+  void InitAsDefaultInstance();
+  static HeartBeatResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class LoginRequest : public ::google::protobuf::Message {
  public:
   LoginRequest();
@@ -816,19 +970,27 @@ class FriendListResponse : public ::google::protobuf::Message {
 };
 // ===================================================================
 
-static const int kLoginRequestFieldNumber = 10001;
+static const int kHeartBeatRequestFieldNumber = 10001;
+extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::HeartBeatRequest >, 11, false >
+  heart_beat_request;
+static const int kHeartBeatResponseFieldNumber = 10002;
+extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
+    ::google::protobuf::internal::MessageTypeTraits< ::spider::HeartBeatResponse >, 11, false >
+  heart_beat_response;
+static const int kLoginRequestFieldNumber = 10003;
 extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
     ::google::protobuf::internal::MessageTypeTraits< ::spider::LoginRequest >, 11, false >
   login_request;
-static const int kLoginResponseFieldNumber = 10002;
+static const int kLoginResponseFieldNumber = 10004;
 extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
     ::google::protobuf::internal::MessageTypeTraits< ::spider::LoginResponse >, 11, false >
   login_response;
-static const int kFriendListRequestFieldNumber = 10003;
+static const int kFriendListRequestFieldNumber = 10005;
 extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
     ::google::protobuf::internal::MessageTypeTraits< ::spider::FriendListRequest >, 11, false >
   friend_list_request;
-static const int kFriendListResponseFieldNumber = 10004;
+static const int kFriendListResponseFieldNumber = 10006;
 extern ::google::protobuf::internal::ExtensionIdentifier< ::spider::Body,
     ::google::protobuf::internal::MessageTypeTraits< ::spider::FriendListResponse >, 11, false >
   friend_list_response;
@@ -1174,6 +1336,55 @@ inline void Response::set_allocated_error_msg(::std::string* error_msg) {
     error_msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:spider.Response.error_msg)
+}
+
+// -------------------------------------------------------------------
+
+// HeartBeatRequest
+
+// -------------------------------------------------------------------
+
+// HeartBeatResponse
+
+// required .spider.Response rc = 10;
+inline bool HeartBeatResponse::has_rc() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void HeartBeatResponse::set_has_rc() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void HeartBeatResponse::clear_has_rc() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void HeartBeatResponse::clear_rc() {
+  if (rc_ != NULL) rc_->::spider::Response::Clear();
+  clear_has_rc();
+}
+inline const ::spider::Response& HeartBeatResponse::rc() const {
+  // @@protoc_insertion_point(field_get:spider.HeartBeatResponse.rc)
+  return rc_ != NULL ? *rc_ : *default_instance_->rc_;
+}
+inline ::spider::Response* HeartBeatResponse::mutable_rc() {
+  set_has_rc();
+  if (rc_ == NULL) rc_ = new ::spider::Response;
+  // @@protoc_insertion_point(field_mutable:spider.HeartBeatResponse.rc)
+  return rc_;
+}
+inline ::spider::Response* HeartBeatResponse::release_rc() {
+  clear_has_rc();
+  ::spider::Response* temp = rc_;
+  rc_ = NULL;
+  return temp;
+}
+inline void HeartBeatResponse::set_allocated_rc(::spider::Response* rc) {
+  delete rc_;
+  rc_ = rc;
+  if (rc) {
+    set_has_rc();
+  } else {
+    clear_has_rc();
+  }
+  // @@protoc_insertion_point(field_set_allocated:spider.HeartBeatResponse.rc)
 }
 
 // -------------------------------------------------------------------

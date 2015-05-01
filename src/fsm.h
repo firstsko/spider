@@ -28,7 +28,7 @@ public:
 	static int OnMessage(SMessage *);
 
 private:
-	int machine_id_;
+	unsigned machine_id_;
 	Status_t status_;
 	
 	std::map<int, state_cb_t> fsm_callbacks_; 

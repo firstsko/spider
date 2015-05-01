@@ -21,7 +21,7 @@ int FsmFactory::AddStateMachine(int request_type, FsmCreate_t create_cb) {
 	return 0;
 }
 
-int FsmFactory::DelStateMachine(int message_type) {
-	fsm_factory_.erase(message_type);
+int FsmFactory::DelStateMachine(int request_type) {
+	fsm_factory_.erase(request_type);
 	return 0;
 }

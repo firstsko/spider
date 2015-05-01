@@ -15,12 +15,12 @@ FsmContainer* FsmContainer::Instance() {
 	return p_container_;
 }
 
-int FsmContainer::AddStateMachine(int machine_id, Fsm *pfsm) {
+int FsmContainer::AddStateMachine(unsigned machine_id, Fsm *pfsm) {
 	fsm_container_.insert(make_pair(machine_id, pfsm));
 	return 0;
 }
 
-int FsmContainer::ActivateCb(SMessage *pmessage, int message_type, int dst_state) {
+int FsmContainer::ActivateCb(SMessage *pmessage, unsigned machine_id, int dst_status) {
 
 	return 0;
 }
