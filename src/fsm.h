@@ -32,10 +32,10 @@ public:
 
 	static int OnMessage(SMessage *);
 	
-	static int SetCallback(int type, int state, state_cb_t callback) {
+	int SetCallback(int state, state_cb_t callback) {
 		std::map <int, state_cb_t> tmp;
 		tmp.insert(std::make_pair(state, callback));
-		fsm_callbacks_.insert(std::make_pair(type, tmp));
+		fsm_callbacks_.insert(std::make_pair(machine_id_, tmp));
 		return 0;
 	}
 	
@@ -43,9 +43,9 @@ public:
 
 private:
 	int machine_id_;
-	int State;	
-	
-	static std::map<int, std::map<int, state_cb_t> > fsm_callbacks_; 
+	int state;	
+	// <machine_id, <state, callback>>
+	static std::map<int, std::map<int, state_cb_t> > fsm_callbacks_;
 };
 
 #endif
