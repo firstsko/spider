@@ -12,14 +12,19 @@ int Fsm::OnMessage(SMessage *pmessage) {
 	int message_type = pmessage->header().type();
 	int dst_state = pmessage->header().dst_state();
 	int dst_fsm_id = pmessage->header().dst_state();
+
 	// Initial State
-	if (dst_state == 0)	 {
-		//
+	if (dst_state == 0)	{
+		// Create StateMachine
 	} else {
-		//
+		Fsm* pstatemachine = FsmContainer::Instance()->GetStateMachine(dst_fsm_id);
+		if (pstatemachine == NULL) {
+			return FSM_NOTEXIST;
+		} else {
+			Status_t ret = pstatemachine->ActivateCb(pmessage, dst_state);
+			return ret;
+		}
 	}
-	
-	return 0;
 }
 
 Fsm::Fsm() {

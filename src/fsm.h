@@ -9,6 +9,7 @@
 #include "message.h"
 
 typedef enum {
+	FSM_NOTEXIST = -3,
 	FSM_TIMEOUT = -2,
 	FSM_ERROR = -1,
 	FSM_START = 0,
@@ -26,12 +27,22 @@ public:
 	~Fsm();
 
 	static int OnMessage(SMessage *);
+	
+	static int SetCallback(int type, int state, state_cb_t) {
+		fsm_callbacks_.insert(make_pair(type, make_pair(state, state_cb_t)));
+	}
+	
+	Status_t ActivateCb(SMessage *, int state);
+
+	static int EraseCallback(int type) {
+		fsm_callbacks_.erase(type);
+	}
 
 private:
 	unsigned machine_id_;
-	Status_t status_;
+	int State;	
 	
-	std::map<int, state_cb_t> fsm_callbacks_; 
+	static std::map<int, std::map<int, state_cb_t>> fsm_callbacks_; 
 };
 
 #endif

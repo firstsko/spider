@@ -12,6 +12,8 @@ public:
 
 	int AddStateMachine(unsigned machine_id, Fsm *pfsm);
 
+	Fsm* GetStateMachine(unsigned machine_id);
+
 	int ActivateCb(SMessage *pmessage, unsigned machine_id, int dst_status);
 	
 	int DelStateMachine(int message_type);
