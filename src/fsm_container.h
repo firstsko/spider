@@ -10,13 +10,11 @@ class FsmContainer {
 public:
 	~FsmContainer();
 
-	int AddStateMachine(unsigned machine_id, Fsm *pfsm);
+	int AddStateMachine(int machine_id, Fsm *pfsm);
 
-	Fsm* GetStateMachine(unsigned machine_id);
+	Fsm* GetStateMachine(int machine_id);
 
-	int ActivateCb(SMessage *pmessage, unsigned machine_id, int dst_status);
-	
-	int DelStateMachine(int message_type);
+	int DelStateMachine(int machine_id);
 
 	static FsmContainer* Instance();
 
@@ -25,7 +23,7 @@ private:
 	FsmContainer() {};
 
 private:
-	std::map <int, Fsm *> fsm_container_;
+	std::map <int, Fsm *> fsm_container_; // Machine Id <-> Machine Pointer
 
 	static FsmContainer* p_container_;
 };

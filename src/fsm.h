@@ -26,23 +26,26 @@ public:
 
 	~Fsm();
 
+	unsigned MyId() {
+		return machine_id_;
+	}
+
 	static int OnMessage(SMessage *);
 	
-	static int SetCallback(int type, int state, state_cb_t) {
-		fsm_callbacks_.insert(make_pair(type, make_pair(state, state_cb_t)));
+	static int SetCallback(int type, int state, state_cb_t callback) {
+		std::map <int, state_cb_t> tmp;
+		tmp.insert(std::make_pair(state, callback));
+		fsm_callbacks_.insert(std::make_pair(type, tmp));
+		return 0;
 	}
 	
-	Status_t ActivateCb(SMessage *, int state);
-
-	static int EraseCallback(int type) {
-		fsm_callbacks_.erase(type);
-	}
+	Status_t InvokeCb(SMessage *, int state);
 
 private:
-	unsigned machine_id_;
+	int machine_id_;
 	int State;	
 	
-	static std::map<int, std::map<int, state_cb_t>> fsm_callbacks_; 
+	static std::map<int, std::map<int, state_cb_t> > fsm_callbacks_; 
 };
 
 #endif

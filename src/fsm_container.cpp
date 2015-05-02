@@ -15,27 +15,21 @@ FsmContainer* FsmContainer::Instance() {
 	return p_container_;
 }
 
-int FsmContainer::AddStateMachine(unsigned machine_id, Fsm *pfsm) {
+int FsmContainer::AddStateMachine(int machine_id, Fsm *pfsm) {
 	fsm_container_.insert(make_pair(machine_id, pfsm));
 	return 0;
 }
 
-Fsm* GetStateMachine(unsigned machine_id) {
+Fsm* FsmContainer::GetStateMachine(int machine_id) {
 	if (fsm_container_.find(machine_id) == fsm_container_.end()) {
 		ERROR("Cannot Find A State Machine To Process Incoming Message");
 		return NULL;
 	} else {
-		return fsm_container_.[machine_id];
-
+		return fsm_container_[machine_id];
 	}
 }
 
-int FsmContainer::ActivateCb(SMessage *pmessage, unsigned machine_id, int dst_state) {
-
-	return 0;
-}
-
-int FsmContainer::DelStateMachine(int message_type) {
-	fsm_container_.erase(message_type);
+int FsmContainer::DelStateMachine(int machine_id) {
+	fsm_container_.erase(machine_id);
 	return 0;
 }
