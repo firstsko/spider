@@ -29,10 +29,10 @@ private:
 	static FsmFactory *pfactory_;
 };
 
-#define REFLECT_CREATE(Classname, type) \
-		static Fsm *ClassName##CreateMySelf() { \
-			return new Classname(); \
-		} \
-		static int ret __attribute__((unused)) = FsmFactory::Instance()->AddStateMachine(type, Classname##CreateMySelf);
+#define REFLECT_CREATE(classname, type) \
+	static Fsm *classname##CreateMySelf() { \
+		return new classname(); \
+	} \
+	static int ret __attribute__((unused)) = FsmFactory::Instance()->AddStateMachine(type, classname##CreateMySelf);
 
 #endif
