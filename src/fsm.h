@@ -17,11 +17,11 @@ typedef enum {
 	FSM_FINISH = 100,
 } Status_t; 
 
-typedef Status_t (*state_cb_t) (void *);
 
 // Finite State Machine
 class Fsm:public Channel {
 public:
+	typedef Status_t (Fsm::*state_cb_t) (void *);
 	Fsm();
 
 	~Fsm();
@@ -39,13 +39,15 @@ public:
 		return 0;
 	}
 	
-	Status_t InvokeCb(SMessage *, int state);
+	virtual Status_t InvokeCb(SMessage *, int state);
+
+protected:
+	// <machine_id, <state, callback>>
+	static std::map<int, std::map<int, state_cb_t> > fsm_callbacks_;
 
 private:
 	int machine_id_;
 	int state;	
-	// <machine_id, <state, callback>>
-	static std::map<int, std::map<int, state_cb_t> > fsm_callbacks_;
 };
 
 #endif

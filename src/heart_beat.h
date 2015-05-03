@@ -7,8 +7,13 @@ class HeartBeat:public Fsm {
 public:
 	HeartBeat();
 
+	Status_t AliveResponse(void *smessage);
+
 	~HeartBeat();
 
+	typedef enum {
+		INIT_STATE = 0, 
+	} State_t;
 
 private:
 	
