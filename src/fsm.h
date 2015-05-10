@@ -17,14 +17,15 @@ typedef enum {
 	FSM_FINISH = 100,
 } Status_t; 
 
+class Fsm;
+typedef Status_t (*state_cb_t) (Fsm *, void *);
 
 // Finite State Machine
 class Fsm:public Channel {
 public:
-	typedef Status_t (Fsm::*state_cb_t) (void *);
 	Fsm();
 
-	~Fsm();
+	virtual ~Fsm();
 
 	unsigned MyId() {
 		return machine_id_;
@@ -32,14 +33,11 @@ public:
 
 	static int OnMessage(SMessage *);
 	
-	virtual	int SetCallback(int state, state_cb_t callback) {
-		std::map <int, state_cb_t> tmp;
-		tmp.insert(std::make_pair(state, callback));
-		fsm_callbacks_.insert(std::make_pair(machine_id_, tmp));
-		return 0;
-	}
-	
 	virtual Status_t InvokeCb(SMessage *, int state);
+
+	virtual int FsmType() = 0;
+
+    void SetGlobalStateName(int type, int state, state_cb_t callback);
 
 protected:
 	// <machine_id, <state, callback>>
@@ -47,7 +45,13 @@ protected:
 
 private:
 	int machine_id_;
-	int state;	
+	int state_;	
 };
 
+#define STATE_CALLBACK(type, state, classname, functionname)                        \
+    static int className##functionname(StateMachine *pMachine, conn_key_t key, void *pMessage) {    \
+        return ((classname *)pMachine)->functionname(key, pMessage);                          \
+    }                                                                                           \
+    static bool bUnused1##functionName __attribute__((unused)) =                                \
+        Fsm::SetGlobalStateName(type, classname::state, #functionname);
 #endif

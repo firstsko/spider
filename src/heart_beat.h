@@ -7,9 +7,11 @@ class HeartBeat:public Fsm {
 public:
 	HeartBeat();
 
-	Status_t AliveResponse(void *smessage);
+	virtual ~HeartBeat();
 
-	~HeartBeat();
+	virtual int FsmType();
+
+	Status_t AliveResponse(void *smessage);
 
 	typedef enum {
 		INIT_STATE = 0, 

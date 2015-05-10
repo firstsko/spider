@@ -2,6 +2,10 @@
 #include "fsm_container.h"
 #include "fsm_factory.h"
 
+using namespace std;
+
+map<int, map<int, state_cb_t> > Fsm::fsm_callbacks_;
+
 static int machine_flow_number = 0;
 
 static int generate_machine_number() {
@@ -30,6 +34,12 @@ int Fsm::OnMessage(SMessage *pmessage) {
 			return ret;
 		}
 	}
+}
+
+void Fsm::SetGlobalStateName(int type, int state, state_cb_t callback) {
+	map<int, state_cb_t> tmp;
+	tmp.insert(make_pair(state, callback));
+	fsm_callbacks_.insert(make_pair(type, tmp));
 }
 
 Status_t Fsm::InvokeCb(SMessage *, int state) {

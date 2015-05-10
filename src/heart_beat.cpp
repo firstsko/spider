@@ -8,8 +8,12 @@ static const int request_type = HEART_BEAT_REQUEST;
 REFLECT_CREATE(HeartBeat, request_type);
 
 HeartBeat::HeartBeat() {
-	SetCallback(INIT_STATE, AliveResponse);
 }
+
+int HeartBeat::FsmType() {
+	return request_type;
+}
+
 
 Status_t HeartBeat::AliveResponse(void *smessage) {
 	INFO("I am Ok");
