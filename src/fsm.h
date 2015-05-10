@@ -32,7 +32,7 @@ public:
 
 	static int OnMessage(SMessage *);
 	
-	int SetCallback(int state, state_cb_t callback) {
+	virtual	int SetCallback(int state, state_cb_t callback) {
 		std::map <int, state_cb_t> tmp;
 		tmp.insert(std::make_pair(state, callback));
 		fsm_callbacks_.insert(std::make_pair(machine_id_, tmp));
