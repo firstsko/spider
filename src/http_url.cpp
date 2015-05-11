@@ -12,7 +12,7 @@ int HttpUrl::Parse(const string &source) {
 	const string hostname_regex = "([0-9a-zA-Z-]+\\.)+[0-9a-zA-Z]{2,6}";
 	const string port_regex = "(:[0-9]{1,5})?";
 	const string path_regex = "(\\/([\\w]+\\/)+[\\w])?";
-	const string querystring_regex = "\\?((([\\w|%]+=[\\w|%]+)&)([\\w|%]+=[\\w|%]))?$";
+	const string querystring_regex = "\\?((([\\w%]+=[\\w%]+)&)([\\w%]+=[\\w%]))?$";
 	
 	char buf[1024] = {0};
 	snprintf(buf, sizeof(buf) - 1, "%s%s%s%s%s", proto_regex.c_str(), hostname_regex.c_str(), port_regex.c_str(), path_regex.c_str(), querystring_regex.c_str());
