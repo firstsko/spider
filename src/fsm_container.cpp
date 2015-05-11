@@ -1,4 +1,5 @@
 #include "fsm_container.h"
+#include "fsm_factory.h"
 
 using namespace std;
 
@@ -32,4 +33,8 @@ Fsm* FsmContainer::GetStateMachine(int machine_id) {
 int FsmContainer::DelStateMachine(int machine_id) {
 	fsm_container_.erase(machine_id);
 	return 0;
+}
+
+Fsm* FsmContainer::NewStateMachine(int type) {
+	return FsmFactory::Instance()->NewFsm(type);
 }

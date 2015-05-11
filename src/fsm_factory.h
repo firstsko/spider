@@ -16,6 +16,8 @@ public:
 
 	int DelStateMachine(int request_type);
 
+	Fsm* NewFsm(int request_type);
+
 	static FsmFactory* Instance();
 
 private:

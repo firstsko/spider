@@ -14,6 +14,8 @@ public:
 
 	Fsm* GetStateMachine(int machine_id);
 
+	Fsm* NewStateMachine(int type);
+
 	int DelStateMachine(int machine_id);
 
 	static FsmContainer* Instance();

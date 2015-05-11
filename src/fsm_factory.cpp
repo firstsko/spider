@@ -25,3 +25,12 @@ int FsmFactory::DelStateMachine(int request_type) {
 	fsm_factory_.erase(request_type);
 	return 0;
 }
+
+Fsm* FsmFactory::NewFsm(int request_type) {
+	map<int, FsmCreate_t>::iterator it = fsm_factory_.find(request_type);
+	if (it != fsm_factory_.end()) {
+		return it->second();
+	} else {
+		return NULL;
+	}
+}

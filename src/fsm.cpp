@@ -25,7 +25,16 @@ int Fsm::OnMessage(SMessage *pmessage) {
 	} else {
 		Fsm* pstatemachine = FsmContainer::Instance()->GetStateMachine(dst_fsm_id);
 		if (pstatemachine == NULL) {
-			return FSM_NOTEXIST;
+			pstatemachine = FsmContainer::Instance()->NewStateMachine(message_type);
+			if (pstatemachine == NULL) {
+				ERROR("Cannot Find StateMachine To Handle Incoming Message");
+				return FSM_NOTEXIST;
+			}
+			Status_t ret = pstatemachine->InvokeCb(pmessage, dst_state);
+			if (ret == FSM_ERROR || ret == FSM_FINISH) {
+				delete pstatemachine;
+			}
+			return ret;
 		} else {
 			Status_t ret = pstatemachine->InvokeCb(pmessage, dst_state);
 			if (ret == FSM_ERROR || ret == FSM_FINISH) {
@@ -42,7 +51,7 @@ void Fsm::SetGlobalStateName(int type, int state, state_cb_t callback) {
 	fsm_callbacks_.insert(make_pair(type, tmp));
 }
 
-Status_t Fsm::InvokeCb(SMessage *, int state) {
+Status_t Fsm::InvokeCb(SMessage *pmessage, int state) {
 
 	return FSM_NEXT;
 }
