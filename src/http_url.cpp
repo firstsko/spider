@@ -3,6 +3,6 @@
 using namespace std;
 
 void HttpUrl::Parse(const string &source_url) {  
-    return 0;  
+    return ;  
 }
 
