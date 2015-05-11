@@ -36,5 +36,5 @@ int FsmContainer::DelStateMachine(int machine_id) {
 }
 
 Fsm* FsmContainer::NewStateMachine(int type) {
-	return FsmFactory::Instance()->NewFsm(type);
+	return FsmFactory::Instance().NewFsm(type);
 }

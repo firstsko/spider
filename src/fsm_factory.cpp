@@ -2,18 +2,13 @@
 
 using namespace std;
 
-FsmFactory* FsmFactory::pfactory_ = NULL;
-
 FsmFactory::~FsmFactory() {
 }
 
 // Singleton, Not Multi-Thread Safe
-FsmFactory* FsmFactory::Instance() {
-	if (pfactory_ == NULL) {
-		pfactory_ = new FsmFactory();
-	}
-
-	return pfactory_;
+FsmFactory &FsmFactory::Instance() {
+	static FsmFactory instance;
+	return instance;
 }
 
 int FsmFactory::AddStateMachine(int request_type, FsmCreate_t create_cb) {

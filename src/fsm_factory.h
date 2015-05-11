@@ -18,7 +18,7 @@ public:
 
 	Fsm* NewFsm(int request_type);
 
-	static FsmFactory* Instance();
+	static FsmFactory &Instance();
 
 private:
 	// Private Constructor For Singletion
@@ -26,15 +26,12 @@ private:
 
 private:
 	std::map<int, FsmCreate_t> fsm_factory_;
-
-private:
-	static FsmFactory *pfactory_;
 };
 
 #define REFLECT_CREATE(classname, type) \
 	static Fsm *classname##CreateMySelf() { \
 		return new classname(); \
 	} \
-	static int ret __attribute__((unused)) = FsmFactory::Instance()->AddStateMachine(type, classname##CreateMySelf);
+	static int ret __attribute__((unused)) = FsmFactory::Instance().AddStateMachine(type, classname##CreateMySelf);
 
 #endif
