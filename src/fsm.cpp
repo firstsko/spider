@@ -45,10 +45,11 @@ int Fsm::OnMessage(SMessage *pmessage) {
 	}
 }
 
-void Fsm::SetGlobalStateName(int type, int state, state_cb_t callback) {
+int Fsm::SetGlobalStateName(int type, int state, state_cb_t callback) {
 	map<int, state_cb_t> tmp;
 	tmp.insert(make_pair(state, callback));
 	fsm_callbacks_.insert(make_pair(type, tmp));
+	return 0;
 }
 
 Status_t Fsm::InvokeCb(SMessage *pmessage, int state) {

@@ -37,7 +37,7 @@ public:
 
 	virtual int FsmType() = 0;
 
-    void SetGlobalStateName(int type, int state, state_cb_t callback);
+    static int SetGlobalStateName(int type, int state, state_cb_t callback);
 
 protected:
 	// <machine_id, <state, callback>>
@@ -49,9 +49,9 @@ private:
 };
 
 #define STATE_CALLBACK(type, state, classname, functionname)                        \
-    static int className##functionname(StateMachine *pMachine, conn_key_t key, void *pMessage) {    \
-        return ((classname *)pMachine)->functionname(key, pMessage);                          \
+    static Status_t classname##functionname(Fsm *pfsm, void *pmessage) {    \
+        return ((classname *)pfsm)->functionname(pmessage);                          \
     }                                                                                           \
-    static bool bUnused1##functionName __attribute__((unused)) =                                \
-        Fsm::SetGlobalStateName(type, classname::state, #functionname);
+    static int bUnused1##functionName __attribute__((unused)) =                                \
+        Fsm::SetGlobalStateName(type, classname::state, classname##functionname);
 #endif
