@@ -10,13 +10,13 @@
 
 class HttpUrl {
 public:
-    HttpUrl() {
+    HttpUrl(const std::string &source) {
     };
 
     ~HttpUrl() {
     };
 	
-	void Parse(const std::string &source);
+	int Parse(const std::string &source);
 	
 	std::string GetDomain();
 
@@ -26,8 +26,11 @@ public:
 
 private:
 	std::string host_;	
+	std::string ipstr_;	
 	std::string query_string_;
 	int port_;
-
+	std::string host_;	
+	unsigned ip_;
 };
+
 #endif
