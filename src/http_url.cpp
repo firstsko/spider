@@ -14,9 +14,7 @@ int HttpUrl::Parse(const string &source) {
 	const string path_regex = "(\\/([\\w]+\\/)*([\\w]+\\.?[\\w])+)?";
 	const string querystring_regex = "(\\?((([\\w%]+=[\\w%\\.]+)&)*([\\w%]+=[\\w%\\.]+)))?$";
 	
-	char buf[1024] = {0};
-	snprintf(buf, sizeof(buf) - 1, "%s%s%s%s%s", proto_regex.c_str(), hostname_regex.c_str(), port_regex.c_str(), path_regex.c_str(), querystring_regex.c_str());
-	string valid_http_url = buf;
+	string valid_http_url = proto_regex + hostname_regex + port_regex + path_regex + querystring_regex;
 
 	regex_t reg;
 	if (regcomp(&reg, valid_http_url.c_str(), 0) != 0) {

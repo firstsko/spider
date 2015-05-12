@@ -25,11 +25,10 @@ public:
 	std::string GetIpStr();
 
 private:
-	std::string host_;	
+	std::string hostname_;	
 	std::string ipstr_;	
 	std::string query_string_;
 	int port_;
-	std::string host_;	
 	unsigned ip_;
 };
 
