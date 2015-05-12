@@ -1,13 +1,10 @@
-#include <regex.h>
-
+#include <regex.h> 
 #include "http_url.h"
 
 using namespace std;
 
 int HttpUrl::Parse(const string &source) {  
 	// protocol + hostname + port + path + querystring = url
-	size_t size = source.length();
-
 	const string proto_regex = "^(https?:\\/\\/)?";
 	const string hostname_regex = "([0-9a-zA-Z-]+\\.)+[0-9a-zA-Z]{2,6}";
 	const string port_regex = "(:[0-9]{1,5})?";
@@ -28,7 +25,6 @@ int HttpUrl::Parse(const string &source) {
 		regfree(&reg);
 		return -1;
 	}
-
 
 	// Get Protocol
 
