@@ -26,6 +26,7 @@ public:
 
 private:
 	std::string hostname_;	
+	std::string protocol_;	
 	std::string ipstr_;	
 	std::string query_string_;
 	int port_;
