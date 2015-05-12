@@ -8,8 +8,10 @@ int HttpUrl::Parse(const string &source) {
 	const string proto_regex = "^(https?:\\/\\/)?";
 	const string hostname_regex = "([0-9a-zA-Z-]+\\.)+[0-9a-zA-Z]{2,6}";
 	const string port_regex = "(:[0-9]{1,5})?";
-	const string path_regex = "(\\/([\\w]+\\/)*([\\w]+\\.?[\\w])+)?";
-	const string querystring_regex = "(\\?((([\\w%]+=[\\w%\\.]+)&)*([\\w%]+=[\\w%\\.]+)))?$";
+	//const string path_regex = "(\\/([\\w]+\\/)*([\\w]+\\.?[\\w])+)?";
+	const string path_regex = "(\\/([[:alnum:]-_]+\\/)*([[:alnum:]-_]+\\.?[[:alnum:]-_])+)?";
+	//const string querystring_regex = "(\\?((([\\w%]+=[\\w%\\.]+)&)*([\\w%]+=[\\w%\\.]+)))?$";
+	const string querystring_regex = "(\\?((([[:alnum:]%]+=[[:alnum:]#%\\.]+)&)*([[:alnum:]%]+=[[:alnum:]%#\\.]+)))?$";
 	
 	string valid_http_url = proto_regex + hostname_regex + port_regex + path_regex + querystring_regex;
 
