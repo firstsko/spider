@@ -31,6 +31,16 @@ int HttpUrl::Parse(const string &source) {
 		return -1;
 	}
 
+
+	// Get Protocol
+
+	// Get Hostname
+
+	// Get Port
+
+	// Get Path
+
+	// Get QueryString
+
     return 0;  
 }
-
