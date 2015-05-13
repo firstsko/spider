@@ -10,25 +10,61 @@
 
 class HttpUrl {
 public:
-    HttpUrl(const std::string &source) {
+    HttpUrl():port_(0), ip_(0) {
     };
 
     ~HttpUrl() {
     };
 	
 	int Parse(const std::string &source);
+
+	std::string Protocol() {
+		return protocol_;
+	}
+
+	std::string Hostname(const std::string &source) {
+		return hostname_;
+	}
+
+	std::string Path(const std::string &source) {
+		return path_;
+	}
+
+	std::string QueryString(const std::string &source) {
+		return querystring_;
+	}
+
+	int Port() {
+		return port_;
+	}
+
+	unsigned Ip() {
+		return 0;
+	}
+
+private:
+	int UrlValid(const std::string &source);
 	
-	std::string GetDomain();
+	int GetHostName();
+
+	int GetProtocol();
+
+	int GetPort();
+
+	int GetPath();
+
+	int GetQueryString();
 
 	unsigned GetIp();
 
 	std::string GetIpStr();
 
 private:
-	std::string hostname_;	
 	std::string protocol_;	
+	std::string hostname_;	
 	std::string ipstr_;	
-	std::string query_string_;
+	std::string path_;	
+	std::string querystring_;
 	int port_;
 	unsigned ip_;
 };
