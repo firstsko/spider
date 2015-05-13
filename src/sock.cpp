@@ -26,7 +26,7 @@ static char* iptostr(unsigned ip) {
 
 static void on_message(void *buffer, int size) {
 	google::protobuf::Message *msg_ptr = CreateMessage("spider.SMessage");
-	msg_ptr->ParseFromArray((char *)buffer + sizeof(Header_t), size);
+	msg_ptr->ParseFromArray((char *)buffer + sizeof(Header_t), size - sizeof(Header_t));
 	SMessage* psmessage = (SMessage *)msg_ptr;
 
 	Fsm::OnMessage(psmessage);
@@ -212,7 +212,6 @@ int Socket::Read() {
 
 	while (true) {
 		len = recv(sockfd_, inbuf_ + r_offset_, SOCKET_BUFFER_SIZE - 1, 0);
-		DEBUG("Recv %d Bytes This Time", len);
 
 		if (len < 0)  {
 			// All Data Drained For Edge-Trigger, No More Data, Wait For Next Round
@@ -232,12 +231,13 @@ int Socket::Read() {
 			// TCP_FIN Recieved From Peer, Close Connection
 			Close(); 
 			break;
-		} 
+		}  else {
+			bytes += len;
+			r_offset_ += len;
+		}
 	}
 
-	bytes += len;
-	r_offset_ += len;
-
+	INFO("Recv %d Bytes, Read Offset %d This Round", bytes, r_offset_);
 	if (bytes > (int)sizeof(Header_t)) {
 		Header_t *head;
 		head = (Header_t *)inbuf_;
@@ -256,10 +256,12 @@ int Socket::Read() {
 			ERROR("Insufficient Bytes, Recv %d Bytes, Expected %d Bytes, Wait For Next Packet", bytes, msg_len);
 			return bytes;
 		} else if (bytes == msg_len) {
-			on_message((void *)inbuf_, r_offset_);
+			INFO("Bingo Bytes, Recv %d Bytes, Expected %d Bytes, Process Request Now", bytes, msg_len);
+			on_message((void *)inbuf_, msg_len);
 			ClearRBuffer();	
 		} else {
-			on_message((void *)inbuf_, r_offset_);
+			INFO("More Bytes, Recv %d Bytes, Expected %d Bytes", bytes, msg_len);
+			on_message((void *)inbuf_, msg_len);
 			// Reset Offset Manually
 			memcpy(inbuf_, inbuf_ + msg_len, bytes - msg_len);
 			memset(inbuf_ + bytes - msg_len, 0, msg_len);
