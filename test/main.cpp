@@ -66,8 +66,10 @@ int main(int argc, char **argv) {
 	SMessage *message = new SMessage;
 	Header *head = new Header;
 	head->set_flow_no(1234);
-	head->set_src_fsm(4321);
-	head->set_dst_fsm(3123);
+	head->set_src_fsm(0);
+	head->set_dst_fsm(0);
+	head->set_src_state(0);
+	head->set_dst_state(0);
 	head->set_type(HEART_BEAT_REQUEST);
 	message->set_allocated_header(head);
 

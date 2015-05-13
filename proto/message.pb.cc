@@ -82,7 +82,7 @@ void protobuf_AssignDesc_message_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, flow_no_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, src_fsm_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, dst_fsm_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, srt_state_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, src_state_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, dst_state_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Header, type_),
   };
@@ -289,7 +289,7 @@ void protobuf_AddDesc_message_2eproto() {
     "eader\030\n \002(\0132\016.spider.Header\022\032\n\004body\030\024 \001("
     "\0132\014.spider.Body\"\204\001\n\006Header\022\017\n\007flow_no\030\n "
     "\002(\r\022\017\n\007src_fsm\030\024 \002(\r\022\017\n\007dst_fsm\030\036 \002(\r\022\021\n"
-    "\tsrt_state\030( \002(\r\022\021\n\tdst_state\0302 \002(\r\022!\n\004t"
+    "\tsrc_state\030( \002(\r\022\021\n\tdst_state\0302 \002(\r\022!\n\004t"
     "ype\030< \002(\0162\023.spider.MessageType\"\017\n\004Body*\007"
     "\010\220N\020\241\215\006\".\n\010Response\022\017\n\007retcode\030\n \002(\005\022\021\n\t"
     "error_msg\030\024 \001(\t\"\022\n\020HeartBeatRequest\"1\n\021H"
@@ -674,7 +674,7 @@ void SMessage::Swap(SMessage* other) {
 const int Header::kFlowNoFieldNumber;
 const int Header::kSrcFsmFieldNumber;
 const int Header::kDstFsmFieldNumber;
-const int Header::kSrtStateFieldNumber;
+const int Header::kSrcStateFieldNumber;
 const int Header::kDstStateFieldNumber;
 const int Header::kTypeFieldNumber;
 #endif  // !_MSC_VER
@@ -700,7 +700,7 @@ void Header::SharedCtor() {
   flow_no_ = 0u;
   src_fsm_ = 0u;
   dst_fsm_ = 0u;
-  srt_state_ = 0u;
+  src_state_ = 0u;
   dst_state_ = 0u;
   type_ = 10001;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -810,18 +810,18 @@ bool Header::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(320)) goto parse_srt_state;
+        if (input->ExpectTag(320)) goto parse_src_state;
         break;
       }
 
-      // required uint32 srt_state = 40;
+      // required uint32 src_state = 40;
       case 40: {
         if (tag == 320) {
-         parse_srt_state:
+         parse_src_state:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &srt_state_)));
-          set_has_srt_state();
+                 input, &src_state_)));
+          set_has_src_state();
         } else {
           goto handle_unusual;
         }
@@ -904,9 +904,9 @@ void Header::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(30, this->dst_fsm(), output);
   }
 
-  // required uint32 srt_state = 40;
-  if (has_srt_state()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->srt_state(), output);
+  // required uint32 src_state = 40;
+  if (has_src_state()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->src_state(), output);
   }
 
   // required uint32 dst_state = 50;
@@ -945,9 +945,9 @@ void Header::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(30, this->dst_fsm(), target);
   }
 
-  // required uint32 srt_state = 40;
-  if (has_srt_state()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->srt_state(), target);
+  // required uint32 src_state = 40;
+  if (has_src_state()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->src_state(), target);
   }
 
   // required uint32 dst_state = 50;
@@ -994,11 +994,11 @@ int Header::ByteSize() const {
           this->dst_fsm());
     }
 
-    // required uint32 srt_state = 40;
-    if (has_srt_state()) {
+    // required uint32 src_state = 40;
+    if (has_src_state()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->srt_state());
+          this->src_state());
     }
 
     // required uint32 dst_state = 50;
@@ -1050,8 +1050,8 @@ void Header::MergeFrom(const Header& from) {
     if (from.has_dst_fsm()) {
       set_dst_fsm(from.dst_fsm());
     }
-    if (from.has_srt_state()) {
-      set_srt_state(from.srt_state());
+    if (from.has_src_state()) {
+      set_src_state(from.src_state());
     }
     if (from.has_dst_state()) {
       set_dst_state(from.dst_state());
@@ -1086,7 +1086,7 @@ void Header::Swap(Header* other) {
     std::swap(flow_no_, other->flow_no_);
     std::swap(src_fsm_, other->src_fsm_);
     std::swap(dst_fsm_, other->dst_fsm_);
-    std::swap(srt_state_, other->srt_state_);
+    std::swap(src_state_, other->src_state_);
     std::swap(dst_state_, other->dst_state_);
     std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

@@ -237,12 +237,12 @@ class Header : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 dst_fsm() const;
   inline void set_dst_fsm(::google::protobuf::uint32 value);
 
-  // required uint32 srt_state = 40;
-  inline bool has_srt_state() const;
-  inline void clear_srt_state();
-  static const int kSrtStateFieldNumber = 40;
-  inline ::google::protobuf::uint32 srt_state() const;
-  inline void set_srt_state(::google::protobuf::uint32 value);
+  // required uint32 src_state = 40;
+  inline bool has_src_state() const;
+  inline void clear_src_state();
+  static const int kSrcStateFieldNumber = 40;
+  inline ::google::protobuf::uint32 src_state() const;
+  inline void set_src_state(::google::protobuf::uint32 value);
 
   // required uint32 dst_state = 50;
   inline bool has_dst_state() const;
@@ -266,8 +266,8 @@ class Header : public ::google::protobuf::Message {
   inline void clear_has_src_fsm();
   inline void set_has_dst_fsm();
   inline void clear_has_dst_fsm();
-  inline void set_has_srt_state();
-  inline void clear_has_srt_state();
+  inline void set_has_src_state();
+  inline void clear_has_src_state();
   inline void set_has_dst_state();
   inline void clear_has_dst_state();
   inline void set_has_type();
@@ -280,7 +280,7 @@ class Header : public ::google::protobuf::Message {
   ::google::protobuf::uint32 flow_no_;
   ::google::protobuf::uint32 src_fsm_;
   ::google::protobuf::uint32 dst_fsm_;
-  ::google::protobuf::uint32 srt_state_;
+  ::google::protobuf::uint32 src_state_;
   ::google::protobuf::uint32 dst_state_;
   int type_;
   friend void  protobuf_AddDesc_message_2eproto();
@@ -1157,28 +1157,28 @@ inline void Header::set_dst_fsm(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:spider.Header.dst_fsm)
 }
 
-// required uint32 srt_state = 40;
-inline bool Header::has_srt_state() const {
+// required uint32 src_state = 40;
+inline bool Header::has_src_state() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void Header::set_has_srt_state() {
+inline void Header::set_has_src_state() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void Header::clear_has_srt_state() {
+inline void Header::clear_has_src_state() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void Header::clear_srt_state() {
-  srt_state_ = 0u;
-  clear_has_srt_state();
+inline void Header::clear_src_state() {
+  src_state_ = 0u;
+  clear_has_src_state();
 }
-inline ::google::protobuf::uint32 Header::srt_state() const {
-  // @@protoc_insertion_point(field_get:spider.Header.srt_state)
-  return srt_state_;
+inline ::google::protobuf::uint32 Header::src_state() const {
+  // @@protoc_insertion_point(field_get:spider.Header.src_state)
+  return src_state_;
 }
-inline void Header::set_srt_state(::google::protobuf::uint32 value) {
-  set_has_srt_state();
-  srt_state_ = value;
-  // @@protoc_insertion_point(field_set:spider.Header.srt_state)
+inline void Header::set_src_state(::google::protobuf::uint32 value) {
+  set_has_src_state();
+  src_state_ = value;
+  // @@protoc_insertion_point(field_set:spider.Header.src_state)
 }
 
 // required uint32 dst_state = 50;

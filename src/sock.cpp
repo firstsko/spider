@@ -212,8 +212,7 @@ int Socket::Read() {
 
 	while (true) {
 		len = recv(sockfd_, inbuf_ + r_offset_, SOCKET_BUFFER_SIZE - 1, 0);
-		bytes += len;
-		r_offset_ += len;
+		DEBUG("Recv %d Bytes This Time", len);
 
 		if (len < 0)  {
 			// All Data Drained For Edge-Trigger, No More Data, Wait For Next Round
@@ -236,10 +235,13 @@ int Socket::Read() {
 		} 
 	}
 
+	bytes += len;
+	r_offset_ += len;
+
 	if (bytes > (int)sizeof(Header_t)) {
 		Header_t *head;
 		head = (Header_t *)inbuf_;
-		int msg_len = ntohl(head->length) + sizeof(Header_t);
+		int msg_len = ntohl(head->length);
 		if (msg_len > SOCKET_BUFFER_SIZE) {
 			INFO("Socket Inbuffer Not Enough, Allocate Space Again");
 			free(inbuf_);
@@ -251,6 +253,7 @@ int Socket::Read() {
 		}
 	
 		if (bytes < msg_len) {
+			ERROR("Insufficient Bytes, Recv %d Bytes, Expected %d Bytes, Wait For Next Packet", bytes, msg_len);
 			return bytes;
 		} else if (bytes == msg_len) {
 			on_message((void *)inbuf_, r_offset_);
