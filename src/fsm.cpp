@@ -13,6 +13,8 @@ static int generate_machine_number() {
 }
 
 int Fsm::OnMessage(SMessage *pmessage) {
+	DEBUG("Incoming Message %s", pmessage->DebugString().c_str());
+
 	int message_type = pmessage->header().type();
 	int dst_state = pmessage->header().dst_state();
 	int dst_fsm_id = pmessage->header().dst_state();

@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 	head->set_flow_no(1234);
 	head->set_src_fsm(4321);
 	head->set_dst_fsm(3123);
-	head->set_type(LOGIN_REQUEST);
+	head->set_type(HEART_BEAT_REQUEST);
 	message->set_allocated_header(head);
 
 	int size = message->ByteSize();
@@ -81,7 +81,8 @@ int main(int argc, char **argv) {
 	memcpy(buffer, &h, sizeof(h));
 	message->SerializeToArray((char *)buffer + sizeof(header), size);
 	
-	printf("Bytes Send %lu\n", send(sockfd, buffer, length, 0));
+	printf("Message: %s\n", message->DebugString().c_str());	
+	printf("Send %lu Bytes\n", send(sockfd, buffer, length, 0));
 	
 	delete message;
 	free(buffer);

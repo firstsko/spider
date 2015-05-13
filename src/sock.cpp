@@ -68,6 +68,11 @@ void Socket::Close() {
 		state_ = SOCK_CLOSED;
 		INFO("Close Connection With Client %s:%d", iptostr(peer_.sin_addr.s_addr), ntohs(peer_.sin_port));
 	}
+	
+	if (gmap_tcpdest.find(peer_) != gmap_tcpdest.end()) {
+		gmap_tcpdest.erase(peer_);
+		
+	}
 }
 
 Socket::~Socket() {

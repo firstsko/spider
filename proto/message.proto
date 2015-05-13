@@ -26,7 +26,7 @@ message Header {
 }
 
 message Body {
-	extensions  10000 to 100000;
+	extensions 10000 to 100000;
 }
 
 extend Body {
