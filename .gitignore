@@ -35,3 +35,6 @@ test/client
 
 # Logs
 log*
+
+# Tags
+tags
