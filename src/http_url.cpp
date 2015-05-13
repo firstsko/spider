@@ -1,6 +1,5 @@
 #include <regex.h> 
 #include "http_url.h"
-#include "log.h"
 
 using namespace std;
 
@@ -72,7 +71,7 @@ int HttpUrl::GetProtocol(const string &source) {
 		return ret;
 	}
 
-	memcpy(buf, source.c_str()+store[0].rm_so, source.c_str() + store[0].rm_eo);
+	memcpy(buf, source.c_str() + store[0].rm_so, store[0].rm_eo - store[0].rm_so);
 	protocol_ = buf;
 
 	regfree(&reg);
@@ -100,7 +99,7 @@ int HttpUrl::GetHostName(const string &source) {
 		return ret;
 	}
 
-	memcpy(buf, source.c_str()+store[0].rm_so, source.c_str() + store[0].rm_eo);
+	memcpy(buf, source.c_str() + store[0].rm_so, store[0].rm_eo - store[0].rm_so);
 	hostname_ = buf;
 
 	regfree(&reg);
@@ -128,7 +127,7 @@ int HttpUrl::GetPath(const string &source) {
 		return ret;
 	}
 
-	memcpy(buf, source.c_str()+store[0].rm_so, source.c_str() + store[0].rm_eo);
+	memcpy(buf, source.c_str() + store[0].rm_so, store[0].rm_eo - store[0].rm_so);
 	path_ = buf;
 
 	regfree(&reg);
@@ -156,7 +155,7 @@ int HttpUrl::GetQueryString(const string &source) {
 		return ret;
 	}
 
-	memcpy(buf, source.c_str()+store[0].rm_so, source.c_str() + store[0].rm_eo);
+	memcpy(buf, source.c_str() + store[0].rm_so, store[0].rm_eo - store[0].rm_so);
 	querystring_ = buf;
 
 	regfree(&reg);

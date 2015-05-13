@@ -7,6 +7,8 @@
 #include <map>
 #include <string>
 #include <strings.h>
+#include "log.h"
+#include "server.h"
 
 class HttpUrl {
 public:
@@ -45,15 +47,15 @@ public:
 private:
 	int UrlValid(const std::string &source);
 	
-	int GetHostName();
+	int GetHostName(const std::string &source);
 
-	int GetProtocol();
+	int GetProtocol(const std::string &source);
 
-	int GetPort();
+	int GetPort(const std::string &source);
 
-	int GetPath();
+	int GetPath(const std::string &source);
 
-	int GetQueryString();
+	int GetQueryString(const std::string &source);
 
 	unsigned GetIp();
 
