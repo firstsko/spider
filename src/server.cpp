@@ -74,7 +74,7 @@ int main(int argc , char **argv) {
 	}
 
 	// When Segmentation Fault Occurs, Print Diagnose Information
-	signal(SIGSEGV, dump_stacktrace);
+//	signal(SIGSEGV, dump_stacktrace);
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, ctrl_c_handler);
 

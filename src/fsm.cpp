@@ -13,32 +13,42 @@ static int generate_machine_number() {
 }
 
 int Fsm::OnMessage(SMessage *pmessage) {
-	DEBUG("Incoming Message %s", pmessage->DebugString().c_str());
-
+	DEBUG("Incoming Message\n%s", pmessage->DebugString().c_str());
 	int message_type = pmessage->header().type();
-	int dst_state = pmessage->header().dst_state();
-	int dst_fsm_id = pmessage->header().dst_state();
+	int dst_fsm_id = pmessage->header().dst_fsm();
 
+	DEBUG("Incoming Message, Fsm id %d",  dst_fsm_id);
+
+	Fsm* pstatemachine = NULL;
 	// Initial State
-	if (dst_state == 0 || dst_fsm_id == 0)	{
-
+	if (dst_fsm_id == 0)	{
 		// Create StateMachine
-		return 0;
+		DEBUG("New State Machine, Request Id %d", message_type);
+		pstatemachine = FsmContainer::Instance()->NewStateMachine(message_type);
+		if (pstatemachine == NULL) {
+			ERROR("Cannot Find StateMachine To Handle Incoming Message");
+			return FSM_NOTEXIST;
+		}
+		Status_t ret = pstatemachine->InvokeCb(pmessage);
+		if (ret == FSM_ERROR || ret == FSM_FINISH) {
+			delete pstatemachine;
+		}
+		return ret;
 	} else {
-		Fsm* pstatemachine = FsmContainer::Instance()->GetStateMachine(dst_fsm_id);
+		pstatemachine = FsmContainer::Instance()->GetStateMachine(dst_fsm_id);
 		if (pstatemachine == NULL) {
 			pstatemachine = FsmContainer::Instance()->NewStateMachine(message_type);
 			if (pstatemachine == NULL) {
 				ERROR("Cannot Find StateMachine To Handle Incoming Message");
 				return FSM_NOTEXIST;
 			}
-			Status_t ret = pstatemachine->InvokeCb(pmessage, dst_state);
+			Status_t ret = pstatemachine->InvokeCb(pmessage);
 			if (ret == FSM_ERROR || ret == FSM_FINISH) {
 				delete pstatemachine;
 			}
 			return ret;
 		} else {
-			Status_t ret = pstatemachine->InvokeCb(pmessage, dst_state);
+			Status_t ret = pstatemachine->InvokeCb(pmessage);
 			if (ret == FSM_ERROR || ret == FSM_FINISH) {
 				delete pstatemachine;
 			}
@@ -54,9 +64,27 @@ int Fsm::SetGlobalStateName(int type, int state, state_cb_t callback) {
 	return 0;
 }
 
-Status_t Fsm::InvokeCb(SMessage *pmessage, int state) {
+Status_t Fsm::InvokeCb(SMessage *pmessage) {
+	int mytype = this->FsmType();
+	int mystate = state_;
+	INFO("InvokeCb, MyType:%d, State:%d", mytype, mystate);
+	
+	map<int, map<int, state_cb_t> >::iterator fsm_it;
+	map<int, state_cb_t>::iterator cb_it;
 
-	return FSM_NEXT;
+	fsm_it = fsm_callbacks_.find(mytype);
+	if (fsm_it == fsm_callbacks_.end()) {
+		ERROR("Cannot Find Corresponding Fsm, MyType:%d, State:%d", mytype, mystate);
+		return FSM_ERROR;
+	}
+
+	cb_it = fsm_it->second.find(mystate);	
+	if (cb_it == fsm_it->second.end()) {
+		ERROR("Cannot Find Callback, MyType:%d, State:%d", mytype, mystate);
+		return FSM_ERROR;
+	}
+	
+	return cb_it->second(this, pmessage);
 }
 
 Fsm::Fsm() {

@@ -8,6 +8,7 @@
 #include <netinet/tcp.h> 
 #include <string.h>
 #include <strings.h>
+#include <errno.h>
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
 
@@ -54,12 +55,12 @@ int main(int argc, char **argv) {
 
 	int sockfd = socket(PF_INET, SOCK_STREAM, 0);
 	if (sockfd <= 0) {
-		printf("Create Socket Failed\n");
+		printf("Create Socket Failure Errno: %d, ErrStr: %s\n", errno, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 	
 	if (connect(sockfd, (struct sockaddr*) &address, sizeof(address)) < 0) {
-		printf("Create Socket Failed\n");
+		printf("Connect Failure Errno: %d, ErrStr: %s\n", errno, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 

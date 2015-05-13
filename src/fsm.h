@@ -33,7 +33,7 @@ public:
 
 	static int OnMessage(SMessage *);
 	
-	virtual Status_t InvokeCb(SMessage *, int state);
+	virtual Status_t InvokeCb(SMessage *);
 
 	virtual int FsmType() = 0;
 
