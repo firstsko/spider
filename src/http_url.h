@@ -7,12 +7,15 @@
 #include <map>
 #include <string>
 #include <strings.h>
+#include <string.h>
 #include "log.h"
 #include "server.h"
 
+#define NOTEXIST 100 
+
 class HttpUrl {
 public:
-    HttpUrl():port_(0), ip_(0) {
+    HttpUrl():port_(80) {
     };
 
     ~HttpUrl() {
@@ -36,12 +39,18 @@ public:
 		return querystring_;
 	}
 
-	int Port() {
-		return port_;
+	// Please Check Return String Empty
+	int GetParaKey(const std::string &key, std::string &result) {
+		if (query_map_.find(key) != query_map_.end()) {
+			result = query_map_[key];
+			return 0;
+		} else {	
+			return NOTEXIST;
+		}
 	}
 
-	unsigned Ip() {
-		return 0;
+	int Port() {
+		return port_;
 	}
 
 private:
@@ -57,9 +66,7 @@ private:
 
 	int GetQueryString(const std::string &source);
 
-	unsigned GetIp();
-
-	std::string GetIpStr();
+	void ParseQueryString(const std::string &querystring);
 
 private:
 	std::string protocol_;	
@@ -69,7 +76,6 @@ private:
 	std::string querystring_;
 	std::map<std::string, std::string> query_map_;
 	int port_;
-	unsigned ip_;
 };
 
 #endif

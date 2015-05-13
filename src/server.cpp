@@ -10,7 +10,7 @@
 #include "log.h"
 #include "message.pb.h"
 
-static const char *version = "Spider0.0.3";
+static const char *version = "Spider0.0.4";
 
 using namespace std;
 

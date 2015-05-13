@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 	char buf[1024] = {0};
 	int ret = 0;
 
-	if ((ret = regcomp(&reg, valid_http_url.c_str(), REG_EXTENDED)) != 0) {
+	if ((ret = regcomp(&reg, proto_regex.c_str(), REG_EXTENDED)) != 0) {
 		printf ("Failed to Compile Regular Expression\n");
 		regerror(ret, &reg, buf, sizeof(buf));
       	printf("%s\n", buf);
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	printf("Regular Expression: %s\n", valid_http_url.c_str());
+	printf("Regular Expression: %s\n", proto_regex.c_str());
 	printf("Source: %s\n", source);
 
 	regmatch_t store[1];

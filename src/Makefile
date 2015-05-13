@@ -11,6 +11,7 @@ all:
 	$(CC) $(INCLUDE) $(SRC) $(CFLAG) $(LINK) $(LINKER) -o $(EXE)
 	../bin/admin.sh stop
 	cp $(EXE) $(BIN)
+	ctags -R *
 clean:
 	rm -rf *.o 
 	rm -rf $(EXE)
