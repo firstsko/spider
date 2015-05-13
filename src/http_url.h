@@ -67,6 +67,7 @@ private:
 	std::string ipstr_;	
 	std::string path_;	
 	std::string querystring_;
+	std::map<std::string, std::string> query_map_;
 	int port_;
 	unsigned ip_;
 };
